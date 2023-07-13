@@ -1,0 +1,114 @@
+@import "../../../Assets/theme/_var.scss";
+
+.login-header {
+  padding: 1.1rem 0;
+
+  .admin_link {
+    font-size: 1.2rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    color: #01131D;
+    text-transform: uppercase;
+  }
+}
+
+.admin_header {
+  padding: 1.1rem 6rem;
+  border-bottom: 1px solid $borderclr1;
+
+  @media (max-width:1499px) {
+    padding: 1.1rem 1.5rem;
+  }
+
+  &_search {
+    .form-control {
+      border-radius: 15px;
+      border: 1px solid $borderclr;
+      background-color: $lightgreyclr;
+      color: $greyclr4;
+      font-size: 1.4rem;
+      font-weight: 500;
+      margin-left: 3rem;
+      padding: 0.9rem 1.5rem;
+      border-radius: 5rem;
+      max-width: 26.7rem;
+
+      @media (max-width:767px) {
+        margin-left: 1rem;
+      }
+
+      &:focus {
+        box-shadow: none;
+        border: 1px solid $borderclr;
+      }
+    }
+  }
+
+  .Notification_Dropdown {
+    &.dropdown {
+      .dropdown-toggle {
+        &::after {
+          display: none;
+        }
+
+        &.show {
+          svg {
+            path {
+              fill: $orangeclr;
+            }
+          }
+        }
+      }
+
+      .dropdown-menu {
+        padding: 1rem;
+
+        @media (max-width:767px) {
+          width: 300px;
+        }
+
+        a {
+          background-color: transparent;
+
+          .Notification_List {
+            p {
+              font-size: 1.4rem;
+              font-weight: 400;
+              width: calc(100% - 30px);
+              white-space: normal;
+
+              small {
+                display: block;
+                font-size: 1.2rem;
+                color: #0D0E0B78;
+                margin-top: 0.4rem;
+              }
+            }
+
+            .close_info {
+              width: 30px;
+              display: inline-block;
+              text-align: right;
+            }
+          }
+
+          &:hover {
+            background-color: transparent;
+            color: $orangeclr;
+          }
+        }
+      }
+    }
+  }
+
+  .Mobile_toggleBtn {
+    width: 32px;
+    display: none;
+    margin-left: 10px;
+
+    @media (max-width:991px) {
+      display: inline-block;
+    }
+  }
+}

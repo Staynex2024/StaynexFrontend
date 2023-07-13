@@ -1,0 +1,122 @@
+@import '../../../Assets/theme/_mixins.scss';
+
+.form-label,
+.form-check-label {
+    font-size: 1.4rem;
+}
+
+.customInput {
+    margin-bottom: 1.5rem;
+
+    &_inner {
+        position: relative;
+    }
+
+    .form-control {
+        height: 4.8rem;
+        box-shadow: none;
+        outline: none;
+        border: 1px solid $borderclr1;
+        width: 100%;
+        padding: 1rem 2rem;
+        background-color: $whiteclr;
+        border-radius: 0.4rem;
+        font-size: 1.4rem;
+
+        &::placeholder {
+            opacity: 1;
+        }
+
+        &:focus {
+            box-shadow: none;
+            outline: none;
+            border-color: $orangeclr;
+        }
+    }
+
+    &.input_with_icon {
+        .customInput_inner {
+            .input_Icon {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                left: 1.7rem;
+            }
+
+            .form-control {
+                padding-left: 4rem;
+            }
+
+            .input_Icontwo {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                right: 17px;
+                cursor: pointer;
+            }
+        }
+    }
+
+
+    .eyeIcon {
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        display: flex;
+
+        svg {
+            opacity: 0.7;
+
+            path {}
+        }
+    }
+
+    .error_Msg {
+        color: red;
+        font-size: 1.3rem;
+        margin-top: 0.5rem;
+    }
+}
+
+.checkbox_input {
+    .form-check {
+        margin-bottom: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+
+        .form-check-input {
+            float: unset;
+            margin: 0;
+            box-shadow: none;
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            border-color: $greyclr;
+
+            &:checked {
+                background-color: $orangeclr;
+                border-color: $orangeclr;
+            }
+        }
+
+        .form-check-label {
+            line-height: 1;
+            margin-left: 1rem;
+        }
+
+        &.form-switch {
+            .form-check-input {
+                width: 46px;
+            }
+        }
+    }
+}
+
+.textarea_feilds {
+    textarea {
+        height: 5.8rem !important;
+    }
+}

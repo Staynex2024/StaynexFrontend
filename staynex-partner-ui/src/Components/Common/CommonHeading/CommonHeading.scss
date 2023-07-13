@@ -1,0 +1,24 @@
+@import '../../../Assets/theme/_mixins.scss';
+
+.common_heading {
+    margin-bottom: 2rem;
+
+    h2 {
+        font-size: 2.5rem;
+        padding-bottom: 1rem;
+        line-height: 3.5rem;
+        color: $blackclr;
+        font-weight: 500;
+    }
+
+    p {
+        font-size: 1.3rem;
+        line-height: 1;
+        color: #0E0E0B;
+        font-weight: 600;
+
+        span {
+            color: $baseclr;
+        }
+    }
+}

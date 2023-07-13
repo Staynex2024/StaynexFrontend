@@ -1,0 +1,126 @@
+@import '../../../Assets/theme/_var.scss';
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 264px;
+    transition: transform 300ms ease-in-out;
+    z-index: 1001;
+    background-color: $blackclr;
+    padding: 2.8rem 3.4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+
+    @media (max-width: 991px) {
+        padding-top: 5rem;
+        display: none;
+    }
+
+    &_inner {
+        padding-top: 10rem;
+
+        @media (max-width: 991px) {
+            padding-top: 5rem;
+        }
+
+        li {
+            margin-bottom: 1rem;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            .nav_link {
+                padding: 0 1.2rem;
+                height: 60px;
+                display: flex;
+                position: relative;
+                align-items: center;
+                font-size: 1.8rem;
+                color: $whiteclr;
+                border-radius: 0.4rem;
+
+                @media (max-width: 1439px) {
+                    font-size: 16px;
+                }
+
+                @media (max-width: 991px) {
+                    font-size: 14px;
+                    height: 50px;
+                }
+
+                &::after {
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                    width: 4px;
+                    height: 100%;
+                }
+
+                &_icon {
+                    margin-right: 1rem;
+                    line-height: normal;
+
+                    svg {
+                        path {
+                            fill: $whiteclr;
+                        }
+
+                        @media (max-width: 991px) {
+                            width: 2rem;
+                        }
+                    }
+                }
+
+                &.active,
+                &:hover {
+                    background-color: $whiteclr;
+                    color: $blackclr;
+
+                    svg {
+                        path {
+                            fill: $blackclr;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &_footerMenu {
+        .sidebar_inner {
+            padding-top: 5rem;
+        }
+    }
+}
+
+body {
+    .SideBar_Menu.offcanvas {
+        width: 264px;
+        background-color: $blackclr;
+
+        @media (max-width: 991px) {
+            .sidebar {
+                display: flex;
+            }
+        }
+    
+        .offcanvas-header {
+            position: relative;
+    
+            .btn-close {
+                position: absolute;
+                right: 20px;
+                filter: brightness(0) invert(1);
+                opacity: 1;
+                top: 20px;
+                color: $whiteclr;
+                z-index: 9991;
+            }
+        }
+    }
+}
