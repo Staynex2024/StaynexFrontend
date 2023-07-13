@@ -1,0 +1,42 @@
+@import "../../../../Assets/theme/_var.scss";
+
+.hotel_details {
+    width: 100%;
+    max-width: 100%;
+
+    &_section {
+        .tabs_section {
+            border: none;
+            margin-bottom: 2rem;
+
+            .nav-item {
+                border: none;
+                padding: 0 1rem;
+
+                .nav-link {
+                    color: #01131D;
+                    font-family: Be Vietnam Pro;
+                    font-size: 1.3rem;
+                    font-weight: 600;
+                    line-height: 1;
+                    letter-spacing: -0.117px;
+                    padding: 0.5rem 0;
+                    border: none;
+                    transition: 0.3s all ease-in-out;
+
+                    &:focus,
+                    &:hover {
+                        border: none;
+                        outline: none;
+                    }
+
+                    &.active {
+                        border: none;
+                        border-bottom: 1px solid #E55735;
+                        transition: 0.3s all ease-in-out;
+                    }
+                }
+            }
+        }
+    }
+}

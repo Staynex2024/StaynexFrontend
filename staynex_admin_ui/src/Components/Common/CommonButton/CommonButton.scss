@@ -1,0 +1,54 @@
+@import '../../../Assets/theme/_mixins.scss';
+
+.btn-style {
+    height: 45px;
+    display: flex;
+    align-items: center;
+    font-family: inherit;
+    padding: 0 25px;
+    border: 1px solid;
+    justify-content: center;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 8px;
+    background-color: $orangeclr;
+    border-color: $orangeclr;
+    transition: all ease-in-out 0.3s;
+    color: $whiteclr;
+    min-width: 150px;
+
+    &:hover {
+        background-color: $blackclr;
+        border-color: $blackclr;
+    }
+
+    &.border-btn {
+        background-color: transparent;
+        border-color: $orangeclr;
+
+        &:hover {
+            background-color: $blackclr;
+            border-color: $blackclr;
+        }
+    }
+
+    &.grey-btn {
+        background-color: $grayclr3;
+        border-color: $grayclr3;
+
+        &:hover {
+            background-color: $blackclr;
+            border-color: $blackclr;
+        }
+    }
+
+    &.bordered {
+        background-color: transparent;
+    }
+
+    .onlyIcon {}
+
+    &:hover {
+        .onlyIcon {}
+    }
+}

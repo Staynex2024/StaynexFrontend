@@ -1,0 +1,26 @@
+@import '../../../Assets/theme/_mixins.scss';
+@import "../../../Assets/theme/_var.scss";
+
+.admin_Layout {
+    &_Rightside {
+        width: calc(100% - 264px);
+        margin-left: 264px;
+
+        @media (max-width:991px) {
+            width: 100%;
+            margin-left: 0;
+        }
+    }
+
+    &_Content {
+        padding: 4rem 6rem;
+
+        @media (max-width:1499px) {
+            padding: 2.8rem 3rem;
+        }
+
+        @media (max-width:1499px) {
+            padding: 2.8rem 2rem;
+        }
+    }
+}
