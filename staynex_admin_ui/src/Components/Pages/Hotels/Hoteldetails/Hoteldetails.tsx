@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Tab, Tabs } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { seeDetails } from '../../../../Redux/Actions/user.action';
 import CommonHeading from '../../../Common/CommonHeading/CommonHeading';
 import Account from './Component/Account';
 import Passes from './Component/Passes';
@@ -8,6 +11,22 @@ import Stats from './Component/Stats';
 import './Hoteldetails.scss';
 
 const Hoteldetails = () => {
+    const dispatch: any = useDispatch()
+    const { id } = useParams()
+
+    const [data, setData] = useState([])
+
+
+    useEffect(() => {
+        const handleHotelDetails = async () => {
+            let result = await dispatch(seeDetails(id))
+            setData(result?.data)
+        }
+
+        handleHotelDetails()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [dispatch, id])
+
     return (
         <>
             <section className='hotel_details'>
@@ -21,7 +40,7 @@ const Hoteldetails = () => {
                         className="tabs_section"
                     >
                         <Tab eventKey="propertydetail" title="Property Detail">
-                            <Propertydetail />
+                            <Propertydetail data={data} />
                         </Tab>
                         <Tab eventKey="passes" title="Passes">
                             <Passes />

@@ -16,6 +16,9 @@ type propsType = {
   id?: any;
   classLabel?: any;
   classgroup?: any;
+  isSearchable?: any;
+  value?: any;
+  placeholder?: any;
 };
 
 const CustomSelect = ({
@@ -30,6 +33,8 @@ const CustomSelect = ({
   controlId,
   id,
   classLabel,
+  isSearchable,
+  placeholder,
 }: propsType) => {
   return (
     <>
@@ -53,6 +58,8 @@ const CustomSelect = ({
           classNamePrefix={"select"}
           menuIsOpen={menuIsOpen}
           name={name}
+          isSearchable={isSearchable}
+          placeholder={placeholder}
         />
       </Form.Group>
     </>

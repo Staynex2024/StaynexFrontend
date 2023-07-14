@@ -25,8 +25,8 @@ const processQueue = (error, token = null) => {
 /**AXIOS INTERCEPTOR */
 axios.interceptors.request.use(
   (config) => {
-    let walletAddress = storeInstance.getState().user.walletAddress;
-    config.headers["Authorization"] = walletAddress
+    let token = storeInstance.getState().user.token || "";
+    config.headers["Authorization"] = `Bearer ${token}`
     config.headers["Content-Type"] = "application/json";
     config.headers["Access-Control-Allow-Origin"] = "*";
     return config;

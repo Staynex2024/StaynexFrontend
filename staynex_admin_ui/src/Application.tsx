@@ -9,11 +9,11 @@ import AuthLayout from "./Components/Common/AuthLayout/AuthLayout";
 // import MainLayout from "./Components/Common/MainLayout/MainLayout";
 // import AuthLogin from "./Components/Pages/AuthLogin/AuthLogin";
 // import ForgotPassword from "./Components/Pages/ForgotPassword/ForgotPassword";
+// import ForgotPassword from "./Components/Pages/ForgotPassword/ForgotPassword";
 import Login from "./Components/Pages/Login/Login";
 import Dashboard from "./Components/Pages/Dashboard/Dashboard";
 import Hotels from "./Components/Pages/Hotels/Hotels";
 import Hoteldetails from "./Components/Pages/Hotels/Hoteldetails/Hoteldetails";
-import ForgotPassword from "./Components/Pages/ForgotPassword/ForgotPassword";
 import LoginLayout from "./Components/Common/MainLayout/LoginLayout";
 import Newproperty from "./Components/Pages/Hotels/Newproperty/Newproperty";
 
@@ -63,14 +63,6 @@ const Application: React.FC = () => {
       element: <AuthLayout />,
       errorElement: <ErrorBoundary />,
       children: [
-        // {
-        //   index: true,
-        //   element: (
-        //     <RequireAuth>
-        //       <AuthLogin />
-        //     </RequireAuth>
-        //   ),
-        // },
         {
           path: "dashboard",
           element: (
@@ -92,7 +84,7 @@ const Application: React.FC = () => {
         //   element: <AuthLogin />,
         // },
         {
-          path: "new-property",
+          path: "hotels/new-property",
           element: (
             <RequireAuth>
               <Newproperty />
@@ -100,7 +92,7 @@ const Application: React.FC = () => {
           ),
         },
         {
-          path: "hotel-details",
+          path: "hotels/hotel-details/:id",
           element: (
             <RequireAuth>
               <Hoteldetails />

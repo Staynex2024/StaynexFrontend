@@ -2,9 +2,9 @@ import Swal from "sweetalert2";
 import Web3 from "web3";
 import toaster from "../../Components/Common/Toast";
 import { CHAIN_ID, EXPLORAR_LINK, NETWORK_DECIMALS, NETWORK_NAME, NETWORK_SYMBOL, RPC_URL } from "../../Constant";
-import { apiCallPost, storeInstance } from "../../Services/axios.service";
+import { apiCallGet, apiCallPost, storeInstance } from "../../Services/axios.service";
 import { APIURL } from "../../Utils";
-import { token, walletAddress, walletType } from "../Slices/user.slice";
+import { email, token, walletAddress, walletType } from "../Slices/user.slice";
 
 /**DECLARE ETHEREUM TYPE */
 declare global {
@@ -154,6 +154,7 @@ export const loginAdmin = (data: any) => {
                     let data: any = result
                     data.token = result.token
                     await dispatch(token(data.token))
+                    await dispatch(email(data.email))
                     resolve(result);
                 })
                 .catch((error) => {
@@ -165,12 +166,56 @@ export const loginAdmin = (data: any) => {
 // Logout Function
 export const logOut = (message = true) => async (dispatch: any, getState: any) => {
     try {
-      dispatch(walletAddress(''))
-      dispatch(token(''))
-      if (message) {
-        toaster.success("Logged out successfully")
-      }
+        dispatch(walletAddress(''))
+        dispatch(token(''))
+        if (message) {
+            toaster.success("Logged out successfully")
+        }
     } catch (error: any) {
-      return toaster.error(error.message);
+        return toaster.error(error.message);
     }
-  };
+};
+
+export const getPropertyList = (currentPage?: any, limit?: any, seachData?: any, data?: any) => {
+    return (dispatch: any) =>
+        new Promise((resolve, reject) => {
+            let query: any = {}
+            if (currentPage) {
+                query.page = currentPage
+            }
+            if (limit) {
+                query.limit = limit
+            }
+            if (data) {
+                query.remittance = data
+            }
+            if (seachData) {
+                query.search = seachData
+            }
+
+            apiCallGet(APIURL.GET_ALL_PROPERTY, query, false)
+                .then(async (result) => {
+                    resolve(result);
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
+}
+
+export const seeDetails = (data: any) => {
+    return (dispatch: any) =>
+        new Promise((resolve, reject) => {
+            let query: any = {}
+            if (data) {
+                query.email = data
+            }
+            apiCallGet(APIURL.SEE_DETAILS, query, false)
+                .then(async (result) => {
+                    resolve(result);
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
+};

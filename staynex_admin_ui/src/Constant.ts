@@ -1,6 +1,8 @@
 
 export const API_HOST = "http://10.1.8.97:3002";
 
+export const PAGE_LIMIT = 10
+
 export const CHAIN_ID = "97";
 export const RPC_URL = "https://data-seed-prebsc-1-s1.binance.org:8545";
 export const NETWORK_NAME = "BSC Testnet";
