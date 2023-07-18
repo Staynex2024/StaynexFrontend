@@ -9,8 +9,12 @@ import { Form } from 'react-bootstrap';
 import Pagination from '../../Common/Pagination/Pagination';
 import { useDispatch } from 'react-redux';
 import { PAGE_LIMIT } from '../../../Constant';
-import { getPropertyList } from '../../../Redux/Actions/user.action';
+import { getPropertyList, UnListProperty } from '../../../Redux/Actions/user.action';
 import SkeletonLoading from '../../Common/SkeletonLoading/SkeletonLoading';
+import toaster from '../../Common/Toast';
+import { useDebounce } from "use-debounce";
+import emptyImg from "../../../Assets/Images/blankimg.jpeg"
+import { loader } from '../../../Redux/Slices/loader.slice';
 
 const Hotels = () => {
     /**CREATE DISPATCH OBJECT */
@@ -25,7 +29,10 @@ const Hotels = () => {
     const [propertyList, setPropertyList] = useState([]);
     const [totalPage, setTotalPage] = useState(0)
     const [propertyCount, setPropertyCount] = useState(0);
-    const [loader, setLoader] = useState(false);
+    const [seachedProperty, setSearchedProperty] = useState("");
+    const [skeletonLoader, setSkeletonLoader] = useState(false);
+    const [isUnList, setIsUnlist] = useState(false);
+    const [seachedProperty_Debounce] = useDebounce(seachedProperty, 1000)
 
     const listspno = [
         { sptitle: 'SP7', }, { sptitle: 'SP14', }, { sptitle: 'SP28', }, { sptitle: 'SP32', },
@@ -37,28 +44,55 @@ const Hotels = () => {
     };
 
     useEffect(() => {
-        setLoader(true);
+        setSkeletonLoader(true);
         //Get transferList function
         const retreivePropertyList = async () => {
             setTimeout(async () => {
-                const result = await dispatch(getPropertyList(currentPage, PAGE_LIMIT));
+                const result = await dispatch(getPropertyList(currentPage, PAGE_LIMIT, seachedProperty_Debounce));
                 setPropertyList(result?.data)
                 setPropertyCount(result?.count)
                 setTotalPage(result?.totalPages)
-                setLoader(false);
+                setSkeletonLoader(false);
             }, 1000)
         }
 
         retreivePropertyList()
         // eslint-disable-next-line
-    }, [currentPage])
+    }, [currentPage, isUnList, seachedProperty_Debounce])
 
     const handleInfo = async (item: any) => {
         const vendorEmail: string = item?.user?.email
         navigate("/auth/hotels/hotel-details/" + vendorEmail)
     }
 
-    console.log('propertList :>> ', propertyList);
+    const handleUnList = async (item: any) => {
+        dispatch(loader(true))
+        const vendorEmail: string = item?.user?.email
+        let dataToSend = {
+            email: vendorEmail
+        }
+        let result = await dispatch(UnListProperty(dataToSend))
+        if (result.statusCode === 200) {
+            toaster.success(result?.message)
+            setIsUnlist(true)
+            dispatch(loader(false))
+        } else if (result.statusCode === 400) {
+            toaster.error(result?.message)
+            setIsUnlist(false)
+            dispatch(loader(false))
+        } else {
+            setIsUnlist(false)
+            dispatch(loader(false))
+        }
+    }
+
+    //Seach function
+    const handleSearchUser = async (event?: any) => {
+        let value = event.target.value;
+        setSearchedProperty(value);
+        setcurrentPage(1)
+    };
+
     return (
         <>
             <section className='hotels'>
@@ -72,7 +106,9 @@ const Hotels = () => {
                 <div className='hotels_topform d-sm-flex align-items-center mb-4 pb-2'>
                     <div className='Common_search d-flex align-items-center'>
                         <SearchIcon />
-                        <Form.Control type="text" placeholder="Search" />
+                        <Form.Control type="text" placeholder="Search"
+                            onChange={(event: any) => handleSearchUser(event)}
+                        />
                     </div>
                     {/* <CustomSelect
                         className="hotels_Select ms-md-3"
@@ -80,22 +116,23 @@ const Hotels = () => {
                     /> */}
                 </div>
                 <div className='hotels_section'>
-                    <div className='hotels_section_cards'>
-                        {!loader ?
-                            <>
-                                {propertyList && propertyList.length ?
-                                    propertyList?.map((item: any, index: any) => {
-                                        return (
-                                            <>
+
+                    {!skeletonLoader ?
+                        <>
+                            {propertyList && propertyList.length ?
+                                propertyList?.map((item: any, index: any) => {
+                                    return (
+                                        <>
+                                            <div className='hotels_section_cards'>
                                                 <div className='top_headbtn'>
                                                     <button className='active'>LISTED <GreentickIcon /></button>
-                                                    <button >UNLIST</button>
+                                                    <button onClick={() => handleUnList(item)}>UNLIST</button>
                                                 </div>
                                                 <div className='main_containt'>
                                                     {item?.images && item?.images.length ?
                                                         <div className='main_containt_left'>
                                                             <SliderImage img={item?.images} />
-                                                        </div> : ""
+                                                        </div> : <div className='main_containt_left'> <span className='EmptyImg'><img src={emptyImg} alt="no data" /></span></div>
                                                     }
                                                     <div className='main_containt_right'>
                                                         <div className='right_textsec'>
@@ -124,25 +161,27 @@ const Hotels = () => {
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </>
-                                        )
-                                    }) : <span>No Data Found</span>}
-                            </>
-                            :
-                            <div>
-                                <SkeletonLoading field={arr} />
-                            </div>
-                        }
-                    </div>
+                                            </div >
+                                        </>
+                                    )
+                                }) : <span>No Data Found</span>}
+                        </>
+                        :
+                        <div>
+                            <SkeletonLoading field={arr} />
+                        </div>
+                    }
                 </div>
-            </section>
-            {
-                propertyList && propertyList.length && propertyCount > PAGE_LIMIT ?
-                    <>
-                        <Pagination totalPage={totalPage} currentPage={currentPage} handlePageChange={handlePageChange} />
-                    </>
-                    : ""
-            }
+            </section >
+            <div className='text-center text-md-end mt-5'>
+                {
+                    propertyList && propertyList.length && propertyCount > PAGE_LIMIT && !skeletonLoader ?
+                        <>
+                            <Pagination totalPage={totalPage} currentPage={currentPage} handlePageChange={handlePageChange} />
+                        </>
+                        : ""
+                }
+            </div>
         </>
     )
 }

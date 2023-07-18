@@ -10,6 +10,11 @@
             border: 1px solid $grayclr2;
             padding: 2rem 4rem;
             background: $whiteclr;
+            margin-bottom: 2rem;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
 
             @media (max-width:1399px) {
                 padding: 2rem 2rem;
@@ -55,6 +60,10 @@
                 align-items: center;
                 flex-wrap: wrap;
                 margin: 0 -1rem;
+
+                .Placeholder_trans {
+                    width: 50%;
+                }
 
                 &_left {
                     width: 35%;
@@ -187,6 +196,8 @@
 
                     .right_btnsec {
                         width: 50%;
+                        display: flex;
+                        justify-content: flex-end;
 
                         @media (max-width:1199px) {
                             width: 100%;

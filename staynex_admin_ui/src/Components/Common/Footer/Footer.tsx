@@ -53,7 +53,7 @@ const Footer = () => {
                 <Dropdown.Menu>
                   {countrylist.map((data, i) => {
                     return (
-                      <Dropdown.Item key={i} href="javascript:;">
+                      <Dropdown.Item key={i}>
                         <img src={data.flagicon} alt="flag" />
                         <span>{data.name}</span>
                       </Dropdown.Item>

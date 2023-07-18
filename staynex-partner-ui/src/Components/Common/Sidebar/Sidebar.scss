@@ -45,11 +45,11 @@
                 border-radius: 0.4rem;
 
                 @media (max-width: 1439px) {
-                    font-size: 16px;
+                    font-size: 1.6rem;
                 }
 
                 @media (max-width: 991px) {
-                    font-size: 14px;
+                    font-size: 1.4rem;
                     height: 50px;
                 }
 
@@ -88,6 +88,50 @@
                     }
                 }
             }
+
+            .dropdown {
+                &-toggle {
+                    padding: 0 1.2rem;
+                    height: 60px;
+                    display: flex;
+                    position: relative;
+                    align-items: center;
+                    font-size: 1.8rem;
+                    color: $whiteclr;
+                    border-radius: 0.4rem;
+
+                    &.show,
+                    &:hover {
+                        background-color: $whiteclr;
+                        color: $blackclr;
+
+                        svg {
+                            path {
+                                fill: $blackclr;
+                            }
+                        }
+                    }
+                }
+
+                &-menu {
+                    position: static !important;
+                    transform: none !important;
+                    background-color: transparent;
+                    padding-top: 1rem;
+                    padding-left: 3rem;
+
+                    a {
+                        padding: 1rem 1.2rem;
+                        font-size: 1.8rem;
+                        color: $whiteclr;
+
+                        &:hover, &.active {
+                            background-color: transparent;
+                            color: $orangeclr;
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -108,10 +152,10 @@ body {
                 display: flex;
             }
         }
-    
+
         .offcanvas-header {
             position: relative;
-    
+
             .btn-close {
                 position: absolute;
                 right: 20px;

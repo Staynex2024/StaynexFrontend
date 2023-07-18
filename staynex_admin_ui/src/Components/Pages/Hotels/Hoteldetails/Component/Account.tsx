@@ -3,13 +3,10 @@ import { Col, Form, Row } from 'react-bootstrap';
 import './Hotelindex.scss';
 import { useFormik } from 'formik';
 import * as Yup from "yup";
-import { useDispatch } from 'react-redux';
 import InputCustom from '../../../../Common/Inputs/InputCustom';
 import { EyeIcon, LockIcon, UserIcon } from '../../../../../Assets/Images/svgImgs/svgImgs';
 
 const Account = () => {
-    /**CREATE DISPATCH OBJECT */
-    const dispatch: any = useDispatch();
 
     const addnewproperty = Yup.object().shape({
         name: Yup.string().required("*This Field is required"),

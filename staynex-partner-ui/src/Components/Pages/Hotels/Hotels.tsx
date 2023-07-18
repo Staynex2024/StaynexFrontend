@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { GreentickIcon, SearchIcon } from '../../../Assets/Images/svgImgs/svgImgs';
 import CommonHeading from '../../Common/CommonHeading/CommonHeading';
 import './Hotels.scss';
-import SliderImage from './Component/SliderImage';
+import SliderImage from '../Booking/Component/SliderImage';
 import CommonButton from '../../Common/CommonButton/CommonButton';
 import { Form } from 'react-bootstrap';
 import CustomSelect from '../../Common/Select/Select';

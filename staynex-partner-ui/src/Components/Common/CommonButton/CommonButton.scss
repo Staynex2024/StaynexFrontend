@@ -17,18 +17,34 @@
     color: $whiteclr;
     min-width: 150px;
 
+    @media (max-width:767px) {
+        padding: 0 15px;
+    }
+
     &:hover {
         background-color: $blackclr;
         border-color: $blackclr;
     }
 
+    &.dark-greenbtn {
+        background-color: #18363B;
+        border-color: #18363B;
+
+        &:hover {
+            background-color: $orangeclr;
+            border-color: $orangeclr;
+        }
+    }
+
     &.border-btn {
         background-color: transparent;
-        border-color: $orangeclr;
+        border-color: $blackclr;
+        color: $blackclr;
 
         &:hover {
             background-color: $blackclr;
             border-color: $blackclr;
+            color: $whiteclr;
         }
     }
 
@@ -50,5 +66,11 @@
 
     &:hover {
         .onlyIcon {}
+    }
+
+    &.text_btn {
+        background: transparent;
+        border: none;
+        color: $blackclr;
     }
 }

@@ -9,13 +9,14 @@ type propTypes = {
     onChange?: any,
     value?: any,
     className?: string,
+    checked?: boolean,
 }
 
 const Checkbox = (props: propTypes) => {
     return (
         <>
             <Form.Group className={`${props.className} checkbox_input`} controlId={props.id}>
-                <Form.Check onChange={props.onChange} value={props.value} name={props.name} disabled={props.disabled} type="checkbox" label={props.label} />
+                <Form.Check onChange={props.onChange} value={props.value} name={props.name} disabled={props.disabled} type="checkbox" label={props.label} checked={props.checked} />
             </Form.Group>
         </>
     )

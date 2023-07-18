@@ -146,10 +146,27 @@ export const disconnectWallet = () => async (dispatch: DispatchType) => {
 };
 
 // Login Function
-export const loginAdmin = (data: any) => {
+export const loginPartner = (data: any) => {
     return (dispatch: any) =>
         new Promise((resolve, reject) => {
             apiCallPost(APIURL.LOGIN, data, {}, true)
+                .then(async (result: any) => {
+                    let data: any = result
+                    data.token = result.token
+                    await dispatch(token(data.token))
+                    resolve(result);
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
+};
+
+// Login Function
+export const signUpPartner = (data: any) => {
+    return (dispatch: any) =>
+        new Promise((resolve, reject) => {
+            apiCallPost(APIURL.CREATE_PARTNER, data, {}, true)
                 .then(async (result: any) => {
                     let data: any = result
                     data.token = result.token

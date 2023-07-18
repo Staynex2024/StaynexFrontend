@@ -1,0 +1,26 @@
+@import "../../../Assets/theme/_var.scss";
+
+.ListPagination {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+
+    li {
+        margin:0 3px 3px;
+        a {
+            border: 1px solid $orangeclr;
+            padding: 1rem 2rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+            color: $blackclr;
+
+            &:hover {
+                background-color: $orangeclr;
+                color: $whiteclr !important;
+            }
+        }
+    }
+}

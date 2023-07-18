@@ -1,69 +1,68 @@
 @import "../../../Assets/theme/_var.scss";
 
-
 // login page css
 /* Change the white to any color */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 3rem white inset !important;
+  -webkit-box-shadow: 0 0 0 3rem white inset !important;
 }
 
 .signin_page {
-    padding: 10rem 0 20rem;
+  padding: 10rem 0 20rem;
 
-    @media (max-width:767px) {
-        padding: 4rem 0;
-    }
+  @media (max-width: 767px) {
+    padding: 4rem 0;
+  }
 
-    .signin_Box {
-        border-radius: 0.6rem;
-        border: 1px solid $borderclr1;
-        background: $whiteclr;
-        padding: 3rem 2rem 5rem;
-        max-width: 40rem;
-        width: 100%;
+  .signin_Box {
+    border-radius: 0.6rem;
+    border: 1px solid $borderclr1;
+    background: $whiteclr;
+    padding: 3rem 2rem 5rem;
+    max-width: 40rem;
+    width: 100%;
 
-        .login_heading {
-            h1 {
-                color: $orangeclr;
-                text-align: center;
-                font-size: 2.7rem;
-                font-style: normal;
-                font-weight: 500;
-                line-height: normal;
-                letter-spacing: -0.729px;
-                margin-bottom: 3rem;
-            }
-            p {
-                font-size: 1.5rem;
-                font-weight: 400;
-                line-height: 2.5rem; 
-            }
-        }
-    }
-
-    .login_btn {
-        border-radius: 0.4rem;
-        background: $orangeclr;
-        display: flex;
-        height: 3.4rem;
-        padding: 1rem 2rem;
-        justify-content: center;
-        align-items: center;
-        color: $whiteclr;
-        font-size: 1.2rem;
+    .login_heading {
+      h1 {
+        color: $orangeclr;
+        text-align: center;
+        font-size: 2.7rem;
         font-style: normal;
         font-weight: 500;
         line-height: normal;
-        border: none;
-    }
-
-    .link {
-        font-size: 1.3rem;
-        font-style: normal;
+        letter-spacing: -0.729px;
+        margin-bottom: 3rem;
+      }
+      p {
+        font-size: 1.5rem;
         font-weight: 400;
-        line-height: normal;
+        line-height: 2.5rem;
+      }
     }
+  }
+
+  .login_btn {
+    border-radius: 0.4rem;
+    background: $orangeclr;
+    display: flex;
+    height: 3.4rem;
+    padding: 1rem 2rem;
+    justify-content: center;
+    align-items: center;
+    color: $whiteclr;
+    font-size: 1.2rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    border: none;
+  }
+
+  .link {
+    font-size: 1.3rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
 }

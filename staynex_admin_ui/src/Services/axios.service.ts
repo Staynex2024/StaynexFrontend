@@ -5,6 +5,7 @@ import { RESPONSES } from "../Utils";
 import { formatUrl } from "./common.service";
 import { API_HOST } from "../Constant";
 import { logoutUser } from "../Redux/Slices/user.slice";
+import { loader } from "../Redux/Slices/loader.slice";
 
 export const storeInstance = store;
 axios.defaults.baseURL = API_HOST;
@@ -89,15 +90,18 @@ function handleSuccess(res) {
 }
 
 /**METHOD FOR CALL API */
-export const apiCallPost = (url, data, params = {}, showtoaster = false) =>
+export const apiCallPost = (url, data, params = {}, showtoaster = false, showLoader = true) =>
   new Promise((resolve) => {
+    showLoader && storeInstance.dispatch(loader(true));
     axios
       .post(formatUrl(url, params), data)
       .then((res) => {
+        showLoader && storeInstance.dispatch(loader(false));
         showtoaster && handleSuccess(res);
         resolve(res.data);
       })
       .catch((error) => {
+        showLoader && storeInstance.dispatch(loader(false));
         resolve(null);
       });
   });

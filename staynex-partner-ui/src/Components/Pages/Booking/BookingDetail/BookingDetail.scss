@@ -1,0 +1,153 @@
+@import "../../../../Assets/theme/_var.scss";
+
+.Booking_Detail {
+    &_Explorer {
+        padding: 3.5rem 5rem;
+        background-image: url("../../../../Assets/Images/patter.svg");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        background-color: #EAE2DB;
+        margin: 6rem 0 2rem;
+
+        @media (max-width:1199px) {
+            margin: 3rem 0 2rem;
+            padding: 3rem 2.5rem;
+        }
+
+        @media (max-width:767px) {
+            padding: 2rem 1.5rem;
+        }
+
+        &_user {
+            .expuser_img {
+                width: 53px;
+                height: 53px;
+                object-fit: cover;
+                border-radius: 100%;
+            }
+
+            h4 {
+                font-size: 2rem;
+                font-weight: 500;
+                margin-bottom: 0.5rem;
+            }
+
+            p {
+                display: inline-flex;
+                font-size: 1.4rem;
+
+                img {
+                    margin-right: 0.5rem;
+                }
+            }
+        }
+
+        &_Progress {
+            @media (max-width:767px) {
+                margin-top: 2rem;
+            }
+
+            .progress {
+                height: 0.5rem;
+                margin: 1rem 0;
+
+                .progress-bar {
+                    background-color: $orangeclr;
+                }
+            }
+
+            .Exp_days {
+                font-size: 2rem;
+                font-weight: 500;
+                display: flex;
+                align-items: center;
+
+                @media (max-width:767px) {
+                    font-size: 1.6rem;
+                }
+
+                .Exp_no {
+                    color: #0D0E0B78;
+                }
+
+                .Exp_grey {
+                    color: #0D0E0B78;
+                    font-size: 1.4rem;
+                    margin-left: 5px;
+
+                    @media (max-width:767px) {
+                        font-size: 1.2rem;
+                    }
+                }
+            }
+
+            p {
+                font-size: 1.4rem;
+                text-transform: uppercase;
+                color: rgba(13, 14, 11, 0.47);
+            }
+        }
+    }
+
+    &_Tentresort {
+        .Exp_tent {
+            margin-bottom: 3rem;
+        }
+
+        .Exp_from_to {
+            span {
+                color: #0D0E0B78;
+                font-size: 1.4rem;
+            }
+
+            h5 {
+                font-size: 2rem;
+                font-weight: 500;
+                margin: 0.5rem 0;
+            }
+
+            p {
+                font-size: 1.4rem;
+            }
+        }
+
+        .tentresort_img {
+            width: 50%;
+            padding: 0 1rem;
+        }
+    }
+
+    &_Bookform {
+        margin-top: 3rem;
+        padding-top: 3rem;
+        border-top: 1px solid $borderclr1;
+
+        form {
+            border: 1px solid $borderclr1;
+            padding: 3rem 4rem 0;
+            border-radius: 0.6rem;
+
+            @media (max-width:1199px) {
+                padding: 2rem 2rem 0;
+            }
+        }
+
+        .EditForm {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 1rem;
+            width: 20px;
+            height: 20px;
+            align-items: center;
+            cursor: pointer;
+            margin-left: auto;
+        }
+    }
+
+    .btn-style {
+        @media (max-width:575px) {
+            width: 100%;
+        }
+    }
+}

@@ -1,0 +1,57 @@
+@import "../../../../Assets/theme/_var.scss";
+
+.Confirmbooking_Modal {
+    .modal-dialog {
+        .modal-content {
+            padding: 3rem 0rem;
+
+            .modal-body {
+
+                .main_content {
+                    .Confirm_booking_heading {
+                        svg {
+                            width: 40px;
+                            height: 40px;
+
+                            path {
+                                fill: $blackclr;
+                            }
+                        }
+
+                        h2 {
+                            color: $blackclr;
+                            font-size: 2.5rem;
+                            font-weight: 600;
+                            line-height: normal;
+                            margin: 1.5rem 0;
+                        }
+
+                        p {
+                            color: $blackclr;
+                            font-size: 1.6rem;
+                            font-weight: 400;
+                            line-height: 2.4rem;
+                        }
+                    }
+
+                    .check_out_in {
+                        span {
+                            color: rgba(13, 14, 11, 0.47);
+                            font-size: 1.6rem;
+                            font-weight: 400;
+                            display: block;
+                            margin-bottom: 0.5rem;
+                        }
+                    }
+                    .check_room {
+                        p {
+                            font-size: 1.6rem;
+                            font-weight: 400;
+                            margin-bottom: 0.5rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

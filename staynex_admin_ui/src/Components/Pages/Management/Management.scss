@@ -1,0 +1,35 @@
+@import "../../../Assets/theme/_var.scss";
+
+.management {
+    &_program {
+        margin-bottom: 2rem;
+    }
+
+    &_form {
+        border-radius: 0.6rem;
+        border: 1px solid $borderclr1;
+        padding: 3rem 4rem;
+
+        .add_fieldsbtn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            button {
+                background: transparent;
+                border: none;
+                padding: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+    }
+
+    .btn_save {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-top: 2rem;
+    }
+}

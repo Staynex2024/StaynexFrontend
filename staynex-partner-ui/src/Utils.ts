@@ -1,4 +1,5 @@
 export const APIURL: any = {
+    CREATE_PARTNER : '/createVendor',
     GETPRODUCTS: `/products`,
     LOGIN: "/login"
 }

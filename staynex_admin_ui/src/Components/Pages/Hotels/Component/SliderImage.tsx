@@ -8,7 +8,10 @@ export default function SliderImage(props: any) {
       arrows: false
     }
   )
+
+  // eslint-disable-next-line
   let slider1: any = []
+  // eslint-disable-next-line
   let slider2: any = []
 
   React.useEffect(() => {
@@ -41,7 +44,7 @@ export default function SliderImage(props: any) {
       >
         {props?.img && props?.img.map((item, index) => {
           return <div key={index}>
-            <img src={item?.imageUrl} alt="image" />
+            <img src={item?.imageUrl} alt="" />
           </div>
         })}
       </Slider>

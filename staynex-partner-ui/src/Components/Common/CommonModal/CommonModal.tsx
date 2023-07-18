@@ -1,17 +1,18 @@
 import React, { ReactNode } from "react";
 import { Modal } from "react-bootstrap";
-import closeIcon from "../../../Assets/Images/Icons/close.png";
+import closeIcon from "../../../Assets/Images/Icons/closeIcon.svg";
+import './CommonModal.scss'
 
 interface CommonModals {
-    show?: boolean;
-    handleClose?: () => void;
-    heading?: ReactNode;
-    className?: string;
-    variant?: "small" | "large";
-    children?: ReactNode;
-    backdropClassName?: string;
-    backdrop?: any;
-  }
+  show?: boolean;
+  handleClose?: () => void;
+  heading?: ReactNode;
+  className?: string;
+  variant?: "small" | "large";
+  children?: ReactNode;
+  backdropClassName?: string;
+  backdrop?: any;
+}
 const CommonModal = (props: CommonModals) => {
   return (
     <>
@@ -26,14 +27,14 @@ const CommonModal = (props: CommonModals) => {
         {props.heading && (
           <Modal.Header>
             <Modal.Title>
-              <h4>{props.heading}</h4>
-            </Modal.Title>
-            <button onClick={props.handleClose} className="modal_close_btn">
-              {/* <CrossIcon /> */}
-              <img src={closeIcon} alt="" />
-            </button>
+              <h3>{props.heading}</h3>
+            </Modal.Title>            
           </Modal.Header>
         )}
+        <button onClick={props.handleClose} className="modal_close_btn">
+              {/* <CrossIcon /> */}
+              <img src={closeIcon} alt="hello" />
+            </button>
         <Modal.Body>{props?.children}</Modal.Body>
       </Modal>
     </>

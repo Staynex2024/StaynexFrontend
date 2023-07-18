@@ -1,0 +1,161 @@
+@import "../../../../Assets/theme/_var.scss";
+
+.support_Modal {
+    .modal-dialog {
+        max-width: 84rem;
+
+        .modal-content {
+            padding: 3rem 0rem;
+
+            @media (max-width:767px) {
+                padding: 2rem 0rem 0rem;
+            }
+
+            .modal-body {
+                .main_content {
+                    .Modal_Heading {
+                        display: flex;
+                        align-items: flex-start;
+                        justify-content: space-between;
+                        padding-bottom: 1rem;
+                        margin-bottom: 1rem;
+                        border-bottom: 1px solid $borderclr1;
+
+                        &_left {
+                            h4 {
+                                color: $blackclr;
+                                font-size: 2rem;
+                                font-weight: 500;
+                                line-height: 3rem;
+                                margin-bottom: 0.4rem;
+                            }
+
+                            p {
+                                color: $blackclr;
+                                font-size: 1.6rem;
+                                font-weight: 400;
+                                line-height: 3.4rem;
+                            }
+                        }
+
+                        &_right {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+
+                            .table_Dropdown {
+                                &.dropdown {
+                                    .dropdown-toggle {
+                                        &::after {
+                                            display: none;
+                                        }
+
+                                        &.show {
+                                            svg {
+                                                path {
+                                                    fill: $orangeclr;
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    .dropdown-menu {
+                                        border-radius: 0.4rem;
+                                        background: $whiteclr;
+                                        box-shadow: 0px 40px 50px 0px rgba(0, 0, 0, 0.05);
+
+                                        a {
+                                            background-color: transparent;
+
+                                            .table_drop {
+                                                display: flex;
+                                                align-items: center;
+
+                                                svg {
+                                                    margin-right: 1rem;
+                                                    width: 13px;
+                                                    // height: 13px;
+                                                }
+                                            }
+
+                                            &:hover {
+                                                background-color: transparent;
+                                                color: $orangeclr;
+
+                                                .table_drop {
+                                                    svg {
+                                                        path {
+                                                            fill: $orangeclr;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    .details_user {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+
+                        li {
+                            width: 35%;
+
+                            .user_info {
+                                display: flex;
+                                align-items: center;
+                                justify-content: flex-start;
+
+                                h6 {
+                                    margin-left: 0.8rem;
+                                    color: #D64C24;
+                                    font-size: 1.4rem;
+                                    font-weight: 400;
+                                    line-height: 200%;
+                                    text-decoration-line: underline;
+                                }
+                            }
+
+                            &:first-child {
+                                border-right: 1px solid#B3B3B3;
+                                padding-right: 3rem;
+                            }
+
+                            &:nth-child(2) {
+                                width: 100%;
+                                padding-left: 3rem;
+                            }
+
+                            &:last-child {
+                                width: 22%;
+                            }
+
+                            p {
+                                color: #4F4F4F;
+                                font-size: 1.4rem;
+                                font-weight: 400;
+                                line-height: 200%;
+                            }
+
+                            .address {
+                                display: flex;
+                                align-items: center;
+                                justify-content: flex-start;
+
+                                button {
+                                    background: transparent;
+                                    border: none;
+                                    margin-left: 1.7rem;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

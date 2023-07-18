@@ -1,0 +1,170 @@
+@import "../../../Assets/theme/_var.scss";
+
+.settings {
+    &_section {
+        .accordion {
+            border: none;
+            background: transparent;
+
+            .accordion-item {
+                border: none;
+                background: transparent;
+                margin-bottom: 3rem;
+
+                .accordion-header {
+                    .accordion-button {
+                        background: transparent;
+                        border-bottom: 1px solid $borderclr;
+                        color: $orangeclr2;
+                        font-family: Be Vietnam Pro;
+                        font-size: 1.6rem;
+                        font-weight: 500;
+                        line-height: 1;
+                        padding: 1rem;
+
+                        &::after {
+                            content: '';
+                            border: none;
+                            width: 2rem;
+                            height: 1rem;
+                            background-image: url(../../../Assets/Images/Icons/droparrowbaseclr.svg);
+                            background-repeat: no-repeat;
+                            background-position: center;
+                            background-size: cover;
+                            transform: none;
+                            transition: 0.3s all ease-in-out;
+                        }
+
+                        &.collapsed {
+                            color: $blackclr2;
+
+                            &::after {
+                                background-image: url(../../../Assets/Images/Icons/droparrowblack.svg);
+                            }
+                        }
+
+                        &:focus {
+                            box-shadow: none;
+                        }
+                    }
+                }
+
+                .accordion-body {
+                    padding: 3rem 2rem 0;
+
+                    @media (max-width:767px) {
+                        padding: 2rem 1.5rem 0;
+                    }
+
+                    .fieldscontent {
+                        margin-bottom: 1.2rem;
+                        padding: 1rem 0;
+
+                        @media (max-width:575px) {
+                            padding: 0;
+                        }
+
+                        &_text {
+                            h6 {
+                                color: $grayclr7;
+                                font-size: 1.4rem;
+                                font-weight: 600;
+                                line-height: 1.2;
+                            }
+
+                            p {
+                                color: $grayclr7;
+                                font-size: 1.4rem;
+                                font-weight: 400;
+                                line-height: 2.5rem;
+                                margin-bottom: 1rem;
+                            }
+                        }
+
+                        &_input {
+                            width: 100%;
+                            max-width: 28rem;
+
+                            @media (max-width:575px) {
+                                max-width: 100%;
+                            }
+
+                            .customInput {
+                                margin: 0;
+                            }
+                        }
+                    }
+
+                    .security {
+                        h5 {
+                            color: $blackclr;
+                            font-size: 1.6rem;
+                            font-weight: 400;
+                            line-height: 200%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: flex-start;
+                            margin-bottom: 2rem;
+
+                            span {
+                                margin-left: 1rem;
+                                display: flex;
+                                align-items: center;
+                                justify-content: flex-start;
+                            }
+                        }
+
+                        &_listing {
+                            li {
+                                display: flex;
+                                align-items: center;
+                                justify-content: space-between;
+                                margin-bottom: 2rem;
+
+                                @media (max-width:767px) {
+                                    flex-direction: column;
+                                    align-items: flex-start;
+                                    justify-content: flex-start;
+
+                                    .btn_section {
+                                        margin-top: 1rem;
+                                    }
+                                }
+
+                                &:last-child {
+                                    margin-bottom: 0;
+                                }
+
+                                .text_sec {
+                                    h6 {
+                                        color: $grayclr7;
+                                        font-size: 1.4rem;
+                                        font-weight: 600;
+                                        line-height: 1.4;
+
+                                        .enable {
+                                            border-radius: 0.6rem;
+                                            border: 1px solid $greyclr4;
+                                            height: 3.2rem;
+                                            padding: 0.8rem;
+                                            margin-left: 1rem;
+                                            text-align: center;
+                                            margin-bottom: 0.8rem;
+                                        }
+                                    }
+
+                                    p {
+                                        color: $grayclr7;
+                                        font-size: 1.4rem;
+                                        font-weight: 400;
+                                        line-height: 2.5rem;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

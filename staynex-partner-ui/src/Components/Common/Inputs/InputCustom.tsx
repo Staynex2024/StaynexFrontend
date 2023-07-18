@@ -11,6 +11,12 @@ const InputCustom = (props) => {
       disabledCharacters.push(".");
     }
 
+    if (props.canGiveSpace) {
+      return;
+    } else if (e.keyCode === 32 || e.keyCode === 38 || e.keyCode === 40) {
+      e.preventDefault();
+    }
+
     /** RESTRICT USER TO ENTER MORE THEN MAX LENGTH IN INPUT TYPE NUBER */
     return props.type === "number"
       ? (disabledCharacters.includes(e.key) ||

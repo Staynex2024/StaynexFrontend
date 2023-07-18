@@ -11,11 +11,20 @@ import AuthLayout from "./Components/Common/AuthLayout/AuthLayout";
 // import ForgotPassword from "./Components/Pages/ForgotPassword/ForgotPassword";
 import Login from "./Components/Pages/Login/Login";
 import Dashboard from "./Components/Pages/Dashboard/Dashboard";
-import Hotels from "./Components/Pages/Hotels/Hotels";
-import Hoteldetails from "./Components/Pages/Hotels/Hoteldetails/Hoteldetails";
 import ForgotPassword from "./Components/Pages/ForgotPassword/ForgotPassword";
 import LoginLayout from "./Components/Common/MainLayout/LoginLayout";
-import Newproperty from "./Components/Pages/Hotels/Newproperty/Newproperty";
+import Newproperty from "./Components/Pages/Booking/Newproperty/Newproperty";
+import Signup from "./Components/Pages/Signup/Signup";
+import Signup2 from "./Components/Pages/Signup2/Signup2";
+import Booking from "./Components/Pages/Booking/Booking";
+import BookingDetail from "./Components/Pages/Booking/BookingDetail/BookingDetail";
+import Customers from "./Components/Pages/Customers/Customers";
+import CustomersDetail from "./Components/Pages/Customers/CustomersDetail/CustomersDetail";
+import Passes from "./Components/Pages/Management/Passes/Passes";
+import Createpass from "./Components/Pages/Management/Passes/Createpass";
+import Hoteldetails from "./Components/Pages/Management/Hoteldetails/Hoteldetails";
+import Settings from "./Components/Pages/Settings/Settings";
+import Support from "./Components/Pages/Support/Support";
 
 const Application: React.FC = () => {
 
@@ -34,20 +43,27 @@ const Application: React.FC = () => {
           ),
         },
 
-        // No need for now
-        // {
-        //   path: "forgot-password",
-        //   element: (
-        //     <WithoutAuth>
-        //       <ForgotPassword />
-        //     </WithoutAuth>
-        //   ),
-        // },
         {
-          path: "hotels",
+          path: "/signup",
           element: (
             <WithoutAuth>
-              <Hotels />
+              <Signup />
+            </WithoutAuth>
+          ),
+        },
+        {
+          path: "/signup-almost",
+          element: (
+            <WithoutAuth>
+              <Signup2 />
+            </WithoutAuth>
+          ),
+        },
+        {
+          path: "forgot-password",
+          element: (
+            <WithoutAuth>
+              <ForgotPassword />
             </WithoutAuth>
           ),
         },
@@ -80,17 +96,13 @@ const Application: React.FC = () => {
           ),
         },
         {
-          path: "hotels",
+          path: "booking",
           element: (
             <RequireAuth>
-              <Hotels />
+              <Booking />
             </RequireAuth>
           ),
         },
-        // {
-        //   path: "login",
-        //   element: <AuthLogin />,
-        // },
         {
           path: "new-property",
           element: (
@@ -100,10 +112,66 @@ const Application: React.FC = () => {
           ),
         },
         {
+          path: "booking-details",
+          element: (
+            <RequireAuth>
+              <BookingDetail />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: "customers",
+          element: (
+            <RequireAuth>
+              <Customers />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: "passes",
+          element: (
+            <RequireAuth>
+              <Passes />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: "customers-details",
+          element: (
+            <RequireAuth>
+              <CustomersDetail />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: "create-pass",
+          element: (
+            <RequireAuth>
+              <Createpass />
+            </RequireAuth>
+          ),
+        },
+        {
           path: "hotel-details",
           element: (
             <RequireAuth>
               <Hoteldetails />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: "settings",
+          element: (
+            <RequireAuth>
+              <Settings />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: "support",
+          element: (
+            <RequireAuth>
+              <Support />
             </RequireAuth>
           ),
         },

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Col, Form, Row } from 'react-bootstrap';
 import './Newproperty.scss';
 import { useFormik } from 'formik';
@@ -7,7 +7,6 @@ import { useDispatch } from 'react-redux';
 import InputCustom from '../../../Common/Inputs/InputCustom';
 import CustomSelect from '../../../Common/Select/Select';
 import TextArea from '../../../Common/FormInputs/TextArea';
-import slider1 from '../../../../Assets/Images/slider1.png';
 import { PlusIcon } from '../../../../Assets/Images/svgImgs/svgImgs';
 import Checkbox from '../../../Common/FormInputs/Checkbox';
 import PoolIcon from '../../../../Assets/Images/Icons/PoolIcon.svg';
@@ -17,15 +16,17 @@ import KitchenIcon from '../../../../Assets/Images/Icons/KitchenIcon.svg';
 import TVIcon from '../../../../Assets/Images/Icons/TVIcon.svg';
 import CommonHeading from '../../../Common/CommonHeading/CommonHeading';
 import CommonButton from '../../../Common/CommonButton/CommonButton';
+import { addProperty } from '../../../../Redux/Actions/user.action';
+import toaster from '../../../Common/Toast';
 
 const Newproperty = () => {
     /**CREATE DISPATCH OBJECT */
     const dispatch: any = useDispatch();
 
+    const [fileArray, setFileArray] = useState([]);
+
     let Country = require("country-state-city").Country;
     let State = require("country-state-city").State;
-
-    const [selectedFiles, setSelectedFiles]: any = useState([]);
 
     const addnewproperty = Yup.object().shape({
         name: Yup.string().required("*This Field is required"),
@@ -36,7 +37,7 @@ const Newproperty = () => {
         description: Yup.string().required("*This Field is required"),
         propertyType: Yup.string().required("*This Field is required"),
         bedroom: Yup.number().positive().required("*This Field is required"),
-        images: Yup.string().required("*This Field is required"),
+        // images: Yup.string().required("*This Field is required"),
         size: Yup.string().required("*This Field is required"),
         email: Yup.string()
             .email("Please enter valid email")
@@ -71,8 +72,36 @@ const Newproperty = () => {
         },
         validationSchema: addnewproperty,
         onSubmit: async (values) => {
-            // console.log('values', values)
-            // await dispatch(loginAdmin(values));
+            let dataToSend = {
+                name: values?.name,
+                country: values?.country,
+                state: values?.state,
+                address: values?.address,
+                longitude: values?.location,
+                latitude: values?.location,
+                description: values?.description,
+                type: values?.propertyType,
+                bedroom: values?.bedroom,
+                size: values?.size,
+                email: values?.email,
+                mobile_number: values?.contact,
+                outdoor_pool: values?.pool,
+                workspace: values?.workspace,
+                pet_allowed: values?.pet,
+                wifi: values?.wifi,
+                air_conditioner: values?.ac,
+                kitchen: values?.kitchen,
+                hd_tv: values?.hdtv,
+                free_washer: values?.washer,
+                images: values?.images,
+            }
+            const result = await dispatch(addProperty(dataToSend));
+            if (result?.statusCode === 201) {
+                toaster.success(result?.message)
+                formik.resetForm()
+            } else if (result?.statusCode === 400) {
+                toaster.error(result?.message)
+            }
         },
 
     });
@@ -84,12 +113,16 @@ const Newproperty = () => {
 
     // console.log('formik.values', formik.values)
 
-    const handleFileChange = (e) => {
-        const a: any = e.target.files
-        setSelectedFiles([a, ...selectedFiles]);
+    const uploadMultipleFiles = (e) => {
+        const files: any = Array.from(e.target.files);
+        const fileURLs: any = files.map((file: any) => URL.createObjectURL(file));
+        setFileArray((prevFileArray): any => [...prevFileArray, ...fileURLs]);
     };
 
-    // console.log('selectedFiles :>> ', selectedFiles);
+    const uploadFiles = (e) => {
+        e.preventDefault();
+        console.log(fileArray);
+    };
 
     return (
         <>
@@ -100,7 +133,7 @@ const Newproperty = () => {
                 <h6>Property information</h6>
                 <div className='new_property_section'>
                     <Form onSubmit={formik.handleSubmit}>
-                        <Row className='align-items-end'>
+                        <Row className=''>
                             <Col lg={4} md={6}>
                                 <InputCustom
                                     label="Name"
@@ -124,42 +157,33 @@ const Newproperty = () => {
                                 />
                             </Col>
                             <Col lg={4} md={6}>
-
-                                <label className="form-label">Country</label>
-                                <Form.Group >
-                                    <Form.Control
-                                        as="select"
-                                        defaultValue={"1"}
-                                        id="country"
-                                        onChange={(e) => { formik.handleChange(e); }}
-                                        value={formik.values.country}
-                                    >
-                                        <option value={""}>{"Select country"}</option>
-                                        {Country.getAllCountries().map((data: any, index: any) => (
-                                            <option value={data.isoCode} key={index}>
-                                                {data.name}
-                                            </option>
-                                        ))}
-                                    </Form.Control>
-                                    {formik.errors.country &&
-                                        formik.touched.country ? (
-                                        <span className="error-message">
-                                            {formik.errors.country}
-                                        </span>
-                                    ) : null}
-                                </Form.Group>
-
-
-                                {/* <CustomSelect
-                                    label="Country"
-                                    classgroup="mb-44"
-                                    options={options}
-                                    onChange={(option: any) => formik.setFieldValue("country", option.value)}
-                                    name={"currency"}
-                                    value={formik.values.country}
-                                    placeholder="Select"
-                                /> */}
-
+                                <div>
+                                    <Row className="flex-column">
+                                        <label className="form-label">Country</label>
+                                        <Form.Group className="customInput label_subText">
+                                            <Form.Control
+                                                as="select"
+                                                defaultValue={"1"}
+                                                id="country"
+                                                onChange={(e) => { formik.handleChange(e); }}
+                                                value={formik.values.country}
+                                            >
+                                                <option value={""}>{"Select country"}</option>
+                                                {Country.getAllCountries().map((data: any, index: any) => (
+                                                    <option value={data.isoCode} key={index}>
+                                                        {data.name}
+                                                    </option>
+                                                ))}
+                                            </Form.Control>
+                                            {formik.errors.country &&
+                                                formik.touched.country ? (
+                                                <span className="error-message">
+                                                    {formik.errors.country}
+                                                </span>
+                                            ) : null}
+                                        </Form.Group>
+                                    </Row>
+                                </div>
                             </Col>
                             <Col lg={4} md={6}>
 
@@ -232,47 +256,52 @@ const Newproperty = () => {
                                     }
                                 />
                             </Col>
-                            <Col lg={4} md={6}>
-                                <InputCustom
-                                    label="Location"
-                                    className="mb-44"
-                                    placeholder='Enter Longitude'
-                                    id="location"
-                                    name="location"
-                                    type="text"
-                                    onChange={formik.handleChange}
-                                    autoFocus={true}
-                                    value={formik.values.location}
-                                    error={
-                                        formik.errors.location && formik.touched.location ? (
-                                            <span
-                                            >
-                                                {formik.errors.location}
-                                            </span>
-                                        ) : null
-                                    }
-                                />
+                            <Col lg={8} md={12}>
+                                <label className='form-label'>Location</label>
+                                <Row>
+                                    <Col lg={6} md={6}>
+                                        <InputCustom
+                                            className="mb-44"
+                                            placeholder='Enter Longitude'
+                                            id="location"
+                                            name="location"
+                                            type="text"
+                                            onChange={formik.handleChange}
+                                            autoFocus={true}
+                                            value={formik.values.location}
+                                            error={
+                                                formik.errors.location && formik.touched.location ? (
+                                                    <span
+                                                    >
+                                                        {formik.errors.location}
+                                                    </span>
+                                                ) : null
+                                            }
+                                        />
+                                    </Col>
+                                    <Col lg={6} md={6}>
+                                        <InputCustom
+                                            className="mb-44"
+                                            placeholder='Enter Longitude'
+                                            id="location"
+                                            name="location"
+                                            type="text"
+                                            onChange={formik.handleChange}
+                                            autoFocus={true}
+                                            value={formik.values.location}
+                                            error={
+                                                formik.errors.location && formik.touched.location ? (
+                                                    <span
+                                                    >
+                                                        {formik.errors.location}
+                                                    </span>
+                                                ) : null
+                                            }
+                                        />
+                                    </Col>
+                                </Row>
                             </Col>
-                            <Col lg={4} md={6}>
-                                <InputCustom
-                                    className="mb-44"
-                                    placeholder='Enter Longitude'
-                                    id="location"
-                                    name="location"
-                                    type="text"
-                                    onChange={formik.handleChange}
-                                    autoFocus={true}
-                                    value={formik.values.location}
-                                    error={
-                                        formik.errors.location && formik.touched.location ? (
-                                            <span
-                                            >
-                                                {formik.errors.location}
-                                            </span>
-                                        ) : null
-                                    }
-                                />
-                            </Col>
+
                             <Col lg={12}>
                                 <TextArea
                                     label='Description'
@@ -360,14 +389,30 @@ const Newproperty = () => {
                                 <div className='upload_image'>
                                     <ul className='upload_image_listed'>
                                         <li>
-                                            <img src={slider1} alt='icons' />
-                                        </li>
-                                        <li>
-                                            <div className='image_up'>
-                                                <span><PlusIcon /></span>
-                                                <Form.Control type="file" multiple onChange={handleFileChange} className='file_up' />
+                                            {/* <img src={slider1} alt='icons' /> */}
+                                            <div className="form-group multi-preview">
+                                                {fileArray.map((url) => (
+                                                    <img src={url} alt="..." key={url} />
+                                                ))}
+
+                                                <div className='image_up'>
+                                                    <span><PlusIcon /></span>
+                                                    <Form.Control type="file" multiple onChange={uploadMultipleFiles} className='file_up' />
+                                                </div>
+
+
+                                                {/* <div className="form-group">
+                                                <input type="file" className="form-control" onChange={uploadMultipleFiles} multiple />
+                                            </div> */}
+                                                <button type="button" className="btn btn-secondary" onClick={uploadFiles}>
+                                                    Upload
+                                                </button>
                                             </div>
+
                                         </li>
+                                        {/* <li>
+                                            
+                                        </li> */}
                                     </ul>
                                 </div>
                             </Col>

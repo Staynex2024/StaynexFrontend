@@ -22,6 +22,21 @@
         border-color: $blackclr;
     }
 
+    &:disabled {
+        background-color: #18363B;
+        border-color: #18363B;
+    }
+
+    &.dark-greenbtn {
+        background-color: #18363B;
+        border-color: #18363B;
+
+        &:hover {
+            background-color: $orangeclr;
+            border-color: $orangeclr;
+        }
+    }
+
     &.border-btn {
         background-color: transparent;
         border-color: $orangeclr;

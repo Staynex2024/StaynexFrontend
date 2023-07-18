@@ -1,8 +1,13 @@
-import './Dashboard.scss'; 
+import './Dashboard.scss';
 import CommonHeading from '../../Common/CommonHeading/CommonHeading';
+import React, { useState } from 'react';
+import CommonButton from '../../Common/CommonButton/CommonButton';
+import Dashboardmodal from './Component/Dashboardmodal';
+import './Dashboard.scss';
+
 
 const Dashboard = () => {
-
+    const [show, setShow] = useState(false);
     const cardlist = [
         { label: 'Total pass sold', value: '18', }, { label: 'Total pass available', value: '45', },
         { label: 'Nights redeemed', value: '120', }, { label: 'Total properties', value: '120', },
@@ -54,11 +59,18 @@ const Dashboard = () => {
                                 <p><span className='gray_span'>0</span>/100</p>
                             </li>
                         </ul>
+                        <div className='create_btn'>
+                            <CommonButton title="Create new" className="btncreate" onClick={() => setShow(true)} />
+                        </div>
                     </div>
                 </div>
             </section>
+            <Dashboardmodal
+                show={show}
+                handleClose={() => setShow(false)}
+            />
         </>
     )
 }
 
-export default Dashboard;
+export default Dashboard

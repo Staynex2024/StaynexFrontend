@@ -12,7 +12,6 @@ import TVIcon from '../../../../../Assets/Images/Icons/TVIcon.svg';
 import './Hotelindex.scss';
 
 const Propertydetail = ({ data }: any) => {
-    console.log('data', data)
     return (
         <>
             <section className='property_detail'>
@@ -135,7 +134,7 @@ const Propertydetail = ({ data }: any) => {
                                     <InputCustom
                                         label="Bedroom (s)"
                                         className="mb-44"
-                                        placeholder='Bedroom'
+                                        placeholder='Enter Bedroom (s)'
                                         id="bedroom"
                                         name="bedroom"
                                         type="text"
@@ -147,9 +146,9 @@ const Propertydetail = ({ data }: any) => {
                                 </Col>
                                 <Col lg={4} md={6}>
                                     <InputCustom
-                                        label="Size"
+                                        label="Size (sqft)"
                                         className="mb-44"
-                                        placeholder='Size'
+                                        placeholder='Enter Size (sqft)'
                                         id="size"
                                         name="size"
                                         type="text"
@@ -175,75 +174,92 @@ const Propertydetail = ({ data }: any) => {
                                         <h6>Amenities</h6>
                                         <ul>
                                             <li>
+                                                {data?.pool &&
                                                 <Checkbox
                                                     className='check_reverse'
                                                     label={<><img src={PoolIcon} alt='Icon' /> Shared outdoor pool</>}
                                                     id='pool'
                                                     name='pool'
-                                                    // value={}
-                                                />
+                                                    value={data?.pool}
+                                                    checked={data?.pool}
+                                                />}
                                             </li>
                                             <li>
+                                                {data?.pet &&
                                                 <Checkbox
                                                     className='check_reverse'
                                                     label={<><img src={PoolIcon} alt='Icon' /> Pet allowed</>}
                                                     id='pet'
                                                     name='pet'
-                                                    // value={}
-                                                />
+                                                    value={data?.pet}
+                                                    checked={data?.pet}
+                                                />}
                                             </li>
                                             <li>
+                                                {data?.workspace &&
                                                 <Checkbox
                                                     className='check_reverse'
                                                     label={<><img src={WorkspaceIcon} alt='Icon' /> Dedicated Workspace</>}
                                                     id='workspace'
                                                     name='workspace'
-                                                    // value={formik.values.pool}
-                                                />
+                                                    value={data?.workspace}
+                                                    checked={data?.workspace}
+                                                />}
                                             </li>
                                             <li>
+                                                {data?.wifi &&
                                                 <Checkbox
                                                     className='check_reverse'
                                                     label={<><img src={WorkspaceIcon} alt='Icon' /> Wifi</>}
                                                     id='wifi'
                                                     name='wifi'
-                                                    // value={formik.values.pool}
-                                                />
+                                                    value={data?.wifi}
+                                                    checked={data?.wifi}
+                                                />}
                                             </li>
                                             <li>
+                                                {data?.ac && 
                                                 <Checkbox
                                                     className='check_reverse'
                                                     label={<><img src={ConditioningIcon} alt='Icon' /> Air conditioning</>}
                                                     id='ac'
                                                     name='ac'
-                                                    // value={formik.values.pool}
-                                                />
+                                                    value={data?.ac}
+                                                    checked={data?.ac}
+                                                />}
                                             </li>
                                             <li>
+                                                {data?.washer &&
                                                 <Checkbox
                                                     className='check_reverse'
                                                     label={<><img src={ConditioningIcon} alt='Icon' /> Free washer</>}
                                                     id='washer'
                                                     name='washer'
-                                                />
+                                                    value={data?.washer}
+                                                    checked={data?.washer}
+                                                />}
                                             </li>
                                             <li>
+                                                {data?.kitchen &&
                                                 <Checkbox
                                                     className='check_reverse'
                                                     label={<><img src={KitchenIcon} alt='Icon' /> Kitchen</>}
                                                     id='kitchen'
                                                     name='kitchen'
-                                                    // value={formik.values.pool}
-                                                />
+                                                    value={data?.kitchen}
+                                                    checked={data?.kitchen}
+                                                />}
                                             </li>
                                             <li>
+                                                {data?.hdtv &&
                                                 <Checkbox
                                                     className='check_reverse'
                                                     label={<><img src={TVIcon} alt='Icon' /> 40” HDTV</>}
                                                     id='hdtv'
                                                     name='hdtv'
-                                                    // value={formik.values.pool}
-                                                />
+                                                    value={data?.hdtv}
+                                                    checked={data?.hdtv}
+                                                />}
                                             </li>
                                         </ul>
                                     </div>

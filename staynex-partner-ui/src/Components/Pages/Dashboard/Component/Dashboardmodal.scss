@@ -1,0 +1,121 @@
+@import "../../../../Assets/theme/_var.scss";
+
+.dashboardmodal {
+    .modal-dialog {
+        .modal-content {
+            .modal-body {
+
+                .main_content {
+                    h6 {
+                        color: #E55735;
+                        font-size: 1.4rem;
+                        font-weight: 400;
+                        line-height: 1.4;
+                    }
+
+                    .select_valuesyear {
+                        display: flex;
+                        align-items: center;
+                        justify-content: flex-start;
+                        margin-top: 1.5rem;
+
+                        .select_year {
+                            margin-right: 1rem;
+
+                            &:last-child {
+                                margin-right: 0;
+                            }
+
+                            .common_select {
+                                border-radius: 0.5rem;
+                                border: 1px solid #0E0E0B;
+
+                                .select__control {
+                                    height: 4rem;
+                                    width: 11rem;
+                                    min-height: 2rem;
+
+                                    .select__indicators {
+                                        height: 4rem;
+
+                                        .select__indicator {
+                                            width: 1.5rem;
+                                            height: 0.6rem;
+                                            margin-left: 0.5rem;
+
+                                            &::after {
+                                                width: 1rem;
+                                                height: 0.5rem;
+                                            }
+                                        }
+                                    }
+
+                                    .select__value-container {
+                                        padding: 0 0.5rem;
+                                        height: 3rem;
+
+                                        .select__single-value,
+                                        .select__placeholder {
+                                            font-size: 1.4rem;
+                                            font-weight: 500;
+                                        }
+                                    }
+                                }
+
+                                .select__menu {
+                                    min-width: 6.5rem;
+
+                                    .select__menu-list {
+                                        .select__option {
+                                            font-size: 1.4rem;
+                                            font-weight: 500;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    .booking_value {
+                        display: flex;
+                        align-items: center;
+                        justify-content: flex-start;
+
+                        li {
+                            margin-right: 2rem;
+
+                            &:last-child {
+                                margin-left: 0;
+                            }
+
+                            label {
+                                color: rgba(13, 14, 11, 0.47);
+                                font-size: 1.2rem;
+                                font-weight: 500;
+                                line-height: 1.2;
+                                margin-bottom: 0.3rem;
+                            }
+
+                            p {
+                                color: #000;
+                                font-size: 1.4rem;
+                                font-weight: 400;
+                                line-height: 1.4;
+                            }
+                        }
+                    }
+
+                    .chart {
+                        text-align: center;
+                        margin-top: 1.5rem;
+                        width: 100%;
+
+                        img {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

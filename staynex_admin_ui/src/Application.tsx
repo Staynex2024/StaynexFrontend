@@ -16,6 +16,10 @@ import Hotels from "./Components/Pages/Hotels/Hotels";
 import Hoteldetails from "./Components/Pages/Hotels/Hoteldetails/Hoteldetails";
 import LoginLayout from "./Components/Common/MainLayout/LoginLayout";
 import Newproperty from "./Components/Pages/Hotels/Newproperty/Newproperty";
+import Members from "./Components/Pages/Members/Members";
+import Management from "./Components/Pages/Management/Management";
+import Settings from "./Components/Pages/Settings/Settings";
+import Createpass from "./Components/Pages/Hotels/Hoteldetails/Component/Createpass";
 
 const Application: React.FC = () => {
 
@@ -96,6 +100,38 @@ const Application: React.FC = () => {
           element: (
             <RequireAuth>
               <Hoteldetails />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: "members",
+          element: (
+            <RequireAuth>
+              <Members />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: "management",
+          element: (
+            <RequireAuth>
+              <Management />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: "settings",
+          element: (
+            <RequireAuth>
+              <Settings />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: "create-pass",
+          element: (
+            <RequireAuth>
+              <Createpass />
             </RequireAuth>
           ),
         },

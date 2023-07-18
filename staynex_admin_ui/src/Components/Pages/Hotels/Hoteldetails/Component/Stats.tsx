@@ -2,7 +2,6 @@ import React from 'react';
 import { Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import * as Yup from "yup";
-import { useDispatch } from 'react-redux';
 import CustomTable from '../../../../Common/Table/Index';
 import './Hotelindex.scss';
 import Checkbox from '../../../../Common/FormInputs/Checkbox';
@@ -67,7 +66,7 @@ const Stats = () => {
                     <ul className='statistics_card_list'>
                         {cardlist.map((data) => (
                             <li>
-                                <label>{data.label}</label>
+                                <label>{data.label}</label> 
                                 <h3>{data.value}</h3>
                             </li>
                         ))}

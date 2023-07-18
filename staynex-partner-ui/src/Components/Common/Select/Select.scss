@@ -2,7 +2,7 @@
 
 .common_select {
     border: 1px solid $borderclr1;
-    border-radius: 0.4rem;
+    border-radius: 0.5rem;
 
     .selector_item {
         display: flex;
@@ -46,6 +46,7 @@
 
         .select__value-container {
             padding-right: 0;
+            padding-left: 1rem;
         }
 
         .select__single-value {
@@ -112,7 +113,7 @@
 
                 &:hover,
                 &.select__option--is-selected {
-                    background: $grayclr3;
+                    background: $orangeclr;
                     color: $whiteclr;
                 }
 

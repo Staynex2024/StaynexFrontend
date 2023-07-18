@@ -3,6 +3,7 @@ import { Tab, Tabs } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { seeDetails } from '../../../../Redux/Actions/user.action';
+import { loader } from '../../../../Redux/Slices/loader.slice';
 import CommonHeading from '../../../Common/CommonHeading/CommonHeading';
 import Account from './Component/Account';
 import Passes from './Component/Passes';
@@ -18,9 +19,11 @@ const Hoteldetails = () => {
 
 
     useEffect(() => {
+        dispatch(loader(true))
         const handleHotelDetails = async () => {
             let result = await dispatch(seeDetails(id))
             setData(result?.data)
+            dispatch(loader(false))
         }
 
         handleHotelDetails()

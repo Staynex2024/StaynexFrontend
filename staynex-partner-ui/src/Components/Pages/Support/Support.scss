@@ -1,0 +1,19 @@
+@import "../../../Assets/theme/_var.scss";
+
+.support {
+    &_section {
+        .support_table {
+            td {
+                .table_Dropdown {
+                    .table_drop {
+                        svg {
+                            path {
+                                fill: $blackclr;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -155,3 +155,30 @@ body ::-webkit-scrollbar-thumb {
     box-shadow: none;
   }
 }
+
+.fade.modal-backdrop {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  .form-check-input {
+    width: 14px;
+    height: 14px;
+    border-color: $borderclr1;
+
+    &:checked {
+      background-color: $orangeclr;
+      border-color: $orangeclr;
+    }
+
+    &:focus {
+      box-shadow: none;
+      border-color: $orangeclr;
+    }
+  }
+}
+
+.Demo_Images {
+  height: 250px;
+}

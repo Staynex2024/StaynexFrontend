@@ -7,7 +7,7 @@
             border: 1px solid $grayclr2;
             padding: 3rem;
             width: 100%;
-            max-width:100rem;
+            max-width: 100rem;
             margin-bottom: 2rem;
 
             p {
@@ -105,6 +105,15 @@
                             }
                         }
                     }
+                }
+            }
+
+            .create_btn {
+                margin-top: 2rem;
+                width: 50%;
+
+                .btncreate {
+                    width: 100%;
                 }
             }
         }
