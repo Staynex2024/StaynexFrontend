@@ -19,13 +19,13 @@ class BiconomyHelper {
             this.isBiconomyConnected();
 
         } catch (error) {
-            console.log('error :>> ', error);
+            // console.log('error :>> ', error);
         }
     }
 
     async isBiconomyConnected() {
         return this.biconomy.onEvent(this.biconomy.ERROR, (error: any) => {
-            console.log('Biconomy is disconnected', error);
+            // console.log('Biconomy is disconnected', error);
         });
     }
 
@@ -107,11 +107,11 @@ class BiconomyHelper {
                 let result = await provider.send("eth_sendTransaction", [txParams]);
                 return result
             } catch (error) {
-                console.log("error", error);
+                // console.log("error", error);
                 return false
             }
         } catch (error) {
-            console.log("Error in catch", error);
+            // console.log("Error in catch", error);
         }
     };
 
@@ -121,7 +121,7 @@ class BiconomyHelper {
             let result = await contract.methods[method].apply(null, Array.prototype.slice.call(data));
             return result;
         } catch (error) {
-            console.log("Error in catch", error);
+            // console.log("Error in catch", error);
         }
     }
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import { Col, Row } from "react-bootstrap";
-import ButtonCommon from "../Button/ButtonCustom";
+import ButtonCommon from "../CommonButton/CommonButton";
 import CommonModal from "../CommonModal/CommonModal";
 import tick from "../../../Assets/animations/tick.json";
 import error from "../../../Assets/animations/error.json";

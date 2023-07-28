@@ -1,0 +1,197 @@
+@import '../../../../Assets/theme/_var.scss';
+
+.StaynexPasses {
+    background-color: $yellowlightclr;
+    padding: 10rem 0;
+
+    @media (max-width:767px) {
+        padding: 3rem 0;
+    }
+
+    &_data {
+        &_heading {
+            text-align: center;
+            margin-bottom: 7rem;
+
+            @media (max-width:767px) {
+                margin-bottom: 3rem;
+            }
+
+            h3 {
+                font-size: 2.2rem;
+                font-weight: 600;
+            }
+
+            p {
+                font-weight: 500;
+                width: 100%;
+                max-width: 59.4rem;
+                margin: 1.5rem auto 0;
+            }
+        }
+
+        .row {
+            >div {
+                margin-bottom: 1.6rem;
+            }
+        }
+
+        &_box {
+            padding: 1.6rem 2.1rem;
+            border: 1px solid $grayclr9;
+            border-radius: 0.6rem;
+            display: flex;
+            align-items: center;
+            height: 100%;
+
+
+            @media (max-width:575px) {
+                height: auto;
+            }
+
+            &_circle {
+                background-color: $orangeclr3;
+                border-radius: 5rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 2.5rem;
+                height: 2.5rem;
+
+                span {
+                    color: $whiteclr;
+                    font-size: 1.4rem;
+                }
+            }
+
+            p {
+                margin-left: 1.5rem;
+                font-size: 1.2rem;
+                font-weight: 700;
+                width: calc(100% - 25px);
+                max-width: 268px;
+            }
+        }
+
+        &_example {
+            margin-top: 4.9rem;
+
+            @media (max-width:767px) {
+                margin-top: 1.4rem;
+            }
+
+            h6 {
+                text-align: center;
+            }
+
+            &_list {
+                margin-top: 3rem;
+                padding: 0 15rem;
+
+                @media (max-width:1199px) {
+                    padding: 0 2rem;
+                }
+
+                @media (max-width:767px) {
+                    padding: 0 5rem;
+                }
+
+                ul {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+
+                    @media (max-width:767px) {
+                        display: block;
+                    }
+
+                    li {
+                        text-align: center;
+                        position: relative;
+
+                        @media (max-width:767px) {
+                            margin-bottom: 4rem;
+
+                            &:last-child {
+                                margin-bottom: 0;
+                            }
+                        }
+
+                        &:last-child {
+                            .icon {
+                                display: none;
+                            }
+                        }
+
+                        .icon {
+                            position: absolute;
+                            top: 11%;
+                            right: -100%;
+                            transform: translate(59%, 10px);
+
+                            @media (max-width:991px) {
+                                right: -55%;
+                            }
+
+                            @media (max-width:767px) {
+                               
+                                position: static;
+                                width: 100%;
+                                max-width: 46%;
+                                text-align: center;
+                                display: flex;
+                                justify-content: center;
+                            }
+
+                            svg {
+                                @media (max-width:767px) {
+                                    display: none;
+                                }
+                            }
+                        }
+
+                        .arrow {
+                            display: none;
+
+                            @media (max-width:767px) {
+                                display: block;
+                            }
+                        }
+
+                        .gray_circle {
+                            background-color: $greybg2;
+                            border-radius: 5rem;
+                            width: 10rem;
+                            height: 10rem;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            margin: 0 auto;
+                        }
+
+                        .list_icon {
+                            margin: 3rem 0 0.9rem 0;
+                        }
+                        .red_clr{
+                            svg{
+                                path{
+                                    fill: $redclr3;
+                                }
+                            }
+                        }
+
+                        h5 {
+                            font-size: 3.5rem;
+                            font-weight: 500;
+                        }
+
+                        p {
+                            font-size: 1.1rem;
+                            font-weight: 600;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

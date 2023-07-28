@@ -1,0 +1,77 @@
+@import "../../../Assets/theme/_var.scss";
+
+.Club_Banner {
+    &_Content {
+        max-width: 23rem;
+        margin: 0 auto;
+        padding: 5rem 2rem;
+        background-color: $blackclr;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        p {
+            color: $whiteclr;
+            margin-top: 1.5rem;
+        }
+    }
+}
+
+.Club_wallet {
+    padding: 7.5rem 0;
+
+    @media (max-width:767px) {
+        padding: 5rem 0;
+    }
+
+    &_box {
+        max-width: 38rem;
+        margin: 0 auto;
+        text-align: center;
+
+        h2 {
+            font-size: 2.7rem;
+            font-weight: 500;
+            margin-bottom: 3rem;
+
+            @media (max-width:767px) {
+                font-size: 2.3rem;
+            }
+        }
+
+        .user_wallet {
+            max-width: 30rem;
+            margin: 4rem auto;
+
+            @media (max-width:767px) {
+                margin: 3rem auto;
+            }
+
+            &_connect {
+                width: 104px;
+                height: 104px;
+                border-radius: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: #d4dadb;
+            }
+        }
+
+        .arrow_big {
+            padding: 0 1rem;
+        }
+    }
+}
+
+.Club_explorer {
+    background-color: $yellowlightclr;
+}
+.Page_heading {
+    h2 {
+        margin-bottom: 1.5rem;
+    }
+}
+.Club_faq {
+    background-color: $greybg1;   
+}

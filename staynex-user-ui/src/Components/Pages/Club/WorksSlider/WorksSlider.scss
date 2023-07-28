@@ -1,0 +1,16 @@
+@import "../../../../Assets/theme/_var.scss";
+
+.work_Slider {
+    &_box {
+        p {
+            margin-top: 0.5rem;
+            font-size: 1.4rem;
+        }
+    }
+
+    &_image {
+        img {
+            width: 100%;
+        }
+    }
+}

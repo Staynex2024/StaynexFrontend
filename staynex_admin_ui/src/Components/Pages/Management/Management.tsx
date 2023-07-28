@@ -15,7 +15,7 @@ const Management = () => {
         nights: Yup.string().required("*This Field is required"),
     });
     const formik = useFormik({
-        initialValues: {
+        initialValues: { 
             name: '',
             nights: '',
         },

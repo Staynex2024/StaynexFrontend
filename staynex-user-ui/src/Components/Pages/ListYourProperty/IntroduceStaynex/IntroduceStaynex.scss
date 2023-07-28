@@ -1,0 +1,79 @@
+@import '../../../../Assets/theme/_var.scss';
+
+.Intro_staynex {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+
+    &_colleftsec {
+        width: 35%;
+        margin: 0 auto 0;
+        padding: 5.7rem;
+        background-image: url(../../../../Assets/Images/staynex-bg.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        @media (max-width:991px) {
+            width: 100%;
+            padding: 4.5rem 1rem 5.1rem;
+        }
+
+        &_leftsec {
+            &_textsec {
+                h4 {
+                    font-size: 2.1rem;
+                    font-weight: 600;
+                    margin-bottom: 1.4rem;
+                    @media (max-width:767px) {
+                        font-size: 1.8rem;
+                    }
+                }
+
+                p {
+                    width: 100%;
+                    max-width: 37.7rem;
+                    @media (max-width:767px) {
+                        font-size: 1.3rem;
+                    }
+                }
+            }
+        }
+    }
+
+    &_colrightsec {
+        background: $blackclr;
+        position: relative;
+        padding: 5.7rem;
+        width: 65%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        @media (max-width:991px) {
+            width: 100%;
+        }
+
+        @media (max-width:767px) {
+            padding: 3.9rem 4.8rem;
+        }
+
+        .nftlist {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            // margin-bottom: 3.9rem;
+
+            li {
+                margin-right: 4rem;
+
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+}

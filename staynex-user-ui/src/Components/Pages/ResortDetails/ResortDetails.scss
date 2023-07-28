@@ -1,0 +1,340 @@
+@import "../../../Assets/theme/_var.scss";
+
+.resort_detail_page {
+    background-image: url("../../../Assets/Images/resort.jpg");
+    height: 50.9rem;
+
+    @media (max-width:575px) {
+        height: 23.9rem;
+    }
+
+    @media (max-width:467px) {
+        height: 17.8rem
+    }
+
+    .details_page {
+        padding-top: 3.9rem;
+
+        @media (max-width:467px) {
+            padding: 1.1rem;
+        }
+
+        h2 {
+            margin-bottom: 1.6rem;
+            font-size: 2.7rem;
+            font-weight: 500;
+            color: $darkblack;
+
+
+
+        }
+
+        p {
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: $black1;
+            max-width: 47.1rem;
+            width: 100%;
+        }
+
+    }
+
+}
+
+.resort {
+    .resort_img {
+        margin-top: -36rem;
+        position: relative;
+
+        @media (max-width:575px) {
+            margin-top: -5rem;
+        }
+
+        .row {
+            row-gap: 1.1rem;
+        }
+
+        .resort_pic {
+            width: 100%;
+            border-radius: 0.6rem;
+            height: 52.9rem;
+            object-fit: cover;
+
+            @media (max-width:575px) {
+                height: 30.5rem;
+            }
+
+            @media (max-width:467px) {
+                height: 17rem;
+            }
+        }
+
+        .villa_pic {
+            width: 100%;
+            border-radius: 1rem;
+            height: 25.9rem;
+            margin-bottom: 1.1rem;
+
+            @media (max-width:575px) {
+                height: 15rem;
+            }
+
+            @media (max-width:467px) {
+                height: 7.8826rem;
+            }
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    .picshow_icon {
+        display: flex;
+        position: absolute;
+        background: white;
+        border: none;
+        border-radius: 0.5rem;
+        align-items: center;
+        padding: 0.8rem;
+        right: 1.6rem;
+        bottom: 1.3rem;
+        font-size: 1.4rem;
+        font-weight: 500;
+        line-height: 1.7rem;
+        color: rgba(0, 0, 0, 1);
+        margin-left: 0.96rem;
+
+        svg {
+            margin-right: 1rem;
+        }
+    }
+
+    .destination {
+        padding: 6.5rem 0 14rem 3rem;
+
+        @media (max-width:767px) {
+            padding: 2rem 0 3rem 0rem;
+        }
+    }
+}
+
+.nazeki_villa {
+    padding: 6.8rem 0;
+    border-bottom: 1px solid rgba(112, 112, 112, 0.15);
+
+    @media (max-width:767px) {
+        padding: 2rem 0 2rem;
+    }
+
+    .nazeki_info {
+        @media (max-width:991px) {
+            padding-bottom: 2rem;
+            border-bottom: 1px solid $borderclr1;
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: $darkbg ;
+            margin-bottom: 1.3rem;
+        }
+
+        h4 {
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: $darkbg ;
+            max-width: 54.5rem;
+            width: 100%;
+            line-height: 2.5rem;
+
+            span {
+                text-decoration: underline;
+            }
+
+        }
+
+        p {
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: $darkbg ;
+            max-width: 54.5rem;
+            width: 100%;
+            margin: 2.6rem 0;
+            line-height: 2.5rem;
+
+            @media (max-width:991px) {
+                margin: 2rem 0;
+            }
+        }
+
+        .villa_info_icon {
+            display: flex;
+            align-items: center;
+
+
+            span {
+                font-size: 1.3rem;
+                font-weight: 400;
+                text-decoration: underline;
+                color: $orangeclr;
+                margin-right: 0.4rem;
+
+            }
+        }
+    }
+
+    h3 {
+        font-size: 1.6rem;
+        font-weight: 600;
+        color: $black2;
+        margin-bottom: 4rem;
+
+        @media (max-width:767px) {
+            margin-bottom: 2rem;
+        }
+    }
+
+    .room_info {
+        display: flex;
+
+        ul {
+            margin-right: 9.8rem;
+
+            @media (max-width:575px) {
+                margin-right: 4rem;
+            }
+
+            &:last-child {
+                margin-right: 0;
+            }
+
+            li {
+                margin-bottom: 1.6rem;
+                font-size: 1.5rem;
+                font-weight: 600;
+                color: $black2;
+
+                &:last-child {
+                    margin-bottom: 0;
+
+                }
+
+                p {
+                    font-size: 1.2rem;
+                    font-weight: 600;
+                    color: $darkbg;
+                    opacity: 0.5722190141677856;
+                }
+
+            }
+
+        }
+    }
+}
+
+.villa_sarvice {
+
+    padding: 8.5rem 0;
+    max-width: 65rem;
+    width: 100%;
+
+    @media (max-width:767px) {
+        padding: 2rem 0;
+    }
+
+
+
+    ul {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 -1rem;
+
+        li {
+            padding: 1.6rem 1rem;
+            width: 33.333333%;
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: $black2;
+            letter-spacing: -0.0117rem;
+            align-items: center;
+
+            @media (max-width:767px) {
+                width: 50%;
+            }
+
+            @media (max-width:575px) {
+                font-size: 1.2rem;
+                padding: 0.5rem;
+            }
+
+
+            &:last-child {
+                margin-bottom: 0;
+
+            }
+
+            img {
+                width: 2.4rem;
+                height: 2.4rem;
+                margin-right: 1rem;
+            }
+
+
+
+        }
+    }
+}
+
+.map_sec { 
+    width: 100%;
+    background: rgba(247, 246, 245, 1);
+    margin: 8.8rem 0 0;
+
+    @media (max-width:767px) {
+        margin-top: 0;
+    }
+
+    .map_content {
+        justify-content: center;
+        flex-direction: column;
+        display: flex;
+        max-width: 30rem;
+        margin: 0 auto;
+        text-align: left;
+        padding: 2rem;
+
+        p {
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: -0.009rem;
+            color: rgba(13, 14, 11, 0.47);
+            ;
+        }
+
+        h2 {
+            font-size: 1.7rem;
+            font-weight: 600;
+            letter-spacing: -0.0135rem;
+            color: $blackclr2;
+            margin: 1rem 0;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 400;
+            letter-spacing: -0.0117rem;
+            color: rgba(13, 14, 11, 0.47);
+        }
+
+    }
+
+    .map_pic {
+
+
+        img {
+            width: 100%;
+        }
+    }
+}

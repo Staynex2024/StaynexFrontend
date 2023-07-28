@@ -1,6 +1,5 @@
 import React, { ReactNode, useState } from 'react';
 import { Table } from 'react-bootstrap';
-import { NoRecord, SortIcon } from '../../../Assets/Images/Icons/SvgIcons';
 import './Index.scss';
 
 const CustomTable = ({ className, fields, sortbuttons, children, noRecordFound }: { className?: string, fields?: string[], sortbuttons?: boolean, children?: ReactNode, noRecordFound?: ReactNode }) => {
@@ -14,7 +13,7 @@ const CustomTable = ({ className, fields, sortbuttons, children, noRecordFound }
                         <th key={item}>
                             <div className="d-flex align-items-center">
                                 {item}
-                                {sortbuttons && <span onClick={() => setActive(!active)} className={`sort_icon ${active ? 'up_active' : 'down_active'}`}><SortIcon /></span>}
+                                {sortbuttons && <span onClick={() => setActive(!active)} className={`sort_icon ${active ? 'up_active' : 'down_active'}`}></span>}
                             </div>
                         </th>
                     ))}
@@ -28,7 +27,7 @@ const CustomTable = ({ className, fields, sortbuttons, children, noRecordFound }
                         <td colSpan={fields?.length}>
                             {noRecordFound || (
                                 <div className='no_record_box'>
-                                    <NoRecord />
+                                    {/* <NoRecord /> */}
                                     <h4>No Record Found</h4>
                                 </div>
                             )}

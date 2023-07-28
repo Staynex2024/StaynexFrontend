@@ -182,3 +182,51 @@ body {
 .Demo_Images {
   height: 250px;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.Border_Tabs {
+  @media (max-width:767px) {
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      height: 0rem;
+    }
+  }
+
+  &.nav {
+    .nav-item {
+      margin-right: 1rem;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      .nav-link {
+        border-radius: 0;
+        border: 0;
+        border-bottom: 1px solid transparent;
+        background: $whiteclr;
+        display: flex;
+        padding: 0.8rem 1.5rem;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.3rem;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+        color: $blackclr;
+
+        &.active {
+          border-color: $orangeclr;
+          color: $blackclr;
+        }
+      }
+    }
+  }
+}

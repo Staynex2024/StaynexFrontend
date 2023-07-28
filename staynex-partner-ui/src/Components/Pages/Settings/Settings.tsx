@@ -3,7 +3,6 @@ import { Accordion, Col, Form, Row } from 'react-bootstrap';
 import CommonHeading from '../../Common/CommonHeading/CommonHeading';
 import { useFormik } from 'formik';
 import * as Yup from "yup";
-import { useDispatch } from 'react-redux';
 import './Settings.scss';
 import InputCustom from '../../Common/Inputs/InputCustom';
 import Switch from '../../Common/FormInputs/Switch';
@@ -11,8 +10,7 @@ import CommonButton from '../../Common/CommonButton/CommonButton';
 import { SecureIcon } from '../../../Assets/Images/svgImgs/svgImgs';
 
 const Settings = () => {
-    /**CREATE DISPATCH OBJECT */
-    const dispatch: any = useDispatch();
+
     const addnewproperty = Yup.object().shape({
         instlink: Yup.string().required("*This Field is required"),
         facebooklink: Yup.string().required("*This Field is required"),
@@ -26,7 +24,6 @@ const Settings = () => {
         },
         validationSchema: addnewproperty,
         onSubmit: async (values) => {
-            // console.log('values', values)
             // await dispatch(loginAdmin(values));
         },
     });

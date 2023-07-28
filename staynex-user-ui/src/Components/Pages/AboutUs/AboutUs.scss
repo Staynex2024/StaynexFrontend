@@ -1,0 +1,269 @@
+@import '../../../Assets/theme/_var.scss';
+
+.aboutus {
+    .aboutus_banner_sec {
+        background-color: $blackclr;
+
+        video {
+            width: 100%;
+            height: calc(100vh - 78px);
+            object-fit: cover;
+            display: block;
+
+            @media (max-width:767px) {
+                height: 220px;
+            }
+        }
+    }
+
+    .aboutus_platform_sec {
+
+        .row {
+            @media (max-width:575px) {
+                flex-direction: column-reverse;
+            }
+        }
+
+        .plateform_column {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: url('../../../Assets/Images/plateform-bg.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+
+        }
+
+        .platform_content {
+            padding: 4rem 0 0 9.3rem;
+
+            @media (max-width:991px) {
+                padding: 4.6rem 0;
+                width: 100%;
+            }
+
+            h1 {
+                font-size: 3rem;
+                margin-bottom: 1.5rem;
+
+                @media (max-width:991px) {
+                    font-size: 1.8rem;
+                }
+            }
+
+            p {
+                font-size: 1.8rem;
+
+                @media (max-width:991px) {
+                    font-size: 1.3rem;
+                }
+            }
+
+            .platform_presskit {
+                margin-top: 6.5rem;
+
+                @media (max-width:991px) {
+                    padding-left: 1rem;
+                }
+
+                p {
+                    font-size: 1.2rem;
+                    font-weight: 600;
+
+                    @media (max-width:991px) {
+                        padding-left: 0;
+                    }
+                }
+
+                .platform_btns {
+                    display: flex;
+                    align-items: center;
+                    margin-top: 0.5rem;
+
+                    .btn-style {
+                        text-align: left;
+                        color: $whiteclr;
+                        font-size: 1.2rem;
+                        padding: 0 1rem;
+
+                        svg {
+                            margin-right: 0.8rem;
+                        }
+                        
+                    }
+
+                    .twitter_btn {
+                        background: transparent;
+                        border: none;
+                        color: $blackclr;
+
+                        svg {
+                            fill: $blackclr;
+
+                        }
+                    }
+                }
+            }
+        }
+
+        // .platform_col{
+
+        // }
+        .paltform_img {
+            width: 100%;
+            height: 100%;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: top;
+
+                @media (min-width:1700px) {
+                    height: 40vw;
+                }
+            }
+        }
+    }
+}
+
+/*partner_sec css*/
+.partner_sec {
+    padding: 11.6rem 0;
+    background-image: url("../../../Assets/Images/Global-banner-img.jpg");
+    position: relative;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    @media (max-width:767px) {
+        padding: 5.6rem 0 3.8rem;
+    }
+
+    .partner_area {
+
+        .partner_head {
+            text-align: center;
+            color: $whiteclr;
+
+            h2 {
+                margin-bottom: 2rem;
+            }
+
+            p {
+                font-size: 1.8rem;
+                line-height: 33px;
+                width: 100%;
+                max-width: 67.5rem;
+                margin: 3rem auto 0;
+
+                @media (max-width:767px) {
+                    margin: 2rem auto 0;
+                }
+            }
+        }
+
+        .partner_box {
+            margin-top: 5.6rem;
+
+            @media (max-width:767px) {
+                margin-top: 2rem;
+            }
+
+            .row {
+                row-gap: 2rem;
+            }
+
+            .partner_card {
+                background-color: $redopacity;
+                border-radius: 0.9rem;
+                padding: 2rem 2.7rem;
+                text-align: center;
+
+                p {
+                    font-size: 1.2rem;
+                    color: $whiteclr;
+                    width: 100%;
+                    max-width: 194px;
+                    margin: 0 auto;
+                }
+            }
+        }
+    }
+}
+
+
+
+/*ImagineNft_sec css*/
+.nft_sec {
+    padding: 12.5rem 0;
+    background-color: $orangeclr3;
+
+    @media (max-width:767px) {
+        padding: 5rem 0;
+    }
+
+    .nft_deatil {
+        color: $whiteclr;
+
+        h2 {
+            font-size: 2.5rem;
+        }
+
+        .card_row {
+            margin-top: 3rem;
+            row-gap: 4rem;
+            // margin-left: -4rem;
+            // margin-right: -4rem;
+
+            // .col {
+            //     padding-left: 4rem;
+            //     padding-right: 4rem;
+            // }
+
+            .Card_Box_img {
+                img {
+                    width: 100%;
+                }
+
+                .card_content {
+                    margin-top: 2.1rem;
+
+                    p {
+                        margin-top: 2.1rem;
+                        font-size: 1.2rem;
+                        width: 100%;
+                        max-width: 340px;
+
+                        @media (max-width:767px) {
+                            max-width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*resort css*/
+
+.resort_sec {
+    background-color: $blackclr;
+
+    .plateform_column {
+        // background-color: $blackclr;
+        background: none;
+
+        .platform_content {
+            padding-left: 0;
+            color: $whiteclr;
+
+            p {
+                width: 100%;
+                max-width: 28.9rem;
+                margin-bottom: 2rem;
+                font-size: 1.5rem;
+            }
+        }
+    }
+}
+

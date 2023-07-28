@@ -1,0 +1,47 @@
+@import "../../../../Assets/theme/_var.scss";
+
+.CenterCard_Slider {
+    max-width: 62rem;
+    margin: 0 auto;
+
+    .slick-slider {
+        .slick-list {
+            .slick-track {
+                display: flex;
+                align-items: center;
+
+                .slick-slide {
+                    float: none;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    height: 250px;
+                    padding: 0 1rem;
+
+                    @media (max-width:575px) {
+                        height: 220px;
+                    }
+
+                    .Card_passimg {
+                        img {
+                            width: 80%;
+                            margin: 0 auto;
+                            transition: all ease-in-out 0.3s;
+                        }
+                    }
+
+                    &.slick-center {
+                        .Card_passimg {
+                            img {
+                                width: 100%;
+                                margin: 0 auto;
+                                transition: all ease-in-out 0.3s;
+                                transform: scale(1.4);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

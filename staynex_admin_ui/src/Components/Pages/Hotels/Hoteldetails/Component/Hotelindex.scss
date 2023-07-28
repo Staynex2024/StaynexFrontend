@@ -352,8 +352,30 @@
 }
 
 .create_pass {
+    width: 100%;
+    max-width: 71.5rem;
+
     &_section {
         .pass_form {
+            @media (max-width:767px) {
+                margin-bottom: 2.5rem;
+            }
+
+            .pass_name {
+                color: $orangeclr2;
+                font-size: 2rem;
+                font-weight: 600;
+                line-height: 1.4;
+                letter-spacing: -0.18px;
+                margin-bottom: 1rem;
+                display: flex;
+                align-items: center;
+
+                span {
+                    margin-left: 1rem;
+                }
+            }
+
             .spaceline {
                 margin: 1rem 0;
                 height: 0.1rem;
@@ -361,6 +383,34 @@
                 border: none;
                 background: $borderclr1;
             }
+
+            .add_fieldsbtn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                button {
+                    background: transparent;
+                    border: none;
+                    padding: 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+
+        }
+
+        .createpass_btns {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 3rem;
+
+            .confirm_btn {
+                margin-left: 1rem;
+            }
+
         }
     }
 }

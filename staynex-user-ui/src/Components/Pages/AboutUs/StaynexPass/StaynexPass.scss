@@ -1,0 +1,117 @@
+@import '../../../../Assets/theme/_var.scss';
+
+.Staynex_Pass {
+    padding-top: 7.9rem;
+    
+
+    @media (max-width:767px) {
+        padding-top: 5rem;
+    }
+
+    // padding-bottom: 8.5rem;
+    .staycard_img {
+        width: 400px;
+
+        @media (max-width:991px) {
+            width: 100%;
+        }
+
+        &_box {
+            display: flex;
+            align-items: flex-end;
+
+            @media (max-width:991px) {
+                justify-content: center;
+            }
+
+            .card_img1 {
+                position: relative;
+                top: 115px;
+                left: 15px;
+                z-index: 9999;
+
+                @media (max-width:991px) {
+                    top: 110px;
+                }
+                @media (max-width:767px) {
+                    top: 67px;
+                    left: 11px;
+                    width: 120px;
+                }
+            }
+
+            .card_img2 {
+                position: relative;
+                top: 20px;
+                left: -20px;
+
+                @media (max-width:991px) {
+                    top: 12px;
+                }
+
+                @media (max-width:767px) {
+                    top: 12px;
+                    left: -11px;
+                    width: 150px;
+                }
+            }
+        }
+    }
+
+    .staynex_data {
+        width: calc(100% - 400px);
+        padding-left: 3rem;
+        padding-right: 1rem;
+
+        @media (max-width:991px) {
+            width: 100%;
+            padding-left: 1rem;            
+        }
+
+        &_box {
+            padding-bottom: 1rem;
+
+            .staynex_head {
+                margin-bottom: 2.5rem;
+
+                h3 {
+                    font-size: 2.4rem;
+                    font-weight: 600;
+
+                    @media (max-width:575px) {
+                        text-align: center;
+                    }
+                }
+            }
+
+            .staynex_box {
+                margin-bottom: 2rem;
+
+                @media (max-width:575px) {
+                    text-align: center;
+                }
+
+                h6 {
+                    margin-top: 1.7rem;
+                    font-size: 1.6rem;
+                    font-weight: 700;
+                }
+
+                p {
+                    margin-top: 1.7rem;
+                    font-size: 1.3rem;
+                    width: 100%;
+                    max-width: 33.9rem;
+
+                    @media (max-width:991px) {
+                        max-width: 100%;
+                    }
+
+                    @media (max-width:575px) {
+                        margin: 1rem auto 0;
+                    }
+                }
+            }
+        }
+    }
+}

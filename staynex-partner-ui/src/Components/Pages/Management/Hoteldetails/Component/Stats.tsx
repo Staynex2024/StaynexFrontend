@@ -23,7 +23,6 @@ const Stats = () => {
         },
         validationSchema: addnewproperty,
         onSubmit: async (values) => {
-            // console.log('values', values)
             // await dispatch(loginAdmin(values));
         },
 

@@ -11,6 +11,7 @@ type propTypes = {
     value?: any,
     error?: any,
     className?: any,
+    maxLength?: any,
 }
 
 const TextArea = (props: propTypes) => {
@@ -19,7 +20,7 @@ const TextArea = (props: propTypes) => {
             <Form.Group className={`customInput ${props.className}`} controlId={props.id}>
                 {props.label && <Form.Label>{props.label}</Form.Label>}
                 <div className="customInput_inner">
-                    <Form.Control placeholder={props.placeholder} name={props.name} as="textarea" rows={props.rows || 3} onChange={props.onChange} value={props.value} />
+                    <Form.Control placeholder={props.placeholder} name={props.name} as="textarea" rows={props.rows || 3} onChange={props.onChange} value={props.value} maxLength={props.maxLength} />
                 </div>
                 <p className="error_Msg">{props.error}</p>
             </Form.Group>

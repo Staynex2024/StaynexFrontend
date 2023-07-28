@@ -22,11 +22,17 @@
   }
 
   &_search {
+    width: 100%;
+
+    label {
+      font-weight: 600;
+    }
+
     .form-control {
       border-radius: 15px;
       border: 1px solid $borderclr;
-      background-color: $lightgreyclr;
-      color: $greyclr4;
+      background-color: $greybg3;
+      color: $blackclr;
       font-size: 1.4rem;
       font-weight: 500;
       margin-left: 3rem;
@@ -38,6 +44,10 @@
         margin-left: 1rem;
       }
 
+      &::placeholder {
+        color: $greyclr4;
+      }
+        
       &:focus {
         box-shadow: none;
         border: 1px solid $borderclr;

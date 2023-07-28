@@ -1,36 +1,36 @@
-import React from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { RequireAuth } from "./Routes/Guard/AuthGuard";
-import { WithoutAuth } from "./Routes/Guard/NoGuard";
-import { ErrorBoundary } from "./Components/Common/ErrorBoundary/Errorboundary";
-import Loader from "./Components/Common/Loader";
-import ErrorPage from "./Components/Pages/ErrorPage/ErrorPage";
-import AuthLayout from "./Components/Common/AuthLayout/AuthLayout";
+import React from 'react'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { RequireAuth } from './Routes/Guard/AuthGuard'
+import { WithoutAuth } from './Routes/Guard/NoGuard'
+import { ErrorBoundary } from './Components/Common/ErrorBoundary/Errorboundary'
+import Loader from './Components/Common/Loader'
+import ErrorPage from './Components/Pages/ErrorPage/ErrorPage'
+import AuthLayout from './Components/Common/AuthLayout/AuthLayout'
 // import MainLayout from "./Components/Common/MainLayout/MainLayout";
 // import AuthLogin from "./Components/Pages/AuthLogin/AuthLogin";
 // import ForgotPassword from "./Components/Pages/ForgotPassword/ForgotPassword";
 // import ForgotPassword from "./Components/Pages/ForgotPassword/ForgotPassword";
-import Login from "./Components/Pages/Login/Login";
-import Dashboard from "./Components/Pages/Dashboard/Dashboard";
-import Hotels from "./Components/Pages/Hotels/Hotels";
-import Hoteldetails from "./Components/Pages/Hotels/Hoteldetails/Hoteldetails";
-import LoginLayout from "./Components/Common/MainLayout/LoginLayout";
-import Newproperty from "./Components/Pages/Hotels/Newproperty/Newproperty";
-import Members from "./Components/Pages/Members/Members";
-import Management from "./Components/Pages/Management/Management";
-import Settings from "./Components/Pages/Settings/Settings";
-import Createpass from "./Components/Pages/Hotels/Hoteldetails/Component/Createpass";
+import Login from './Components/Pages/Login/Login'
+import Dashboard from './Components/Pages/Dashboard/Dashboard'
+import Hotels from './Components/Pages/Hotels/Hotels'
+import Hoteldetails from './Components/Pages/Hotels/Hoteldetails/Hoteldetails'
+import LoginLayout from './Components/Common/MainLayout/LoginLayout'
+import Newproperty from './Components/Pages/Hotels/Newproperty/Newproperty'
+import Members from './Components/Pages/Members/Members'
+import Management from './Components/Pages/Management/Management'
+import Settings from './Components/Pages/Settings/Settings'
+import Createpass from './Components/Pages/Hotels/Hoteldetails/Component/Createpass'
+import Approvals from './Components/Pages/Dashboard/Component/Approvals'
 
 const Application: React.FC = () => {
-
   const router = createBrowserRouter([
     {
-      path: "/",
+      path: '/',
       element: <LoginLayout />,
       errorElement: <ErrorBoundary />,
       children: [
         {
-          path: "/",
+          path: '/',
           element: (
             <WithoutAuth>
               <Login />
@@ -48,7 +48,7 @@ const Application: React.FC = () => {
         //   ),
         // },
         {
-          path: "hotels",
+          path: 'hotels',
           element: (
             <WithoutAuth>
               <Hotels />
@@ -56,19 +56,19 @@ const Application: React.FC = () => {
           ),
         },
         {
-          path: "*",
+          path: '*',
           element: <ErrorPage />,
         },
       ],
     },
 
     {
-      path: "/auth",
+      path: '/auth',
       element: <AuthLayout />,
       errorElement: <ErrorBoundary />,
       children: [
         {
-          path: "dashboard",
+          path: 'dashboard',
           element: (
             <RequireAuth>
               <Dashboard />
@@ -76,7 +76,7 @@ const Application: React.FC = () => {
           ),
         },
         {
-          path: "hotels",
+          path: 'hotels',
           element: (
             <RequireAuth>
               <Hotels />
@@ -88,7 +88,7 @@ const Application: React.FC = () => {
         //   element: <AuthLogin />,
         // },
         {
-          path: "hotels/new-property",
+          path: 'hotels/new-property',
           element: (
             <RequireAuth>
               <Newproperty />
@@ -96,7 +96,7 @@ const Application: React.FC = () => {
           ),
         },
         {
-          path: "hotels/hotel-details/:id",
+          path: 'hotel-details/:id',
           element: (
             <RequireAuth>
               <Hoteldetails />
@@ -104,7 +104,15 @@ const Application: React.FC = () => {
           ),
         },
         {
-          path: "members",
+          path: 'members',
+          element: (
+            <RequireAuth>
+              <Approvals />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: 'customers',
           element: (
             <RequireAuth>
               <Members />
@@ -112,15 +120,15 @@ const Application: React.FC = () => {
           ),
         },
         {
-          path: "management",
+          path: 'management',
           element: (
             <RequireAuth>
-              <Management />
+              <Management /> 
             </RequireAuth>
           ),
         },
         {
-          path: "settings",
+          path: 'settings',
           element: (
             <RequireAuth>
               <Settings />
@@ -128,22 +136,30 @@ const Application: React.FC = () => {
           ),
         },
         {
-          path: "create-pass",
+          path: 'create-pass',
           element: (
             <RequireAuth>
               <Createpass />
             </RequireAuth>
           ),
         },
+        // {
+        //   path: 'approvals',
+        //   element: (
+        //     <RequireAuth>
+        //       <Approvals />
+        //     </RequireAuth>
+        //   ),
+        // },
       ],
     },
-  ]);
+  ])
 
   return (
     <>
       <RouterProvider router={router} fallbackElement={<Loader />} />
     </>
-  );
-};
+  )
+}
 
-export default Application;
+export default Application

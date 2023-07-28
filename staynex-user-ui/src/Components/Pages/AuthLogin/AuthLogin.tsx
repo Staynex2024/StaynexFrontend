@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import { Container } from "react-bootstrap";
 import * as Yup from "yup";
-import ButtonCustom from "../../Common/Button/ButtonCustom";
+import ButtonCustom from "../../Common/CommonButton/CommonButton";
 import CommonHeading from "../../Common/CommonHeading/CommonHeading";
 import InputCustom from "../../Common/Inputs/InputCustom";
 import "./AuthLogin.scss";
@@ -17,7 +17,7 @@ const AuthLogin = () => {
     },
     validationSchema: loginSchema,
     onSubmit: async (values) => {
-      console.log(values);
+      // console.log(values);
     },
   });
   return (

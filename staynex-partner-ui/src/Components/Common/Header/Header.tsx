@@ -1,69 +1,62 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import headerLogo from "../../../Assets/Images/logo.svg";
-import {
-  Col,
-  Container,
-  Dropdown,
-  Form,
-  Offcanvas,
-  Row,
-} from "react-bootstrap";
-import "./Header.scss";
-import { useDispatch, useSelector } from "react-redux";
-import UserImg from "../../../Assets/Images/userimg.png";
-import { NotificationIcon } from "../../../Assets/Images/svgImgs/svgImgs";
-import closeicon from "../../../Assets/Images/Cancel.svg";
-import Sidebar from "../Sidebar/Sidebar";
-import menuToggle from "../../../Assets/Images/Icons/menu-toggle.svg";
-import { logOut } from "../../../Redux/Actions/user.action";
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import headerLogo from '../../../Assets/Images/logo.svg'
+import { Col, Container, Dropdown, Form, Offcanvas, Row } from 'react-bootstrap'
+import './Header.scss'
+import { useDispatch, useSelector } from 'react-redux'
+import UserImg from '../../../Assets/Images/userimg.png'
+import { NotificationIcon } from '../../../Assets/Images/svgImgs/svgImgs'
+import closeicon from '../../../Assets/Images/Cancel.svg'
+import Sidebar from '../Sidebar/Sidebar'
+import menuToggle from '../../../Assets/Images/Icons/menu-toggle.svg'
+import { logOut } from '../../../Redux/Actions/user.action'
 
 const Header = () => {
-  const dispatch: any = useDispatch();
-  const navigate: any = useNavigate();
-  const isLogin = useSelector((state: any) => state.user.token);
-  const userData = useSelector((state: any) => state.user?.userDetails);
+  const dispatch: any = useDispatch()
+  const navigate: any = useNavigate()
+  const isLogin = useSelector((state: any) => state.user.token)
+  const userData = useSelector((state: any) => state.user?.userDetails)
   const settingdata = [
     {
       name: userData?.name,
     },
     {
-      name: "User Profile",
+      name: 'User Profile',
     },
     {
-      name: "Add Properties",
+      name: 'Add Properties',
     },
     {
-      name: "Logout",
+      name: 'Logout',
     },
-  ];
+  ]
   const countrylist = [
     {
-      name: "India",
+      name: 'India',
     },
     {
-      name: "USA",
+      name: 'USA',
     },
     {
-      name: "UK",
+      name: 'UK',
     },
-  ];
-  const [show, setShow] = useState(false);
+  ]
+  const [show, setShow] = useState(false)
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false)
+  const handleShow = () => setShow(true)
 
   // Logut Function
   const handleLogout = async () => {
-    await dispatch(logOut());
-  };
+    await dispatch(logOut())
+  }
 
   const handleNavigation = () => {
-    navigate("/auth/hotels/new-property");
-  };
+    navigate('/auth/new-property')
+  }
   return (
     <>
-      {isLogin === "" ? (
+      {!isLogin ? (
         <header className="login-header">
           <Container>
             <Row>
@@ -72,8 +65,10 @@ const Header = () => {
                   <img src={headerLogo} alt="Logo" />
                 </Link>
               </Col>
-              <Col xs={6} className='text-end'>
-                <Link to="/" className='admin_link'>Partner Portal</Link>
+              <Col xs={6} className="text-end">
+                <Link to="/" className="admin_link">
+                  Partner Portal
+                </Link>
               </Col>
             </Row>
           </Container>
@@ -102,10 +97,10 @@ const Header = () => {
                     <Dropdown.Menu>
                       {countrylist.map((data, i) => {
                         return (
-                          <Dropdown.Item key={i} href="javascript:;">
+                          <Dropdown.Item key={i}>
                             <div className="Notification_List d-flex">
                               <p>
-                                Jessica P. made a new booking at Mohini Resort{" "}
+                                Jessica P. made a new booking at Mohini Resort{' '}
                                 <small>a min ago</small>
                               </p>
                               <span className="close_info">
@@ -113,7 +108,7 @@ const Header = () => {
                               </span>
                             </div>
                           </Dropdown.Item>
-                        );
+                        )
                       })}
                     </Dropdown.Menu>
                   </Dropdown>
@@ -124,26 +119,26 @@ const Header = () => {
                     <Dropdown.Menu>
                       {countrylist.map((data, i) => {
                         return (
-                          <Dropdown.Item key={i} href="javascript:;">
+                          <Dropdown.Item key={i}>
                             <span>{data.name}</span>
                           </Dropdown.Item>
-                        );
+                        )
                       })}
                     </Dropdown.Menu>
                   </Dropdown>
                   <Dropdown align="end" className="Setting_Dropdown">
                     <Dropdown.Toggle variant="" id="dropdown-basic">
-                      <img src={UserImg} alt="flag" />{" "}
+                      <img src={UserImg} alt="flag" />{' '}
                       <span>Hello, {userData.name}</span>
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                       {settingdata.map((data, i) => {
-                        return data?.name === "Logout" ? (
+                        return data?.name === 'Logout' ? (
                           <Dropdown.Item key={i} onClick={handleLogout}>
-                            {" "}
+                            {' '}
                             <span>{data.name}</span>
                           </Dropdown.Item>
-                        ) : data?.name === "Add Properties" ? (
+                        ) : data?.name === 'Add Properties' ? (
                           <Dropdown.Item key={i} onClick={handleNavigation}>
                             <span>{data.name}</span>
                           </Dropdown.Item>
@@ -151,7 +146,7 @@ const Header = () => {
                           <Dropdown.Item key={i}>
                             <span>{data.name}</span>
                           </Dropdown.Item>
-                        );
+                        )
                       })}
                     </Dropdown.Menu>
                   </Dropdown>
@@ -168,7 +163,7 @@ const Header = () => {
         </Offcanvas.Body>
       </Offcanvas>
     </>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

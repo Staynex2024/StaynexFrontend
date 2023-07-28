@@ -1,5 +1,7 @@
 export const APIURL: any = {
-    GETPRODUCTS: `/products`
+    GETPRODUCTS: `/products`,
+    LOGIN: "/login",
+    PROPERTY_ADD_REQUEST: '/addVendorRequest'
 }
 
 export const RESPONSES: any = {

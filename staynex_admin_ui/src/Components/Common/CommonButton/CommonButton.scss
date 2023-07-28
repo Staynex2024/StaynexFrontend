@@ -61,6 +61,18 @@
         background-color: transparent;
     }
 
+    &.border-black-btn {
+        background-color: transparent;
+        border-color: $blackclr2;
+        color: $blackclr2;
+
+        &:hover {
+            background-color: $blackclr2;
+            border-color: $blackclr2;
+            color: $whiteclr;
+        }
+    }
+
     .onlyIcon {}
 
     &:hover {

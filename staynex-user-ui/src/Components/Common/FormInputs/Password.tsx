@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Form } from "react-bootstrap";
-import { CloseEye, EyeIcon } from "../../../Assets/Images/Icons/SvgIcons";
 import { allowOnlyString } from "../../../Services/common.service";
+import { EyeIcon } from "../../../Assets/Images/svgImgs/svgImgs";
+// import { CloseEye, EyeIcon } from "../../../Assets/Images/Icons/SvgIcons";
 
 /** CUSTOM COMMON INPUT FIELD WITH DYNAMIC PROPS */
 const Password = (props) => {
@@ -9,7 +10,7 @@ const Password = (props) => {
     /** RESTRICT USER TO ENTER e, E, +, -, . IN INPUT TYPE NUBER */
     const disabledCharacters = ["e", "E", "+", "-"];
     const onKeyDown = (e) => {
-        if (props.disableDecimal) {
+        if (props.disableDecimal) { 
             disabledCharacters.push(".");
         }
 
@@ -56,7 +57,7 @@ const Password = (props) => {
                     />
                     {props.children}
                     <span onClick={() => setActive(!active)} className="eyeIcon">
-                        {active ? <EyeIcon /> : <CloseEye />}
+                        {active ? <EyeIcon /> : ""}
                     </span>
                 </div>
                 {props.error}

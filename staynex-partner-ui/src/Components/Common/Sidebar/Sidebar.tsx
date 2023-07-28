@@ -1,15 +1,14 @@
 import React from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import "./Sidebar.scss";
 import headerLogo from "../../../Assets/Images/white-logo.svg"
-import { BookingIcon, DashboardIcon, HomeIcon, LogoutIcon, LoyaltyIcon, ManageIcon, ManageSearchIcon, SettingIcon, SupportIcon, UserbigIcon } from "../../../Assets/Images/svgImgs/svgImgs";
+import { BookingIcon, DashboardIcon, LogoutIcon, LoyaltyIcon, ManageIcon, SettingIcon, SupportIcon } from "../../../Assets/Images/svgImgs/svgImgs";
 import { Dropdown } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { logOut } from "../../../Redux/Actions/user.action";
 
 const Sidebar = ({ handleSidebar }: { handleSidebar?: () => void }) => {
   const dispatch: any = useDispatch();
-  const navigate: any = useNavigate();
 
   const NavfooterLinks = [
     {

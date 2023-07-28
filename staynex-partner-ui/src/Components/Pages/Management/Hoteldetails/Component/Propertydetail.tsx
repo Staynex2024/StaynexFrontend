@@ -1,5 +1,5 @@
 import React from 'react';
-import Newproperty from '../../../Booking/Newproperty/Newproperty';
+import Newproperty from '../Newproperty/Newproperty';
 import './Hotelindex.scss';
 
 const Propertydetail = () => {

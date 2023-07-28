@@ -58,9 +58,9 @@ axios.interceptors.response.use(
 )
 /**HANDLE AXIOS ERROR */
 function manageErrorConnection(err) {
-  if (err.response && err.response.status >= 400 && err.response.status <= 500) {
-    toaster.error(err.response.data.msg);
-    if (err.response.status === 401) {
+  if (err.response && err.data.statusCode >= 400 && err.response.status <= 500) {
+    toaster.error(err.data.message);
+    if (err.data.statusCode === 401) {
       setTimeout(function () { store.dispatch(logoutUser()) }, 1000);
     }
     return Promise.reject(err)
@@ -73,12 +73,18 @@ function manageErrorConnection(err) {
   }
 }
 
-/**HANDLE AXIOS SUCCESS */
+// /**HANDLE AXIOS SUCCESS */
 function handleSuccess(res) {
-  if (res.status === RESPONSES.SUCCESS || res.status === RESPONSES.CREATED)
+  if (res.data.statusCode === RESPONSES.SUCCESS || res.data.statusCode === RESPONSES.CREATED)
     res?.data?.message && toaster.success(res.data.message);
+  else if (res.data.statusCode === RESPONSES.BADREQUEST) {
+    res.data?.message && toaster.error(res.data.message);
+  }
+  else if (res.data.statusCode === RESPONSES.UN_AUTHORIZED) {
+    res.data?.message && toaster.error(res.data.message);
+  }
   else {
-    res?.data?.message && toaster.info(res.data.message);
+    res?.data?.message && toaster.error(res.data.message);
   }
 }
 

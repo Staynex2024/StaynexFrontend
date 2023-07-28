@@ -92,7 +92,6 @@ const Login = () => {
                 name="password"
                 onChange={formik.handleChange}
                 icon={<LockIcon />}
-                // icontwo={<EyeIcon />}
                 className="input_with_icon password_Input"
                 classIcontwo="input_Eyeicon"
                 autoFocus={true}

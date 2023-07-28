@@ -1,33 +1,33 @@
-import { Form } from "react-bootstrap";
-import { allowOnlyString } from "../../../Services/common.service";
-import "./InputCustom.scss";
+import { Form } from 'react-bootstrap'
+import { allowOnlyString } from '../../../Services/common.service'
+import './InputCustom.scss'
 
 /** CUSTOM COMMON INPUT FIELD WITH DYNAMIC PROPS */
-const InputCustom = (props) => {
+const InputCustom = (props: any) => {
   /** RESTRICT USER TO ENTER e, E, +, -, . IN INPUT TYPE NUBER */
-  const disabledCharacters = ["e", "E", "+", "-"];
-  const onKeyDown = (e) => {
+  const disabledCharacters = ['e', 'E', '+', '-']
+  const onKeyDown = (e:any) => {
     if (props.disableDecimal) {
-      disabledCharacters.push(".");
+      disabledCharacters.push('.')
     }
 
     if (props.canGiveSpace) {
-      return;
+      return
     } else if (e.keyCode === 32 || e.keyCode === 38 || e.keyCode === 40) {
-      e.preventDefault();
+      e.preventDefault()
     }
 
     /** RESTRICT USER TO ENTER MORE THEN MAX LENGTH IN INPUT TYPE NUBER */
-    return props.type === "number"
+    return props.type === 'number'
       ? (disabledCharacters.includes(e.key) ||
-        (e.key !== "Backspace" &&
-          props.maxlength &&
-          e.target.value.length === props.maxlength)) &&
-      e.preventDefault()
+          (e.key !== 'Backspace' &&
+            props.maxlength &&
+            e.target.value.length === props.maxlength)) &&
+          e.preventDefault()
       : props.onlyChar
-        ? !allowOnlyString(e.key) && e.preventDefault()
-        : null;
-  };
+      ? !allowOnlyString(e.key) && e.preventDefault()
+      : null
+  }
 
   return (
     <>
@@ -40,7 +40,7 @@ const InputCustom = (props) => {
             {props.label}
           </Form.Label>
         ) : (
-          ""
+          ''
         )}
         <div className="customInput_inner">
           {props.icon ? (
@@ -48,7 +48,7 @@ const InputCustom = (props) => {
               {props.icon}
             </span>
           ) : (
-            ""
+            ''
           )}
           <Form.Control
             disabled={props.disabled}
@@ -60,7 +60,7 @@ const InputCustom = (props) => {
             placeholder={props.placeholder}
             onBlur={props.onBlur}
             onChange={props.onChange}
-            maxLength={props.maxLength ? props.maxLength : ""}
+            maxLength={props.maxLength ? props.maxLength : ''}
             required={props.required}
             min={props.min}
             max={props.max}
@@ -70,9 +70,9 @@ const InputCustom = (props) => {
             }
             onWheel={props.onWheel}
             step={props.step}
-            autoComplete={props.onlyChar ? props.autoComplete : "off"}
+            autoComplete={props.onlyChar ? props.autoComplete : 'off'}
             pattern="\S(.*\S)?"
-            title={props.title ? props.title : "Blank space are not allowed"}
+            title={props.title ? props.title : 'Blank space are not allowed'}
             onInvalid={props.onInvalid}
             onInput={props.onInput}
             className={props.inputtext}
@@ -83,7 +83,7 @@ const InputCustom = (props) => {
               {props.icontwo}
             </span>
           ) : (
-            ""
+            ''
           )}
           {props.children}
         </div>
@@ -93,10 +93,10 @@ const InputCustom = (props) => {
             {props.smallText}
           </Form.Text>
         ) : (
-          ""
+          ''
         )}
       </Form.Group>
     </>
-  );
-};
-export default InputCustom;
+  )
+}
+export default InputCustom

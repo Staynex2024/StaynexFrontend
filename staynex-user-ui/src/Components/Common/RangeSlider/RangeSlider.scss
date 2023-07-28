@@ -1,0 +1,42 @@
+@import "../../../Assets/theme/_var.scss";
+
+.multi-range-slider {
+    box-shadow: none;
+    border: 0;
+
+    .ruler {
+        display: none;
+    }
+
+    .bar-left,
+    .bar-right {
+        background-color: $blackclr;
+        border-radius: 0;
+        box-shadow: none;
+        padding: 1px 0px;
+    }
+
+    .bar-inner {
+        background-color: $orangeclr;
+        border: solid 1px $orangeclr;
+    }
+
+    .thumb {
+        &::before {
+            background-color: $whiteclr;
+            width: 24px;
+            height: 24px;
+            border: solid 1px #707070;
+            margin: -12px -12px;
+            box-shadow: none;
+        }
+
+        .caption * {
+            min-width: 30px;
+            height: 30px;
+            background-color:$orangeclr;
+            color: $whiteclr;
+            box-shadow: none;
+        }
+    }
+}

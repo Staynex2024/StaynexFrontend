@@ -1,0 +1,36 @@
+@import '../../../../Assets/theme/_var.scss';
+
+.membership_sec {
+    background-color: $blackclr;
+    padding: 3rem 0 3rem 23rem;
+
+    @media (max-width:991px) {
+        padding: 3rem 0 3rem 15rem;
+    }
+    @media (max-width:575px) {
+        padding: 2rem;
+    }
+
+    &_logo {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        img {
+            width: 6rem;
+            height: 7rem;
+        }
+
+        p {
+            font-size: 1.4rem;
+            font-weight: 600;
+            letter-spacing: -0.126px;
+            color: $whiteclr;
+            margin-left: 3.2rem;
+
+            @media (max-width:575px) {
+                font-size: 0.84rem;
+            }
+        }
+    }
+}

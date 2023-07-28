@@ -9,12 +9,14 @@ type propTypes = {
     onChange?: any,
     value?: any
     className?: string,
+    labelleft?: any,
 }
 
 const Switch = (props: propTypes) => {
     return (
         <>
             <Form.Group className={`${props.className} checkbox_input`} controlId={props.id}>
+                {props.labelleft && <Form.Label className='label_left'>{props.labelleft}</Form.Label>}
                 <Form.Check
                     className='form-check'
                     disabled={props.disabled}

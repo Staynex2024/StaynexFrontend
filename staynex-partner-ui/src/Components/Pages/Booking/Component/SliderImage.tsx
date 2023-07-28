@@ -12,7 +12,10 @@ export default function SliderImage() {
       arrows: false
     }
   )
+
+  // eslint-disable-next-line
   let slider1: any = []
+  // eslint-disable-next-line
   let slider2: any = []
 
   React.useEffect(() => {

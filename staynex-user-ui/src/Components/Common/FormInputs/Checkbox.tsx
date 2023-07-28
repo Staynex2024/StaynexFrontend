@@ -4,7 +4,7 @@ import { Form } from 'react-bootstrap'
 type propTypes = {
     label?: string | ReactNode,
     id?: string,
-    name: string,
+    name?: string,
     disabled?: boolean,
     onChange?: any,
     value?: any,

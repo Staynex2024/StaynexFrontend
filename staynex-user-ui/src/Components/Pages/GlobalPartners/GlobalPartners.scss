@@ -1,0 +1,48 @@
+@import '../../../Assets/theme/_var.scss';
+
+.global_sec {
+    .global_partnership {
+        background-image: url('../../../Assets/Images/Global-banner-img.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        padding: 11.5rem 0;
+        position: relative;
+        z-index: 1;
+
+        @media (max-width:767px) {
+            padding: 11rem 3.5rem;
+        }
+
+        &::after {
+            background-color: $blackclr;
+            opacity: 0.7;
+            content: "";
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            z-index: -1;
+            top: 0;
+            left: 0;
+        }
+
+        .global_text {
+            text-align: center;
+            color: $whiteclr;
+
+            h2 {
+                font-size: 2.8rem;
+                font-weight: 500;
+                margin-bottom: 1rem;
+            }
+
+            p {
+                width: 100%;
+                max-width: 29.1rem;
+                margin: 0 auto 1rem;
+            }
+        }
+    }
+}
+
+
+

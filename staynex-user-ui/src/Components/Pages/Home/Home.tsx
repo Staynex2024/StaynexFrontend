@@ -1,33 +1,25 @@
-import { useState, useEffect } from "react";
-import { Col } from "react-bootstrap";
-import { useTranslation } from "react-i18next";
-import Decentralized from "./Decenterlized/Decentralized";
-import Shimmer from "../../Common/Shimmer/Shimmer";
+import React from 'react'
+import "./Home.scss"
+import Destinations from './Component/Destinations/Destinations'
+import Arsenalnft from './Component/Arsenalnft/Arsenalnft'
+import Eventandstuff from './Component/Eventandstuff/Eventandstuff'
+import FavoriteDestinations from './Component/FavoriteDestinations/FavoriteDestinations'
+import Topsection from './Component/Topsection/Topsection'
 
 const Home = () => {
-  const { t } = useTranslation();
 
-  const [isShown, setIsShown] = useState(false);
-  useEffect(() => {
-    setTimeout(() => {
-      setIsShown(true);
-    }, 3000);
-  }, []);
+    return (
+        <>
+            <div className='Home_page'>
+                <Topsection />
+                <Destinations />
+                <FavoriteDestinations />
+                <Arsenalnft />
+                <Eventandstuff />
+            </div>
+        </>
+    )
+}
 
-  return (
-    <div className="App">
-      <div className="app-body">
-        <Col md="6" className="mb-4">
-          {isShown ? (
-            <h2>{t("home.slogan")}</h2>
-          ) : (
-            <Shimmer fluid height={38} />
-          )}
-        </Col>
-        <Decentralized />
-      </div>
-    </div>
-  );
-};
+export default Home
 
-export default Home;

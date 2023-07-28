@@ -1,9 +1,9 @@
-import React, { ReactNode } from "react";
-import "./Select.scss";
-import Select from "react-select";
-import { Form } from "react-bootstrap";
+import React, { ReactNode } from 'react'
+import './Select.scss'
+import Select from 'react-select'
+import { Form } from 'react-bootstrap'
 
-type valueType = { value: string | number; label: string | ReactNode };
+type valueType = { value: string | number; label: string | ReactNode }
 type propsType = {
   defaultValue?: valueType;
   onChange?: any;
@@ -16,6 +16,8 @@ type propsType = {
   id?: any;
   classLabel?: any;
   classgroup?: any;
+  placeholder?: any;
+  isSearchable?: any;
 };
 
 const CustomSelect = ({
@@ -30,33 +32,33 @@ const CustomSelect = ({
   controlId,
   id,
   classLabel,
+  placeholder,
+  isSearchable,
 }: propsType) => {
   return (
     <>
-
-      <Form.Group
-        className={`customInput ${classgroup}`}
-        controlId={controlId}
-      >
+      <Form.Group className={`customInput ${classgroup}`} controlId={controlId}>
         {label ? (
           <Form.Label htmlFor={id} className={classLabel}>
             {label}
           </Form.Label>
         ) : (
-          ""
+          ''
         )}
         <Select
           defaultValue={defaultValue}
           onChange={onChange}
           options={options}
           className={`common_select ${className}`}
-          classNamePrefix={"select"}
+          classNamePrefix={'select'}
           menuIsOpen={menuIsOpen}
           name={name}
+          placeholder={placeholder}
+          isSearchable={isSearchable}
         />
       </Form.Group>
     </>
-  );
-};
+  )
+}
 
-export default CustomSelect; 
+export default CustomSelect

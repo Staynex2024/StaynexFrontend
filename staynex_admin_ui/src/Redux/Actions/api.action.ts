@@ -1,5 +1,4 @@
 import { apiCallPost, apiCallGet } from "../../Services/axios.service";
-import { APIURL } from "../../Utils";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 import { loader } from "../Slices/loader.slice";
@@ -13,7 +12,7 @@ export const callApiGetMethod = (method: string, parms: any = {}, loading = true
             if (loading) dispatch(loader(true));
 
             /**CALL METHOD */
-            apiCallGet(APIURL[method], parms, showtoaster)
+            apiCallGet(method, parms, showtoaster)
                 .then((result) => {
                     if (loading) dispatch(loader(false));
                     resolve(result);
@@ -34,7 +33,7 @@ export const callApiPostMethod = (method: string, data: any = {}, parms: any = {
             dispatch(loader(true));
 
             /**CALL METHOD */
-            apiCallPost(APIURL[method], data, parms, showtoaster)
+            apiCallPost(method, data, parms, showtoaster)
                 .then((result) => {
                     dispatch(loader(false));
                     resolve(result);

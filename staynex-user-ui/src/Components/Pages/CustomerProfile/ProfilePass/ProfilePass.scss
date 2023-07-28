@@ -1,0 +1,135 @@
+@import "../../../../Assets/theme/_var.scss";
+
+.Booking_Detail_Explorer {
+    padding: 3.5rem 5rem;
+    background-image: url("../../../../Assets/Images/patter-white.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-color: #EAE2DB;
+
+    @media (max-width:1199px) {
+        padding: 3rem 2.5rem;
+    }
+
+    @media (max-width:767px) {
+        padding: 2rem 1.5rem;
+    }
+
+    &_user {
+        .expuser_img {
+            width: 53px;
+            height: 53px;
+            object-fit: cover;
+            border-radius: 100%;
+        }
+
+        h4 {
+            font-size: 2rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            display: inline-flex;
+            font-size: 1.4rem;
+
+            img {
+                margin-right: 0.5rem;
+            }
+        }
+    }
+
+    &_Progress {
+        @media (max-width:767px) {
+            margin-top: 2rem;
+        }
+
+        .progress {
+            height: 0.5rem;
+            margin: 1rem 0;
+            background-color: $lightbronclr;
+
+            .progress-bar {
+                background-color: $orangeclr;
+            }
+        }
+
+        .Exp_days {
+            font-size: 2rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+
+            @media (max-width:767px) {
+                font-size: 1.6rem;
+            }
+
+            .Exp_no {
+                color: #0D0E0B78;
+            }
+
+            .Exp_grey {
+                color: #0D0E0B78;
+                font-size: 1.4rem;
+                margin-left: 5px;
+
+                @media (max-width:767px) {
+                    font-size: 1.2rem;
+                }
+            }
+        }
+
+        p {
+            font-size: 1.4rem;
+            text-transform: uppercase;
+            color: rgba(13, 14, 11, 0.47);
+        }
+    }
+}
+
+.Profile_Pass {
+    &_tabs {
+        background-color: $greybg1;
+        padding: 2rem 0;
+
+        .Border_Tabs.nav {
+            .nav-item {
+                margin-right: 5rem;
+
+                &:last-child {
+                    margin-right: 0;
+                }
+
+                .nav-link {
+                    background-color: transparent;
+                    padding: 0;
+                    padding-bottom: 1rem;
+                }
+            }
+        }
+    }
+}
+
+.empty_msg {
+    max-width: 27rem;
+    margin: 0 auto;
+    padding: 16rem 0;
+
+    @media (max-width:991px) {
+        padding: 8rem 0;
+    }
+
+    @media (max-width:991px) {
+        padding: 5rem 0;
+    }
+
+    h2 {
+        margin: 1.8rem 0;
+    }
+
+    .empty_btn {
+        margin: 0 auto;
+        margin-top: 1.8rem;
+    }
+}

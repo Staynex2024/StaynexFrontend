@@ -242,18 +242,18 @@ export const seeDetails = (data: any) => {
 }
 
 // unlist property
-export const UnListProperty = (data: any) => {
-    return (dispatch: any) =>
-        new Promise((resolve, reject) => {
-            apiCallPost(APIURL.UNLIST_PROPERTY, data, {}, false, true)
-                .then(async (result) => {
-                    resolve(result);
-                })
-                .catch((error) => {
-                    reject(error);
-                });
-        });
-};
+// export const UnListProperty = (data: any) => {
+//     return (dispatch: any) =>
+//         new Promise((resolve, reject) => {
+//             apiCallPost(APIURL.UNLIST_PROPERTY, data, {}, false, true)
+//                 .then(async (result) => {
+//                     resolve(result);
+//                 })
+//                 .catch((error) => {
+//                     reject(error);
+//                 });
+//         });
+// };
 
 // add property
 export const addProperty = (data: any) => {
@@ -271,15 +271,15 @@ export const addProperty = (data: any) => {
  
 
 // Reset passowrd Function
-export const resetPassword = (data: any) => {
-  return (dispatch: any) =>
-    new Promise((resolve, reject) => {
-      apiCallPost(APIURL.RESET_PASSWORD, data, {}, true, true)
-        .then(async (result) => {
-          resolve(result)
-        })
-        .catch((error) => {
-          reject(error)
-        })
-    })
-}
+// export const resetPassword = (data: any) => {
+//   return (dispatch: any) =>
+//     new Promise((resolve, reject) => {
+//       apiCallPost(APIURL.RESET_PASSWORD, data, {}, true, true)
+//         .then(async (result) => {
+//           resolve(result)
+//         })
+//         .catch((error) => {
+//           reject(error)
+//         })
+//     })
+// }

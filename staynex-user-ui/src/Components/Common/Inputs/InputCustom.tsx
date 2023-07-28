@@ -14,13 +14,13 @@ const InputCustom = (props) => {
     /** RESTRICT USER TO ENTER MORE THEN MAX LENGTH IN INPUT TYPE NUBER */
     return props.type === "number"
       ? (disabledCharacters.includes(e.key) ||
-          (e.key !== "Backspace" &&
-            props.maxlength &&
-            e.target.value.length === props.maxlength)) &&
-          e.preventDefault()
+        (e.key !== "Backspace" &&
+          props.maxlength &&
+          e.target.value.length === props.maxlength)) &&
+      e.preventDefault()
       : props.onlyChar
-      ? !allowOnlyString(e.key) && e.preventDefault()
-      : null;
+        ? !allowOnlyString(e.key) && e.preventDefault()
+        : null;
   };
 
   return (
@@ -37,6 +37,13 @@ const InputCustom = (props) => {
           ""
         )}
         <div className="customInput_inner">
+          {props.icon ? (
+            <span className={`input_Icon ${props.classIcon}`}>
+              {props.icon}
+            </span>
+          ) : (
+            ""
+          )}
           <Form.Control
             disabled={props.disabled}
             type={props.type}
@@ -65,9 +72,16 @@ const InputCustom = (props) => {
             className={props.inputtext}
             readOnly={props.readOnly}
           />
+          {props.icontwo ? (
+            <span className={`input_Icontwo ${props.classIcontwo}`}>
+              {props.icontwo}
+            </span>
+          ) : (
+            ""
+          )}
           {props.children}
         </div>
-        {props.error}
+        <p className="error_Msg">{props.error}</p>
         {props.smallText ? (
           <Form.Text id="" muted className="small-text-form">
             {props.smallText}

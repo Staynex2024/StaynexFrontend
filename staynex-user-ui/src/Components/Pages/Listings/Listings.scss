@@ -1,0 +1,185 @@
+@import "../../../Assets/theme/_var.scss";
+
+.Listings {
+    &_Banner {
+        background-color: $lightbrownclr;
+        padding: 3rem 0;
+        background-image: url("../../../Assets/Images/pattnr_bg.svg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        .common_heading {
+            &.text_size {
+                h2 {
+                    margin-bottom: 0.5rem;
+                }
+            }
+        }
+    }
+
+    &_Filter {
+        padding: 4rem 0;
+
+        &_Btns {
+            .filter_toggle {
+                cursor: pointer;
+            }
+
+            .filter_Dropdown {
+                .dropdown-toggle {
+                    border-radius: 5px;
+                    border: 1px solid $blackclr;
+                    background: $whiteclr;
+                    padding: 0.8rem 1.3rem;
+                    transition: all ease-in-out 0.3s;
+                    display: flex;
+                    align-items: center;
+                    font-size: 1.4rem;
+
+                    svg {
+                        width: 1.4rem;
+                        height: 1.4rem;
+                        margin-left: 0.5rem;
+                    }
+
+                    &::after {
+                        display: none;
+                    }
+
+                    &:hover {
+                        background-color: $blackclr;
+                        color: $whiteclr;
+
+                        svg {
+                            path {
+                                fill: $whiteclr;
+                            }
+                        }
+                    }
+                }
+
+                .dropdown-menu {
+                    // width: 100%;
+                }
+            }
+        }
+
+        .listing_filter_box {
+            border-radius: 6px;
+            border: 1px solid $borderclr1;
+            background: $whiteclr;
+
+            @media (max-width:1199px) {
+                position: fixed;
+                top: 0;
+                z-index: 9999;
+                left: -320px;
+                width: 320px;
+                height: 100vh;
+                overflow-y: auto;
+                transition: all ease-in-out 0.3s;
+            }
+
+            .listing_filter_centerbox {
+                padding: 3rem 1.5rem;
+                @media (max-width:1199px) {
+                    padding: 3rem 1.5rem 8.5rem
+                }
+            }
+
+            h2 {
+                margin-top: 1.5rem;
+                margin-bottom: 0.6rem;
+            }
+
+            &_Inner {
+                padding-top: 2rem;
+                margin-top: 2rem;
+                border-top: 1px solid $borderclr1;
+
+                h5 {
+                    margin-bottom: 1.5rem;
+                    color: $blackclr2;
+                }
+
+                .checkbox_input {
+                    margin-bottom: 1rem;
+
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                }
+
+                .customInput {
+                    margin-bottom: 0;
+
+                    .form-control {
+                        border-color: $blackclr;
+                        height: 3.8rem;
+                        padding: 0.5rem 1rem;
+                        font-size: 1.2rem;
+
+                        &::placeholder {
+                            color: $blackclr;
+                        }
+                    }
+                }
+            }
+        }
+
+        &.openFilter {
+            .listing_filter_box {
+                @media (max-width:1199px) {
+                    position: fixed;
+                    left: 0;
+                }
+
+                .Flietr_mobile_header {
+                    position: relative;
+                    padding: 1rem 1.5rem;
+                    border-bottom: 1px solid $borderclr1;
+
+                    .Close_filter_btn {
+                        position: absolute;
+                        left: 1.5rem;
+                        top: 0.5rem;
+                    }
+                }
+
+                .Flietr_mobile_footer {
+                    position: fixed;
+                    bottom: 0;
+                    width: 320px;
+                    background-color: $whiteclr;
+                    padding: 1rem 1.5rem;
+                    border-top: 1px solid $borderclr1;
+
+                    .btn-style {
+                        font-size: 1.4rem;
+                        height: 4rem;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.common_search {
+    .form-control {
+        border-radius: 3.2rem;
+        border: 1.3px solid $borderclr4;
+        background: $whiteclr;
+        box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.16);
+        height: 50px;
+        padding: 1rem 2rem;
+        font-size: 1.4rem;
+        font-weight: 600;
+        line-height: normal;
+        color: $blackclr;
+
+        &:focus {
+            border-color: $borderclr3;
+        }
+    }
+}

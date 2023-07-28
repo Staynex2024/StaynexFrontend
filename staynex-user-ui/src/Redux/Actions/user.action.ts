@@ -2,8 +2,9 @@ import Swal from "sweetalert2";
 import Web3 from "web3";
 import toaster from "../../Components/Common/Toast";
 import { CHAIN_ID, EXPLORAR_LINK, NETWORK_DECIMALS, NETWORK_NAME, NETWORK_SYMBOL, RPC_URL } from "../../Constant";
-import { storeInstance } from "../../Services/axios.service";
-import { walletAddress, walletType } from "../Slices/user.slice";
+import { apiCallPost, storeInstance } from "../../Services/axios.service";
+import { APIURL } from "../../Utils";
+import { token, walletAddress, walletType } from "../Slices/user.slice";
 
 /**DECLARE ETHEREUM TYPE */
 declare global {
@@ -86,7 +87,7 @@ export const connectmetamask = () => {
                     reject(false);
                     return toaster.error("Please install Metamask.");
                 }
-            } catch (error: any) {
+            } catch (error: any) {  
                 reject(error);
                 return toaster.error(error.message);
             }
@@ -143,3 +144,33 @@ export const disconnectWallet = () => async (dispatch: DispatchType) => {
         return toaster.error(error.message);
     }
 };
+
+// Login Function
+export const loginAdmin = (data: any) => {
+    return (dispatch: any) =>
+        new Promise((resolve, reject) => {
+            apiCallPost(APIURL.LOGIN, data, {}, true)
+                .then(async (result: any) => {
+                    let data: any = result
+                    data.token = result.token
+                    await dispatch(token(data.token))
+                    resolve(result);
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+        });
+};
+
+// Logout Function
+export const logOut = (message = true) => async (dispatch: any, getState: any) => {
+    try {
+      dispatch(walletAddress(''))
+      dispatch(token(''))
+      if (message) {
+        toaster.success("Logged out successfully")
+      }
+    } catch (error: any) {
+      return toaster.error(error.message);
+    }
+  };

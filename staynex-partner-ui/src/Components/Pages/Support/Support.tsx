@@ -11,7 +11,6 @@ import CustomTable from '../../Common/Table/Index';
 import './Support.scss';
 import { useFormik } from 'formik';
 import * as Yup from "yup";
-import { useDispatch } from 'react-redux';
 import Supportmodal from './Supportmodal/Supportmodal';
 
 const Support = () => {
@@ -23,8 +22,6 @@ const Support = () => {
         { value: 'russia', label: 'Russia' },
         { value: 'australia', label: 'Australia' },
     ]
-    /**CREATE DISPATCH OBJECT */
-    const dispatch: any = useDispatch();
     const addnewproperty = Yup.object().shape({
     });
     const formik = useFormik({
@@ -33,7 +30,6 @@ const Support = () => {
         },
         validationSchema: addnewproperty,
         onSubmit: async (values) => {
-            // console.log('values', values)
             // await dispatch(loginAdmin(values));
         },
 
@@ -111,8 +107,8 @@ const Support = () => {
                         <CustomTable
                             fields={fields}
                         >
-                            {tabledata.map((item) => (
-                                <tr>
+                            {tabledata.map((item,i) => (
+                                <tr key={i}>
                                     <td>
                                         <Form onSubmit={formik.handleSubmit}>
                                             <Checkbox

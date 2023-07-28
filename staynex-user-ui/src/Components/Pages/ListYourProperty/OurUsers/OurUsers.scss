@@ -1,0 +1,56 @@
+@import '../../../../Assets/theme/_var.scss';
+
+.user_sec {
+    background-color: $orangeclr4;
+    padding-top: 8rem;
+    padding-bottom: 2.5rem;
+    color: $whiteclr;
+
+    @media (max-width:767px) {
+        padding-top: 4rem;
+        padding-bottom: 0;
+    }
+
+    .user_data {
+        .user_heading {
+            text-align: center;
+            margin-bottom: 8rem;
+
+            @media (max-width:767px) {
+                margin-bottom: 4rem;
+            }
+
+            h3 {
+                font-size: 2rem;
+                font-weight: 600;
+            }
+
+            p {
+                width: 100%;
+                max-width: 35.4rem;
+                margin: 1.2rem auto 0;
+            }
+        }
+
+        .redefine_box {
+            margin-bottom: 6rem;
+            text-align: center;
+            @media (max-width:767px) {
+                margin-bottom: 4rem;
+            }
+
+            span {
+                svg {
+                    width: 4rem;
+                    height: 4rem;
+                }
+            }
+
+            p {
+                margin: 1rem auto 0;
+                width: 100%;
+                max-width: 30rem;
+            }
+        }
+    }
+}

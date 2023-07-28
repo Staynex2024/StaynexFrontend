@@ -1,18 +1,18 @@
 @import './_var.scss';
 
-@mixin theme() {
+// @mixin theme() {
 
-    @each $theme,
-    $map in $themes {
-        $theme-map: $map !global;
+//     @each $theme,
+//     $map {
+//         $theme-map: $map !global;
 
-        .#{$theme} & {
-            @content;
-        }
-    }
+//         .#{$theme} & {
+//             @content;
+//         }
+//     }
 
-    $theme-map: null !global;
-}
+//     $theme-map: null !global;
+// }
 
 @function theme-get($key) {
     @return map-get($theme-map, $key);

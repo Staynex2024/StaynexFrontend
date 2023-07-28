@@ -1,0 +1,98 @@
+@import "../../../Assets/theme/_var.scss";
+
+.Listing_Card {
+    .Card_hotel_Box {
+        margin-bottom: 3rem;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        &_img {
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+
+        &_content {
+            padding: 3rem;
+            border: 1px solid $borderclr1;
+
+            @media (max-width:767px) {
+                padding: 2rem 1.5rem;
+            }
+
+            .Card_content_heading {
+                margin-bottom: 1.5rem;
+
+                h2 {
+                    font-weight: 600;
+                    margin-bottom: 0.5rem;
+                }
+
+                h5 {
+                    color: $greyclr;
+                    font-size: 1.4rem;
+                    font-weight: 500;
+                    line-height: 1.5;
+                    margin-bottom: 0.4rem;
+                }
+
+                h6 {
+                    font-size: 1.2rem;
+                }
+            }
+
+            hr {
+                border-color: $borderclr1;
+                opacity: 1;
+                margin: 1.8rem 0;
+            }
+        }
+
+        &_details {
+            ul {
+                li {
+                    margin-right: 1.4rem;
+                    font-size: 1.4rem;
+                    display: flex;
+                    align-items: center;
+
+                    &:last-child {
+                        margin-right: 0;
+                    }
+
+                    svg {
+                        margin-right: 0.4rem;
+                        width: 1.5rem;
+                        height: 1.5rem;
+                    }
+                }
+            }
+
+            h4 {
+                font-size: 1.6rem;
+                margin-top: 1.5rem;
+                margin-bottom: 1rem;
+            }
+
+            p {
+                color: $greyclr;
+                font-size: 1.4rem;
+            }
+
+            .amenities_icon {
+                img {
+                    width: 2rem;
+                    margin-right: 1.2rem;
+
+                    &:last-child {
+                        margin-right: 0;
+                    }
+                }
+            }
+        }
+    }
+}

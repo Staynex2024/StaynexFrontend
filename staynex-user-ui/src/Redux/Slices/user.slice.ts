@@ -5,9 +5,12 @@ export const UserSlice = createSlice({
     name: 'user',
     initialState: {
         walletAddress: "",
+        isWalletConnected: "",
         walletType: "",
+        walletDetails: {},
         userDetails: {},
         network: "matic",
+        token: '',
     },
 
     reducers: {
@@ -20,7 +23,14 @@ export const UserSlice = createSlice({
             const { payload } = param;
             state.walletAddress = payload;
         },
-
+        walletDetails: (state, param) => {
+            const { payload } = param;
+            state.walletAddress = payload;
+        },
+        token: (state, param) => {
+            const { payload } = param;
+            state.token = payload;
+        },
         walletType: (state, param) => {
             const { payload } = param;
             state.walletType = payload;
@@ -34,5 +44,5 @@ export const UserSlice = createSlice({
 })
 
 /**ACTIONS FOR SLICE*/
-export const { userDetails, walletAddress, logoutUser, walletType } = UserSlice.actions
+export const { userDetails, walletAddress, logoutUser, token, walletType, walletDetails } = UserSlice.actions
 

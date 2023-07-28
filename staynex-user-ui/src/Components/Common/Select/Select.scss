@@ -1,7 +1,8 @@
 @import '../../../Assets/theme/_mixins.scss';
 
 .common_select {
-
+    border: 1px solid $borderclr1;
+    border-radius: 0.5rem;
 
     .selector_item {
         display: flex;
@@ -31,30 +32,25 @@
         border: none;
 
         .select__input-container {
-            color: white;
+            color: $blackclr;
         }
 
-        @include theme() {
-            background-color: theme-get('blueBg');
-        }
+
 
         &.select__control--is-focused,
-        &.select__control--menu-is-open {
-            @include theme() {
-                background-color: theme-get('blueBgDark');
-            }
-        }
+        &.select__control--menu-is-open {}
 
         .select__placeholder {
-            color: white;
+            color: $blackclr;
         }
 
         .select__value-container {
             padding-right: 0;
+            padding-left: 1rem;
         }
 
         .select__single-value {
-            color: #fff;
+            color: $blackclr;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -65,9 +61,27 @@
         }
 
         .select__indicator {
+            position: relative;
+            padding: 0;
+            width: 2.5rem;
+            height: 1rem;
+
+            &::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 1.4rem;
+                height: 0.9rem;
+                background-image: url(../../../Assets/Images/Icons/droparrow.svg);
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: center;
+            }
 
             svg {
-                fill: #fff;
+                // fill: #fff;
+                display: none;
             }
         }
     }
@@ -77,20 +91,15 @@
         right: 0;
         left: unset;
 
-        @include theme() {
-            background-color: theme-get('headerBg');
-            color: theme-get('darkBg');
-        }
-
         .select__menu-notice {
             font-size: 14px;
 
-            @include theme() {
-                color: theme-get('textClr');
-            }
+
         }
 
         .select__menu-list {
+            padding: 0;
+
             .select__option {
                 cursor: pointer;
                 display: flex;
@@ -98,23 +107,16 @@
                 gap: 10px;
                 font-size: 16px;
 
-                &.select__option--is-selected {
-                    @include theme() {
-                        background-color: theme-get('cardBg');
-                        color: theme-get('textClr');
-                    }
-                }
-
                 &.select__option--is-focused {
-                    background-color: transparent;
+                    background: transparent;
                 }
 
-                &:hover {
-
-                    @include theme() {
-                        background-color: theme-get('cardBg');
-                    }
+                &:hover,
+                &.select__option--is-selected {
+                    background: $orangeclr;
+                    color: $whiteclr;
                 }
+
 
             }
         }
@@ -128,42 +130,20 @@
                 height: 50px;
             }
 
-            .select__placeholder {
-                @include theme() {
-                    color: theme-get('placeholderClr');
-                }
-            }
+            .select__placeholder {}
 
-            .select__input-container {
-                @include theme() {
-                    color: theme-get('textClr');
-                }
-            }
+            .select__input-container {}
 
-            @include theme() {
-                background-color: theme-get("inputBg");
-            }
+
 
             .select__indicator {
-                svg {
-                    @include theme() {
-                        fill: theme-get('textClr');
-                    }
-                }
+                svg {}
             }
 
-            .select__single-value {
-                @include theme() {
-                    color: theme-get('textClr');
-                }
-            }
+            .select__single-value {}
 
             &.select__control--is-focused,
-            &.select__control--menu-is-open {
-                @include theme() {
-                    background-color: theme-get("inputBgFocus");
-                }
-            }
+            &.select__control--menu-is-open {}
         }
     }
 }

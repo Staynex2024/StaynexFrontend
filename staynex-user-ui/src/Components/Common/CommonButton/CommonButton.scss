@@ -1,0 +1,121 @@
+@import '../../../Assets/theme/_mixins.scss';
+
+.btn-style {
+    height: 45px;
+    display: flex;
+    align-items: center;
+    font-family: inherit;
+    padding: 0 25px;
+    border: 1px solid;
+    justify-content: center;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 8px;
+    background-color: $orangeclr;
+    border-color: $orangeclr;
+    transition: all ease-in-out 0.3s;
+    color: $whiteclr;
+    min-width: 150px;
+
+    @media (max-width:767px) {
+        padding: 0 15px;
+    }
+
+    &:hover {
+        background-color: $blackclr;
+        border-color: $blackclr;
+    }
+
+    &.dark-greenbtn {
+        background-color: $darkgreen;
+        border-color: $darkgreen;
+
+        &:hover {
+            background-color: $orangeclr;
+            border-color: $orangeclr;
+        }
+    }
+
+    &.border-btn {
+        background-color: transparent;
+        border-color: $blackclr;
+        color: $blackclr;
+
+        &:hover {
+            background-color: $blackclr;
+            border-color: $blackclr;
+            color: $whiteclr;
+        }
+    }
+
+    &.grey-btn {
+        background-color: $grayclr3;
+        border-color: $grayclr3;
+
+        &:hover {
+            background-color: $blackclr;
+            border-color: $blackclr;
+        }
+    }
+
+    &.black-btn {
+        background-color: $blackclr;
+        border-color: $blackclr;
+
+        &:hover {
+            background-color: $orangeclr;
+            border-color: $orangeclr;
+        }
+    }
+
+    &.bordered {
+        background-color: transparent;
+    }
+
+    .onlyIcon {}
+
+    &:hover {
+        .onlyIcon {}
+    }
+
+    &.white-bg {
+        background-color: $whiteclr;
+        border-color: $whiteclr;
+        color: $blackclr2;
+
+        &:hover {
+            background-color: $blackclr2;
+            border-color: $blackclr2;
+            color: $whiteclr;
+        }
+
+    }
+    &.blurclr-bg{
+        background-color: $blurclr;
+        border-color: $blurclr;
+        color: $whiteclr;
+        &:hover {
+            background-color: transparent;
+            border-color: $blurclr;
+            color: $blurclr;
+        }
+    }
+
+    &.dark-greenborder {
+        background-color: transparent;
+        border-color: $darkgreen;
+        color: $darkgreen;
+
+        &:hover {
+            background-color: $darkgreen;
+            border-color: $darkgreen;
+            color: $whiteclr;
+
+            svg {
+                path {
+                    fill: $whiteclr;
+                }
+            }
+        }
+    }
+}

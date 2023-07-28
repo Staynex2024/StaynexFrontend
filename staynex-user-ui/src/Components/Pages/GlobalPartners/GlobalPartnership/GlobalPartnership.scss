@@ -1,0 +1,75 @@
+@import '../../../../Assets/theme/_var.scss';
+
+.partnership_sec {
+
+    .row {
+        @media (max-width:575px) {
+            flex-direction: column-reverse;
+        }
+    }
+
+    &_column {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-image: url('../../../../Assets/Images/Bgnft_leftsec.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        &_content {
+            color: $whiteclr;
+
+            @media (max-width:991px) {
+                padding: 6rem 0;
+                width: 100%;
+            }
+
+            h1 {
+                font-size: 2.8rem;
+                margin-bottom: 2.3rem;
+                width: 100%;
+                max-width: 31rem;
+
+                @media (max-width:767px) {
+                    margin-bottom: 1.5rem;
+                }
+            }
+
+            p {
+                font-size: 1.8rem;
+                width: 100%;
+                max-width: 28.9rem;
+
+                @media (max-width:991px) {
+                    font-size: 1.3rem;
+                }
+            }
+
+            .platform_presskit {
+                margin-top: 2.3rem;
+
+            }
+        }
+    }
+
+    &_rightimg {
+
+        &_img {
+            width: 100%;
+            height: 100%;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: top;
+
+                @media (min-width:1700px) {
+                    height: 25vw;
+                    object-fit: cover;
+                }
+            }
+        }
+    }
+
+}

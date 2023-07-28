@@ -1,0 +1,92 @@
+@import "../../../../Assets/theme/_var.scss";
+
+.profile_login {
+    padding-top: 10rem;
+    padding-bottom: 10rem;
+
+    @media (max-width:767px) {
+        padding: 6rem 0;
+    }
+
+    &_img {
+        position: relative;
+        width: 77px;
+        margin: 0 auto;
+
+        .User_Profile {
+            width: 77px;
+            height: 77px;
+            border-radius: 10rem;
+        }
+
+        .User_upload_img {
+            position: absolute;
+            bottom: 0rem;
+            left: 0.5rem;
+            cursor: pointer;
+        }
+    }
+
+    &_Input {
+        margin-top: 4rem;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+
+        @media (max-width:767px) {
+            margin-top: 2rem;
+        }
+
+        label {
+            color: $blackclr;
+            font-size: 4.5rem;
+            font-weight: 500;
+            line-height: 4.5rem;
+
+            @media (max-width:767px) {
+                font-size: 2.7rem;
+                line-height: 2.7rem;
+                width: 100%;
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+            }
+        }
+
+        .profile_input {
+            border: 0;
+            background-color: transparent;
+            color: $blackclr;
+            font-size: 4.5rem;
+            font-weight: 500;
+            line-height: 4.5rem;
+            height: auto;
+            padding: 0;
+            width: 450px;
+            border-left: 4px solid $orangeclr;
+            padding-left: 1rem;
+            margin-left: 1rem;
+
+            @media (max-width:767px) {
+                width: 100%;
+                max-width: 290px;
+                font-size: 2.7rem;
+                line-height: 2.7rem;
+            }
+
+            &:focus {
+                outline: 0;
+                border: 0;
+                box-shadow: none;
+                border-left: 4px solid $orangeclr;
+                padding-left: 1rem;
+                margin-left: 1rem;
+            }
+
+            &::placeholder {
+                color: $greyclr;
+            }
+        }
+    }
+}

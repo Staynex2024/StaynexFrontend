@@ -22,5 +22,11 @@
                 color: $whiteclr !important;
             }
         }
+        &.active{
+            a {
+                background-color: $orangeclr;
+                color: $whiteclr !important;
+            }
+        }
     }
 }

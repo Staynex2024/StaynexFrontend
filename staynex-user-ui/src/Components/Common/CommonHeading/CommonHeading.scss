@@ -1,13 +1,37 @@
 @import '../../../Assets/theme/_mixins.scss';
 
 .common_heading {
-    font-size: 28px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid;
-    margin-bottom: 30px;
-    line-height: 1;
+    margin-bottom: 2rem;
 
-    @include theme() {
-        border-bottom-color: theme-get('borderClr');
+    h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        line-height: 3.5rem;
+        color: $blackclr;
+        font-weight: 500;
+    }
+
+    p {
+        font-size: 1.3rem;
+        line-height: 2rem;
+        color: #0E0E0B;
+        font-weight: 600;
+
+        span {
+            color: $baseclr;
+        }
+    }
+
+    &.text_size {
+        h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            line-height: 3rem;
+        }
+
+        p {
+            font-size: 1.4rem;
+            font-weight: 400;
+        }
     }
 }

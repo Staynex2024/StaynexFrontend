@@ -34,7 +34,7 @@ export const callApiPostMethod = (method: string, data: any = {}, parms: any = {
             dispatch(loader(true));
 
             /**CALL METHOD */
-            apiCallPost(APIURL[method], data, parms, showtoaster)
+            apiCallPost(method, data, parms, showtoaster)
                 .then((result) => {
                     dispatch(loader(false));
                     resolve(result);

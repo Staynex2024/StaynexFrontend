@@ -117,5 +117,54 @@
                 }
             }
         }
+
+        .approval {
+            margin-bottom: 2rem;
+
+            &_tophead {
+                margin-bottom: 2rem;
+                display: flex;
+                align-items: center;
+
+                h5 {
+                    color: #18181D;
+                    font-size: 1.6rem;
+                    font-weight: 600;
+                    line-height: 1.2;
+
+                    span {
+                        color: #E55735;
+                        text-decoration-line: underline;
+                    }
+                }
+
+                .viewbtn {
+                    color: #0E0E0B;
+                    font-family: Be Vietnam Pro;
+                    font-size: 1.4rem;
+                    font-weight: 400;
+                    line-height: 1.2;
+                    margin-left: 1rem;
+                }
+            }
+
+            &_table {
+                .tables_btn {
+                    display: flex;
+                    align-items: center;
+
+                    .btn-style {
+                        margin-right: 1rem;
+                        min-width: auto;
+                        height: 3.5rem;
+                        padding: 0.6rem 1.5rem;
+
+                        &:last-child {
+                            margin-right: 0;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

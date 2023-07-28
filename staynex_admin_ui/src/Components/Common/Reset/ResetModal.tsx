@@ -5,25 +5,26 @@ import * as Yup from 'yup'
 import CommonButton from '../CommonButton/CommonButton'
 import CommonModal from '../CommonModal/CommonModal'
 import InputCustom from '../Inputs/InputCustom'
-import { logOut, resetPassword } from '../../../Redux/Actions/user.action'
+import { logOut } from '../../../Redux/Actions/user.action'
 import { useDispatch } from 'react-redux'
 import { LockIcon } from '../../../Assets/Images/svgImgs/svgImgs'
-
 import show from '../../../Assets/Images/eye_white.svg'
 import eye from '../../../Assets/Images/eye-slash_white.svg'
+import { callApiPostMethod } from '../../../Redux/Actions/api.action'
+import { APIURL } from '../../../Utils'
 
 const ResetSchema = Yup.object().shape({
-  oldpassword: Yup.string().required('Password Required'),
+  oldpassword: Yup.string().required('*This Field is Required'),
   newpassword: Yup.string()
-    .required('Password Required')
-    .min(8, 'Password is too short - should be 8 characters minimum')
-    .max(19, 'Password is too long - should be less than 20 characters maximum')
+    .required('*This Field is Required')
+    .min(10, 'Password is too short - should be 10 characters minimum')
+    .max(15, 'Password is too long - should be less than 15 characters maximum')
     .matches(
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[`~!@#$%^&*()_|+\-=?;:'",.<>/])[A-Za-z\d@$!%*#?&]{8,}$/,
       'Must contain minimum 8 characters, one uppercase, one lowercase, one number and one special case character.',
     ),
   confirmpassword: Yup.string()
-    .required('Confirm Password Required')
+    .required('*This Field is Required')
     .oneOf([Yup.ref('newpassword')], 'Passwords must match'),
 })
 
@@ -64,8 +65,7 @@ const ResetModal = ({ showResetModal, handleClose }) => {
                 new_password: values.newpassword,
                 old_password: values.oldpassword,
               }
-              const res: any = await dispatch(resetPassword(data))
-              console.log('valuessssssss', values)
+              const res: any = await dispatch(callApiPostMethod(APIURL.RESET_PASSWORD, data, {}, true))
               if (res?.statusCode === 200) {
                 setTimeout(() => {
                   handleClose()
@@ -85,6 +85,7 @@ const ResetModal = ({ showResetModal, handleClose }) => {
                     placeholder="Old password"
                     name="oldpassword"
                     onChange={handleChange}
+                    maxLength={15}
                     className="input_with_icon password_Input"
                     classIcontwo="input_Eyeicon"
                     value={values.oldpassword}
@@ -109,6 +110,7 @@ const ResetModal = ({ showResetModal, handleClose }) => {
                     name="newpassword"
                     icon={<LockIcon />}
                     onChange={handleChange}
+                    maxLength={15}
                     className="input_with_icon password_Input"
                     classIcontwo="input_Eyeicon"
                     value={values.newpassword}
@@ -131,6 +133,7 @@ const ResetModal = ({ showResetModal, handleClose }) => {
                     placeholder="Confirm password"
                     name="confirmpassword"
                     onChange={handleChange}
+                    maxLength={15}
                     icon={<LockIcon />}
                     className="input_with_icon password_Input"
                     classIcontwo="input_Eyeicon"

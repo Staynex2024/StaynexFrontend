@@ -1,0 +1,39 @@
+@import "../../../../../Assets/theme/_var.scss";
+
+.account_Card {
+    &_box {
+        border: 1px solid $borderclr1;
+        padding: 3rem 4rem;
+        border-radius: 0.6rem;
+
+        .account_heading {
+            h5 {
+                font-size: 1.5rem;
+                font-weight: 600;
+                margin-bottom: 0.8rem;
+            }
+            p {
+                font-size: 1.2rem;
+                font-weight: 400;
+            }
+        }
+
+        .account_profile {
+            position: relative;
+            width: 77px;
+
+            .User_Profile {
+                width: 77px;
+                height: 77px;
+                border-radius: 10rem;
+            }
+
+            .User_upload_img {
+                position: absolute;
+                bottom: 0rem;
+                left: 0.5rem;
+                cursor: pointer;
+            }
+        }
+    }
+}

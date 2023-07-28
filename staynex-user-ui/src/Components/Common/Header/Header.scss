@@ -1,0 +1,199 @@
+@import "../../../Assets/theme/_var.scss";
+
+.site_header {
+  padding: 1.1rem 0rem;
+  border-bottom: 1px solid $borderclr1;
+  background-color: $whiteclr;
+
+  // @media (max-width:1499px) {
+  //   padding: 1.1rem 1.5rem;
+  // }
+
+  &_search {
+    .form-control {
+      border-radius: 15px;
+      border: 1px solid $borderclr;
+      background-color: $greybg3;
+      color: $greyclr4;
+      font-size: 1.4rem;
+      font-weight: 500;
+      margin-left: 1.5rem;
+      padding: 0.9rem 1.5rem;
+      border-radius: 5rem;
+      min-width: 26.7rem;
+      width: auto;
+
+      @media (max-width:1199px) {
+        min-width: auto;
+      }
+
+      @media (max-width:767px) {
+        margin-left: 1rem;
+        display: none;
+      }
+
+      &:focus {
+        box-shadow: none;
+        border: 1px solid $borderclr;
+      }
+    }
+
+    a {
+      img {
+        @media (max-width:767px) {
+          max-width: 100px;
+        }
+      }
+    }
+
+
+  }
+
+  .navbar {
+    .navbar-collapse {
+      @media (max-width:1199px) {
+        position: absolute;
+        left: -320px;
+        width: 320px;
+        top: 6.7rem;
+        background-color: $blackclr;
+        padding: 2rem 0;
+        z-index: 999;
+        height: calc(100vh - 78px);
+        display: block;
+        transition: all ease-in-out 0.3s;
+
+        @media (max-width:767px) {
+          top: 5.8rem;
+          height: calc(100vh - 69px);
+        }
+
+        &.show {
+          left: 0;
+        }
+      }
+
+      .navbar-nav {
+        .nav-link {
+          padding: 0 1rem;
+          font-size: 1.5rem;
+          font-weight: 500;
+
+          @media (max-width:1199px) {
+            padding: 1.5rem 2rem;
+            color: $whiteclr;
+            font-size: 1.6rem;
+          }
+
+          &:hover,
+          &.active {
+            color: $orangeclr ;
+          }
+        }
+      }
+    }
+
+    .navbar-toggler {
+      border: 0;
+      padding: 0;
+
+      &:focus {
+        box-shadow: none;
+      }
+
+      .navbar-toggler-icon {
+        font-size: 25px;
+
+        @media (max-width:767px) {
+          font-size: 20px;
+        }
+      }
+    }
+  }
+
+  .Notification_Dropdown {
+    &.dropdown {
+      .dropdown-toggle {
+        &::after {
+          display: none;
+        }
+
+        &.show {
+          svg {
+            path {
+              fill: $orangeclr;
+            }
+          }
+        }
+      }
+
+      .dropdown-menu {
+        padding: 1rem;
+
+        @media (max-width:767px) {
+          width: 300px;
+        }
+
+        a {
+          background-color: transparent;
+
+          .Notification_List {
+            p {
+              font-size: 1.4rem;
+              font-weight: 400;
+              width: calc(100% - 30px);
+              white-space: normal;
+
+              small {
+                display: block;
+                font-size: 1.2rem;
+                color: #0D0E0B78;
+                margin-top: 0.4rem;
+              }
+            }
+
+            .close_info {
+              width: 30px;
+              display: inline-block;
+              text-align: right;
+            }
+          }
+
+          &:hover {
+            background-color: transparent;
+            color: $orangeclr;
+          }
+        }
+      }
+    }
+  }
+
+  .Mobile_toggleBtn {
+    width: 32px;
+    display: none;
+    margin-left: 10px;
+
+    @media (max-width:991px) {
+      display: inline-block;
+    }
+  }
+
+  .btn-style {
+    @media (max-width:767px) {
+      padding: 0 9px;
+      font-size: 12px;
+      height: 36px;
+      min-width: auto;
+    }
+  }
+
+  .country_Dropdown {
+    .dropdown-toggle {
+      color: rgba(13, 14, 11, 0.47);
+
+      @media (max-width:767px) {
+        padding: 0 0.5rem;
+      }
+    }
+  }
+}

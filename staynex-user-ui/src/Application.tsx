@@ -1,152 +1,123 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { callContractGetMethod } from './Redux/Actions/contract.action'
-import { RequireAuth } from './Routes/Guard/AuthGuard'
-import { WithoutAuth } from './Routes/Guard/NoGuard'
-import { Dispatch } from 'redux'
-import { USDT_ADDRESS } from './Constant'
-import { usdtDecimals, bnbDecimals } from './Redux/Slices/ico.slice'
-import { ErrorBoundary } from './Components/Common/ErrorBoundary/Errorboundary'
-import Loader from './Components/Common/Loader'
-import MainLayout from './Components/Common/MainLayout/MainLayout'
-// import Home from './Components/Pages/Home/Home'
-import LandingPage from './Components/Pages/LandingPage/LandingPage'
-import Dashboard from './Components/Pages/Dashboard/Dashboard'
-import ErrorPage from './Components/Pages/ErrorPage/ErrorPage'
-import AuthLayout from './Components/Common/AuthLayout/AuthLayout'
-import Settings from './Components/Pages/Settings/Settings'
-import DesignUi from './Components/Pages/DesignUi/DesignUi'
-import AuthLogin from './Components/Pages/AuthLogin/AuthLogin'
-import BuyToken from './Components/Pages/BuyToken/BuyToken'
-import { connectmetamask } from './Redux/Actions/user.action'
-import Home from './screens/Home'
-import StaynexPass from './screens/StaynexPass'
-import StaynexClub from './screens/StaynexClub'
-import StaynexGlobal from './screens/StaynexGlobal'
-import StaynexProperty from './screens/StaynexProperty'
+import React from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { WithoutAuth } from "./Routes/Guard/NoGuard";
+import { ErrorBoundary } from "./Components/Common/ErrorBoundary/Errorboundary";
+import Loader from "./Components/Common/Loader";
+import MainLayout from "./Components/Common/MainLayout/MainLayout";
+import Home from "./Components/Pages/Home/Home";
+import Listings from "./Components/Pages/Listings/Listings";
+import ResortDetails from "./Components/Pages/ResortDetails/ResortDetails";
+import Club from "./Components/Pages/Club/Club";
+import DemoPage from "./Components/Pages/DemoPage/DemoPage";
+import AboutUs from "./Components/Pages/AboutUs/AboutUs";
+import GlobalPartners from "./Components/Pages/GlobalPartners/GlobalPartners";
+import ListYourProperty from "./Components/Pages/ListYourProperty/ListYourProperty";
+import ProfileLogin from "./Components/Pages/CustomerProfile/ProfileLogin/ProfileLogin";
+import ProfilePass from "./Components/Pages/CustomerProfile/ProfilePass/ProfilePass";
 
 const Application: React.FC = () => {
-  /**CREATE DISPATCH OBJECT */
-  const dispatch: Dispatch<any> = useDispatch()
-
-  /**GET STATES FROM STORE */
-  const walletAddress = useSelector((state: any) => state?.user?.walletAddress)
-  const walletType = useSelector((state: any) => state?.user?.walletType)
-
-  useEffect(() => {
-    /**FUNCTION FOR SET DECIMALS ON PAGE LOAD */
-    const getDecimals = async () => {
-      let getUsdtDecimals: any = await dispatch(
-        callContractGetMethod('decimals', [], 'dynamic', false, USDT_ADDRESS),
-      )
-      dispatch(usdtDecimals(getUsdtDecimals))
-      dispatch(bnbDecimals(18))
-    }
-
-    getDecimals()
-  }, [dispatch])
-
-  useEffect(() => {
-    /**CALL CONNECT METAMASK ON PAGE ONLOAD FOR CREATE NEW WEB3 INSTANCE */
-    if (walletAddress && walletType === 'MetaMask') {
-      dispatch(connectmetamask())
-    }
-  }, [walletAddress, walletType, dispatch])
 
   const router = createBrowserRouter([
     {
-      path: '/',
+      path: "/",
       element: <MainLayout />,
       errorElement: <ErrorBoundary />,
       children: [
         {
-          index: true,
+          path: "/",
           element: (
             <WithoutAuth>
-              {/* <Home /> */}
               <Home />
             </WithoutAuth>
           ),
         },
         {
-          path: 'staynexpass',
-          element: <StaynexPass />,
-        },
-        {
-          path: 'staynexclub',
-          element: <StaynexClub />,
-        },
-        {
-          path: 'staynexglobal',
-          element: <StaynexGlobal />,
-        },
-        {
-          path: 'staynexproperty',
-          element: <StaynexProperty />,
-        },
-        {
-          path: 'login',
+          path: "/listing",
           element: (
             <WithoutAuth>
-              <LandingPage />
+              <Listings />
             </WithoutAuth>
           ),
         },
         {
-          path: '*',
-          element: <ErrorPage />,
-        },
-      ],
-    },
-
-    {
-      path: '/auth',
-      element: <AuthLayout />,
-      errorElement: <ErrorBoundary />,
-      children: [
-        {
-          index: true,
+          path: "resort-details",
           element: (
-            <RequireAuth>
-              <AuthLogin />
-            </RequireAuth>
+            <WithoutAuth>
+              <ResortDetails />
+            </WithoutAuth>
           ),
         },
         {
-          path: 'dashboard',
+          path: "club",
           element: (
-            <RequireAuth>
-              <Dashboard />
-            </RequireAuth>
+            <WithoutAuth>
+              <Club />
+            </WithoutAuth>
           ),
         },
         {
-          path: 'buy-token',
-          element: <BuyToken />,
+          path: "demo",
+          element: (
+            <WithoutAuth>
+              <DemoPage />
+            </WithoutAuth>
+          ),
         },
         {
-          path: 'design-ui',
-          element: <DesignUi />,
+          path: "/about-us",
+          element: (
+            <WithoutAuth>
+              <AboutUs />
+            </WithoutAuth>
+          ),
         },
         {
-          path: 'login',
-          element: <AuthLogin />,
+          path: "/global-partner",
+          element: (
+            <WithoutAuth>
+              <GlobalPartners />
+            </WithoutAuth>
+          ),
+        }, 
+        {
+          path: "/list-property",
+          element: (
+            <WithoutAuth>
+              <ListYourProperty/>
+            </WithoutAuth>
+          ),
+        },    
+
+        {
+          path: "/profile-login",
+          element: (
+            <WithoutAuth>
+              <ProfileLogin/>
+            </WithoutAuth>
+          ),
         },
 
         {
-          path: 'settings',
-          element: <Settings />,
+          path: "/profile-pass",
+          element: (
+            <WithoutAuth>
+              <ProfilePass/>
+            </WithoutAuth>
+          ),
         },
-      ],
+        // {
+        //   path: "*",
+        //   element: <ErrorPage />,
+        // },
+      ], 
     },
-  ])
+  ]);
 
   return (
     <>
       <RouterProvider router={router} fallbackElement={<Loader />} />
     </>
-  )
-}
+  );
+};
 
-export default Application
+export default Application;

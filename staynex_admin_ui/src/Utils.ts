@@ -1,11 +1,15 @@
 export const APIURL: any = {
   GETPRODUCTS: `/products`,
   LOGIN: '/login',
-  GET_ALL_PROPERTY: '/getAllProperty',
-  SEE_DETAILS: '/getPropertyDetailsById',
+  GET_ALL_PROPERTY: '/getAllListedProperty',
+  SEE_DETAILS: '/getListedPropertyDetailsById',
   UNLIST_PROPERTY: '/unlistProperty',
   ADD_PROPERTY: '/addProperty',
   RESET_PASSWORD: '/resetPassword',
+  PARTNER_REQUEST_LIST: '/partnerRequestsList',
+  ACTION_PARTNER_REQUEST: '/createActionOnParterRequest',
+  PARTNER_PROPERTY_REQUEST_LIST: '/propertyRequestsList',
+  ACTION_PARTNER_PROPERTY: '/createActionOnPropertyRequest',
 }
 
 export const RESPONSES: any = {
