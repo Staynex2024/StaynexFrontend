@@ -1,6 +1,7 @@
 
-export const API_HOST = "http://10.1.8.97:3002";
-// export const API_HOST= "http://10.1.5.164:3002"
+export const API_HOST = "https://stage-api.staynex.io/";
+
+// export const API_HOST= 'http://10.1.8.97:3000'
 
 export const PAGE_LIMIT = 10
 

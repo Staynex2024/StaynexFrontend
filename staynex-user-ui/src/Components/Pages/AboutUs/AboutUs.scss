@@ -1,8 +1,9 @@
 @import '../../../Assets/theme/_var.scss';
 
 .aboutus {
-    .aboutus_banner_sec {
+    .aboutus_banner {
         background-color: $blackclr;
+        position: relative;
 
         video {
             width: 100%;
@@ -11,7 +12,44 @@
             display: block;
 
             @media (max-width:767px) {
-                height: 220px;
+                height: 330px;
+            }
+        }
+
+        &_content {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            text-align: center;
+            padding: 0 15px;
+
+            .about_logo {
+                margin-bottom: 3.5rem;
+                width: 25rem;
+
+                @media (max-width:767px) {
+                    width: 15rem;
+                    margin-bottom: 1rem;
+                }
+            }
+
+            h1 {
+                color: $whiteclr;
+                width: 100%;
+                max-width: 70rem;
+                text-align: center;
+                letter-spacing: -2px;
+                margin-bottom: 0;
+                font-size: 4.5rem;
+                line-height: 5.8rem;
+                font-weight: 500;
+                margin: 0 auto;
+
+                @media (max-width:767px) {
+                    font-size: 2.2rem;
+                    line-height: 3.2rem;
+                }
             }
         }
     }
@@ -35,10 +73,10 @@
         }
 
         .platform_content {
-            padding: 4rem 0 0 9.3rem;
+            padding: 4rem 2rem 0 9.3rem;
 
             @media (max-width:991px) {
-                padding: 4.6rem 0;
+                padding: 4rem 0;
                 width: 100%;
             }
 
@@ -53,9 +91,12 @@
 
             p {
                 font-size: 1.8rem;
+                font-weight: 400;
+                line-height: 3.3rem;
 
                 @media (max-width:991px) {
-                    font-size: 1.3rem;
+                    font-size: 1.4rem;
+                    line-height: 2.5rem;
                 }
             }
 
@@ -64,11 +105,14 @@
 
                 @media (max-width:991px) {
                     padding-left: 1rem;
+                    margin-top: 3.5rem;
                 }
 
                 p {
                     font-size: 1.2rem;
                     font-weight: 600;
+                    line-height: normal;
+                    margin-bottom: 0.8rem;
 
                     @media (max-width:991px) {
                         padding-left: 0;
@@ -85,11 +129,14 @@
                         color: $whiteclr;
                         font-size: 1.2rem;
                         padding: 0 1rem;
+                        font-weight: 700;
+                        line-height: 1.5rem;
+                        text-transform: uppercase;
 
                         svg {
                             margin-right: 0.8rem;
                         }
-                        
+
                     }
 
                     .twitter_btn {
@@ -120,7 +167,7 @@
                 object-position: top;
 
                 @media (min-width:1700px) {
-                    height: 40vw;
+                    height: 55vw;
                 }
             }
         }
@@ -130,7 +177,7 @@
 /*partner_sec css*/
 .partner_sec {
     padding: 11.6rem 0;
-    background-image: url("../../../Assets/Images/Global-banner-img.jpg");
+    background-image: url("../../../Assets/Images/arsenal-bg.jpg");
     position: relative;
     background-repeat: no-repeat;
     background-size: cover;
@@ -147,6 +194,7 @@
 
             h2 {
                 margin-bottom: 2rem;
+                color: $whiteclr;
             }
 
             p {
@@ -155,6 +203,7 @@
                 width: 100%;
                 max-width: 67.5rem;
                 margin: 3rem auto 0;
+                color: $whiteclr;
 
                 @media (max-width:767px) {
                     margin: 2rem auto 0;
@@ -178,6 +227,8 @@
                 border-radius: 0.9rem;
                 padding: 2rem 2.7rem;
                 text-align: center;
+                display: flex;
+                align-items: center;
 
                 p {
                     font-size: 1.2rem;
@@ -189,7 +240,7 @@
             }
         }
     }
-}
+} 
 
 
 
@@ -207,6 +258,7 @@
 
         h2 {
             font-size: 2.5rem;
+            color: $whiteclr;
         }
 
         .card_row {
@@ -228,11 +280,17 @@
                 .card_content {
                     margin-top: 2.1rem;
 
+                    h3 {
+                        color: $whiteclr;
+                    }
+
                     p {
                         margin-top: 2.1rem;
                         font-size: 1.2rem;
+                        line-height: 2.4rem;
                         width: 100%;
                         max-width: 340px;
+                        color: $whiteclr;
 
                         @media (max-width:767px) {
                             max-width: 100%;
@@ -257,13 +315,40 @@
             padding-left: 0;
             color: $whiteclr;
 
+            h1 {
+                color: $whiteclr;
+            }
+
             p {
                 width: 100%;
                 max-width: 28.9rem;
                 margin-bottom: 2rem;
                 font-size: 1.5rem;
+                color: $whiteclr;
+            }
+
+            .btn-style {
+                &:hover {
+                    background-color: $orangeclr;
+                }
+            }
+        }
+    }
+
+    &.aboutus_platform_sec {
+
+        .paltform_img {
+            img {
+                height: 35vw;
+
+                @media (max-width:767px) {
+                    height: 100%;
+                }
+
+                @media (max-width:575px) {
+                    height: 220px;
+                }
             }
         }
     }
 }
-

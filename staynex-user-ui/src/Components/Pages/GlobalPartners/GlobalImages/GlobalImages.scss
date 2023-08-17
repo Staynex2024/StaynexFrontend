@@ -95,12 +95,14 @@
                 font-size: 2.1rem;
                 font-weight: 600;
                 margin-bottom: 0;
+                color: $whiteclr;
             }
 
             p {
                 margin: 0.7rem auto 0;
                 width: 100%;
                 max-width: 68.8rem;
+                color: $whiteclr;
 
                 @media (max-width:767px) {
                     margin-top: 2rem;

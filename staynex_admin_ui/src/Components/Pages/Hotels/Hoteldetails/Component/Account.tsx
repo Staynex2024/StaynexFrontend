@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import InputCustom from '../../../../Common/Inputs/InputCustom';
 import { EyeIcon, LockIcon, UserIcon } from '../../../../../Assets/Images/svgImgs/svgImgs';
 
-const Account = () => {
+const Account = ({data} : any) => {
 
     const addnewproperty = Yup.object().shape({
         name: Yup.string().required("*This Field is required"),
@@ -37,7 +37,7 @@ const Account = () => {
         <>
             <section className='account'>
                 <Form onSubmit={formik.handleSubmit}>
-                    <Row className='align-items-end'>
+                    <Row>
                         <Col lg={6} md={6}>
                             <InputCustom
                                 label="Name"
@@ -48,15 +48,8 @@ const Account = () => {
                                 type="text"
                                 onChange={formik.handleChange}
                                 autoFocus={true}
-                                value={formik.values.name}
-                                error={
-                                    formik.errors.name && formik.touched.name ? (
-                                        <span
-                                        >
-                                            {formik.errors.name}
-                                        </span>
-                                    ) : null
-                                }
+                                value={data?.user?.name ? data?.user?.name?.charAt(0).toUpperCase() +
+                                    data?.user?.name?.slice(1).toLowerCase() : ""}
                             />
                         </Col>
                         <Col lg={6} md={6}>
@@ -69,15 +62,8 @@ const Account = () => {
                                 type="text"
                                 onChange={formik.handleChange}
                                 autoFocus={true}
-                                value={formik.values.contact}
-                                error={
-                                    formik.errors.contact && formik.touched.contact ? (
-                                        <span
-                                        >
-                                            {formik.errors.contact}
-                                        </span>
-                                    ) : null
-                                }
+                                value={data?.user?.mobile_number ? data?.user?.mobile_number : ""}
+                                readOnly
                             />
                         </Col>
                         <Col lg={6} md={6}>
@@ -90,15 +76,8 @@ const Account = () => {
                                 type="text"
                                 onChange={formik.handleChange}
                                 autoFocus={true}
-                                value={formik.values.email}
-                                error={
-                                    formik.errors.email && formik.touched.email ? (
-                                        <span
-                                        >
-                                            {formik.errors.email}
-                                        </span>
-                                    ) : null
-                                }
+                                value={data?.user?.email ? data?.user?.email : ""}
+                                readOnly
                             />
                         </Col>
                         <Col lg={6} md={6}>

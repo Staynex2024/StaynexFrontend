@@ -1,11 +1,13 @@
 @import "../../../Assets/theme/_var.scss";
 
 .Club_Banner {
+    background-color: $blackclr4;
+
     &_Content {
         max-width: 23rem;
         margin: 0 auto;
         padding: 5rem 2rem;
-        background-color: $blackclr;
+        background-color: $blackclr4;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -61,17 +63,27 @@
         .arrow_big {
             padding: 0 1rem;
         }
-    }
+    } 
 }
 
 .Club_explorer {
     background-color: $yellowlightclr;
 }
+
 .Page_heading {
     h2 {
         margin-bottom: 1.5rem;
     }
 }
-.Club_faq {
-    background-color: $greybg1;   
+
+.Club {
+    &_faq {
+        background-color: $greybg1;
+
+        &_heading {
+            p {
+                max-width: 40rem;
+            }
+        }
+    }
 }

@@ -153,6 +153,7 @@ const Members = () => {
                 id="head-select"
                 onChange={handleSelectAll}
                 checked={isCheckAll}
+                className='table_checkall_box'
               />
               {tabledata.map((item: any, data: any) => (
                 <tr key={data}>

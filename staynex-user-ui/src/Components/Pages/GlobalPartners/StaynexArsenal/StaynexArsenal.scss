@@ -2,7 +2,7 @@
 
 
 .staynex_arsenal {
-    background-image: url("../../../../Assets/Images/Global-banner-img.jpg");
+    background-image: url("../../../../Assets/Images/arsenal-bg.jpg");
     position: relative;
     background-repeat: no-repeat;
     background-size: cover;
@@ -24,12 +24,14 @@
         h3 {
             font-size: 2rem;
             font-weight: 600;
+            color: $whiteclr;
         }
 
         p {
             width: 100%;
             max-width: 35.4rem;
             margin: 1.2rem auto 0;
+            color: $whiteclr;
         }
     }
 

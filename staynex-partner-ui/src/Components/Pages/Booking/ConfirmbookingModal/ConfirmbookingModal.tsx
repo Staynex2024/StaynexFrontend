@@ -7,7 +7,7 @@ import CommonButton from '../../../Common/CommonButton/CommonButton';
 const ConfirmbookingModal = ({ show, handleClose, }) => {
     return (
         <>
-            <CommonModal
+            <CommonModal 
                 show={show}
                 handleClose={handleClose}
                 className='Confirmbooking_Modal'

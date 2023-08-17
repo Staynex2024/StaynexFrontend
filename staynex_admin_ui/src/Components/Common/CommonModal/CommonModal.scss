@@ -1,12 +1,35 @@
 .commonModal {
     .modal-dialog {
+        // padding: 0 1.5rem;
+
         .modal-content {
+            position: relative;
+
             .modal-header {
                 padding: 1.5rem 1.5rem 1.5rem 3rem;
             }
 
+            .modal_close_btn {
+                background-color: transparent;
+                border: 0;
+                position: absolute;
+                right: 1.5rem;
+                top: 1.5rem;
+                cursor: pointer;
+                z-index: 1;
+
+                img {
+                    width: 2.5rem;
+                    opacity: 1;
+                }
+            }
+
             .modal-body {
-                padding: 3rem;
+                padding: 6rem 3rem 4rem;
+
+                @media (max-width:767px) {
+                    padding: 5rem 1.5rem 3rem;
+                }
             }
         }
     }

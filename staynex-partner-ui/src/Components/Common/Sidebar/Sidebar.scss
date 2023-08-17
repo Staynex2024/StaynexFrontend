@@ -64,6 +64,8 @@
                 &_icon {
                     margin-right: 1rem;
                     line-height: normal;
+                    display: flex;
+                    align-items: center;
 
                     svg {
                         path {

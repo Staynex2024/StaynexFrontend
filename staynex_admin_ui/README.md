@@ -1,50 +1,35 @@
-# Running Test Cases
-1. node version should be 16.0.0
-2. npm run test
+# Node Version
+16.19.1
 
-# Getting Started with Create React App
+# staynex
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project we can clone from [STAYNEX](http://repo.antiersolutions.com/blocklime/blocklime-admin-ui).
 
-## Available Scripts
+After clone we need to run "npm install" in terminal.<br/>
+You can run start your project by "npm start" in terminal.<br />
+we need to login with valid Credentials.
 
-In the project directory, you can run:
+### `Dashboard Page Details`
 
-### `npm start`
+Admin panel will see all the statistics and pending actions required on the dashboard data:
+<li>1. Statistics</li>
+<li>2. Pending Property approvals</li>
+<li>3. Pending Pass approvals</li>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### `Approvals`
+Under approvals admin will see all the pending approvals - 
+<li>1. Property </li>
+<li>2. Pass</li>
+Admin can either accept or reject it from here.</br>
+Once rejected, the entry will be deleted from the database so that partner can make a request again.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### `Properties`
+Admin will be able to see and manage all properties on the platform:
+<li>1. View all the details</li>
+<li>2. List and Delist</li>
+<li>3. We cannot edit the property details - only the partner can do so</i>
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Admin will also be able to see and manage the Passes which belongs to those properties:
+<li>View all the details</li>
+<li>List and delist</li>
+<li>Cannot edit, only the partner can do so</li>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
-import { AeroplaneIcon, BenefitIcon, CalendarIcon, ChartDataIcon, DollarIcon, IncreaseIcon, TimerIcon, UserIcon } from '../../../../Assets/Images/svgImgs/svgImgs';
+import { AeroplaneIcon, BenefitIcon, CalendarIcon, ChartDataIcon, DollarIcon,  TimerIcon,  } from '../../../../Assets/Images/svgImgs/svgImgs';
 import './OurUsers.scss'
 
 const OurUsers = () => {
@@ -42,9 +42,9 @@ const OurUsers = () => {
                     </div>
 
                     <Row>
-                        {user.map((data) => {
+                        {user.map((data ,i) => {
                             return (
-                                <Col sm={6} md={4} xl={4}>
+                                <Col key={i} sm={6} md={4} xl={4}>
                                     <div className='redefine_box'>
                                         <span>
                                             {data.icon}

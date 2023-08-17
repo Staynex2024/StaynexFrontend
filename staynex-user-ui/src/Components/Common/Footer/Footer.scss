@@ -1,26 +1,14 @@
 @import "../../../Assets/theme/_var.scss";
-.site_footer {
-  background-image: url("../../../Assets/Images/Global-banner-img.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  padding: 6rem 0;
-  position: relative;
-  z-index: 1;
+
+.login_footer {
+  background-color: $blackclr;
+  padding: 4.5rem 0;
+  position: fixed;
+  bottom: 0;
 
   @media (max-width:767px) {
-    padding: 4rem 0;
-  }
-
-  &::after {
-    background-color: $blackclr;
-    opacity: 0.7;
-    content: "";
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    z-index: -1;
-    top: 0;
-    left: 0;
+    padding: 3rem 0;
+    // position: static;
   }
 
   &_Links {
@@ -29,16 +17,6 @@
       font-size: 1.4rem;
       font-weight: 400;
       line-height: normal;
-      padding: 1rem 3rem;
-
-      @media (max-width:991px) {
-        padding: 0.5rem 1rem;
-      }
-
-      @media (max-width:575px) {
-        padding: 1rem 1rem;
-        display: block;
-      }
 
       &:hover {
         color: $orangeclr;
@@ -46,33 +24,7 @@
     }
   }
 
-  &_Socialmedia {
-    a {
-      color: $whiteclr;
-      padding: 1rem 3rem;
-      transition: all ease-in-out 0.3s;
-
-      @media (max-width:991px) {
-        padding: 0.5rem 1rem;
-      }
-
-      &:hover {
-        svg {
-          path {
-            fill: $orangeclr;
-          }
-        }
-      }
-    }
-  }
-
   &_Copyright {
-    .site_footer_Links {
-      a {
-        padding: 0rem;
-      }
-    }
-
     p {
       color: $whiteclr;
       font-size: 1.4rem;
@@ -85,7 +37,7 @@
     width: 12rem;
 
     &-toggle {
-      color: $whiteclr;
+      color: $whiteclr;      
       font-size: 1.4rem;
       font-weight: 400;
       display: flex;

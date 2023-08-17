@@ -1,10 +1,69 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import "./ProfileLogin.scss"
 import ProfileImg from "../../../../Assets/Images/profile_img.svg"
 import uploadIcon from "../../../../Assets/Images/upload_icon.svg"
 import { Container } from 'react-bootstrap'
+import useDebounce from '../../../../hooks/useDebounce'
+import { apiCallGet } from '../../../../Services/axios.service'
+import { useDispatch, useSelector } from 'react-redux'
+import { callApiGetMethod, callApiPostMethod } from '../../../../Redux/Actions/api.action'
+import { APIURL } from '../../../../Utils'
+import CommonButton from '../../../Common/CommonButton/CommonButton'
+import { useNavigate } from 'react-router-dom'
 
 const ProfileLogin = () => {
+    const dispatch: any = useDispatch()
+    const navigate: any = useNavigate()
+    const address = useSelector((state: any) => state?.user?.walletAddress);
+
+    const [search, setSearch] = useState('')
+    const [debounce_search, setDeounce_Search] = useState('')
+    const [fafaSpin, setfafaSpin] = useState(false);
+    const [message, setMessage] = useState('')
+    const [show, setShow] = useState(false)
+
+    useDebounce(() => handleDebounceSearch(search), 1000, [search])
+
+    const handleDebounceSearch = (value: any) => {
+        setDeounce_Search(value)
+    }
+
+    useEffect(() => {
+        setfafaSpin(false)
+        setMessage('')
+        setShow(false)
+        const checkDuplicateUserName = async () => {
+            setfafaSpin(true)
+            const result = await dispatch(callApiGetMethod(APIURL.CHECK_DUPLICATE_NAME, { name: debounce_search }, false, false))
+            if (result?.statusCode === 200) {
+                setfafaSpin(false)
+                setMessage(result?.message)
+                setShow(true)
+            } else if (result?.statusCode === 400) {
+                setfafaSpin(false)
+                setMessage(result?.message)
+                setShow(false)
+            }
+        }
+
+        if (debounce_search !== '') {
+            checkDuplicateUserName()
+        }
+    }, [debounce_search])
+
+
+    const handleCustomerProfile = async () => {
+        const result = await dispatch(callApiPostMethod(APIURL?.ADD_CUSTOMER_NAME, {
+            walletAddress: address,
+            name: debounce_search,
+            profileImage: "image"
+        }, {}, false))
+        console.log('result :>> ', result);
+        if (result?.statusCode === 201) {
+            navigate('/auth/profile-pass')
+        }
+    }
+
     return (
         <>
             <div className='profile_login'>
@@ -14,13 +73,26 @@ const ProfileLogin = () => {
                         <span className='User_upload_img'><img src={uploadIcon} alt="" /></span>
                     </div>
                     <div className='profile_login_Input'>
-                        <label>Hello,</label>   
-                        <input type="text" className='profile_input' placeholder='type your name here' />
-                    </div>                    
+                        <label>Hello,</label>
+                        <input
+                            type="text"
+                            className='profile_input'
+                            placeholder='type your name here'
+                            onChange={(event: any) => setSearch(event.target.value)}
+                        />
+                        {fafaSpin && <i className="fa fa-spinner fa-spin" style={{ fontSize: "20px" }}></i>}
+                        {message}
+                    </div>
+                    {show &&
+                        <CommonButton
+                            title={"Create Profie"}
+                            // disabled={connecting}
+                            onClick={() => handleCustomerProfile()}
+                        />}
                 </Container>
             </div>
         </>
     )
 }
 
-export default ProfileLogin
+export default ProfileLogin;

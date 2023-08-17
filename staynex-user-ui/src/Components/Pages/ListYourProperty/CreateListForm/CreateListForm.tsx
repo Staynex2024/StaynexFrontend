@@ -51,12 +51,12 @@ const CreateListForm = () => {
       .min(2, "Name should be at least 2 characters long.")
       .max(25, "Name should be at most 25 characters long.")
       .matches(/[^]/, 'special characters not awllowed')
-      .matches(/^(?! ).*(?<! )$/, "Input should not start or end with a space"),
+      .matches(/^(?! ).*(?<! )$/, "Space is not allowed at start or end places"),
     email: Yup.string()
       .email("Please enter valid email")
       .required("This field is required")
       .matches(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i, "Please enter valid email"),
-      mobile_number: Yup.string().required("*This Field is required").min(8, 'Please enter valid contact number').max(15, 'Please enter valid contact number'),
+      mobile_number: Yup.string().required("This field is required").min(8, 'Please enter valid contact number').max(15, 'Please enter valid contact number'),
   });
   const formik = useFormik({
     initialValues: {

@@ -16,7 +16,7 @@ interface CommonModals {
 const CommonModal = (props: CommonModals) => {
   return (
     <>
-      <Modal
+      <Modal 
         show={props.show}
         onHide={props.handleClose}
         centered

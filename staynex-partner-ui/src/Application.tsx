@@ -27,6 +27,8 @@ import SignUp from './Components/Pages/SignUp/SignUp'
 import ForgotPasswordForm from './Components/Pages/ForgotPassword/ForgotPasswordForm'
 import ResetPassword from './Components/Pages/ForgotPassword/resetPassowrdPage'
 import Hotels from './Components/Pages/Hotels/Hotels'
+import UpdateProperty from './Components/Pages/Management/UpdateProperty/UpdateProperty'
+import UpdatePass from './Components/Pages/Management/Passes/UpdatePass/UpdatePass'
 const Application: React.FC = () => {
   const router = createBrowserRouter([
     {
@@ -51,14 +53,14 @@ const Application: React.FC = () => {
             </WithoutAuth>
           ),
         },
-        // {
-        //   path: "/signup-almost",
-        //   element: (
-        //     <WithoutAuth>
-        //       <SignUp />
-        //     </WithoutAuth>
-        //   ),
-        // },
+          // {
+          //   path: "/signup-almost",
+          //   element: (
+          //     <WithoutAuth>
+          //       <SignUp />
+          //     </WithoutAuth>
+          //   ),
+          // },
         {
           path: 'forgot-password',
           element: (
@@ -130,6 +132,14 @@ const Application: React.FC = () => {
           ),
         },
         {
+          path: 'update-property',
+          element: (
+            <RequireAuth>
+              <UpdateProperty />
+            </RequireAuth>
+          ),
+        },
+        {
           path: 'booking-details',
           element: (
             <RequireAuth>
@@ -166,6 +176,22 @@ const Application: React.FC = () => {
           element: (
             <RequireAuth>
               <Createpass />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: 'resubmit-pass/:id',
+          element: (
+            <RequireAuth>
+              <Createpass />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: 'update-pass/:id',
+          element: (
+            <RequireAuth>
+              <UpdatePass />
             </RequireAuth>
           ),
         },

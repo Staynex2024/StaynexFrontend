@@ -83,7 +83,7 @@
                     .create_form {
                         @media (max-width:991px) {
                             left: 7%;
-                        }
+                        } 
 
                         @media (max-width:767px) {
                             padding: 3.2rem 1.5rem;
@@ -93,6 +93,14 @@
                             width: 100%;
                             max-width: 95%;
                             margin: 0 auto;
+                        }
+
+                        .customInput {
+                            .form-control {
+                                &::placeholder {
+                                    color: $black1;
+                                }
+                            }
                         }
 
                     }

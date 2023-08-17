@@ -18,6 +18,7 @@ type propsType = {
   classgroup?: any;
   placeholder?: any;
   isSearchable?: any;
+  error?: any;
 };
 
 const CustomSelect = ({
@@ -34,6 +35,7 @@ const CustomSelect = ({
   classLabel,
   placeholder,
   isSearchable,
+  error,
 }: propsType) => {
   return (
     <>
@@ -55,7 +57,8 @@ const CustomSelect = ({
           name={name}
           placeholder={placeholder}
           isSearchable={isSearchable}
-        />
+          />
+          {error ? error : ""}
       </Form.Group>
     </>
   )

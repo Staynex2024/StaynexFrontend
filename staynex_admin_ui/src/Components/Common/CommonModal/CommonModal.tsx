@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import { Modal } from "react-bootstrap";
-// import closeIcon from "../../../Assets/Images/Icons/close.png";
+// import closeIcon from "../../../Assets/Images/Cancel.svg";
 import './CommonModal.scss'
 
 interface CommonModals {
@@ -29,12 +29,12 @@ const CommonModal = (props: CommonModals) => {
             <Modal.Title>
               <h3>{props.heading}</h3>
             </Modal.Title>
-            {/* <button onClick={props.handleClose} className="modal_close_btn">
-              <CrossIcon />
-              <img src={closeIcon} alt="" />
-            </button> */}
           </Modal.Header>
         )}
+        <button onClick={props.handleClose} className="modal_close_btn">
+          {/* <CrossIcon /> */}
+          {/* <img src={closeIcon} alt="icon" /> */}
+        </button>
         <Modal.Body>{props?.children}</Modal.Body>
       </Modal>
     </>

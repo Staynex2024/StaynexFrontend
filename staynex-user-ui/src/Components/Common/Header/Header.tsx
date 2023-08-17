@@ -1,89 +1,108 @@
-import "./Header.scss";
-import { Link, NavLink } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { Dispatch } from "redux";
+import './Header.scss'
+import { Link, NavLink } from 'react-router-dom'
+// import { useDispatch } from "react-redux";
+// import { Dispatch } from "redux";
 import headerLogo from "../../../Assets/Images/logo.svg";
 import { Container, Dropdown, Form, Nav, Navbar } from "react-bootstrap";
-import CommonButton from "../CommonButton/CommonButton";
 import injectedModule from "@web3-onboard/injected-wallets";
-import Onboard from "@web3-onboard/core";
-import { useState } from "react";
-const injected = injectedModule();
-const modules = [injected];
+import { ethers } from "ethers";
+import { useConnectWallet, init } from "@web3-onboard/react";
+import CommonButton from "../CommonButton/CommonButton";
+import { useDispatch, useSelector } from "react-redux";
+import { walletAddress, walletDetails } from "../../../Redux/Slices/user.slice";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { callApiPostMethod } from "../../../Redux/Actions/api.action";
+import { APIURL } from "../../../Utils";
 
+const apiKey = "1730eff0-9d50-4382-a3fe-89f0d34a2070";
+const injected = injectedModule();
+const infuraKey = "b9002ae31947492c96e3ff7fc63116b2";
+const rpcUrl = `https://mainnet.infura.io/v3/${infuraKey}`;
+
+// initialize Onboard
+// eslint-disable-next-line no-undef
+init({
+  apiKey,
+  wallets: [injected],
+  chains: [
+    {
+      id: '0x1',
+      token: 'ETH',
+      label: 'Ethereum Mainnet',
+      rpcUrl,
+    },
+    {
+      id: '0x2105',
+      token: 'ETH',
+      label: 'Base',
+      rpcUrl: 'https://mainnet.base.org',
+    },
+  ],
+})
 
 const Header = () => {
-  const dispatch: Dispatch<any> = useDispatch();
-  const MAINNET_RPC_URL = `https://mainnet.infura.io/v3/${process.env.INFURA_KEY}`;
-  const ROPSTEN_RPC_URL = `https://ropsten.infura.io/v3/${process.env.INFURA_KEY}`;
-  const RINKEBY_RPC_URL = `https://rinkeby.infura.io/v3/${process.env.INFURA_KEY}`;
-  const [walletDetails, setWalletDetails] = useState<any>([]);
+  const dispatch: any = useDispatch();
+  const navigate: any = useNavigate();
+  const address = useSelector((state: any) => state?.user?.walletAddress);
+  const [{ wallet, connecting }, connect, disconnect]: any = useConnectWallet();
 
-  const onboard = Onboard({
-    wallets: modules, // created in previous step
-    chains: [
-      {
-        id: "0x1", // chain ID must be in hexadecimel
-        token: "ETH",
-        namespace: "evm",
-        label: "Ethereum Mainnet",
-        rpcUrl: MAINNET_RPC_URL,
-      },
-      {
-        id: "0x3",
-        token: "tROP",
-        namespace: "evm",
-        label: "Ethereum Ropsten Testnet",
-        rpcUrl: ROPSTEN_RPC_URL,
-      },
-      {
-        id: "0x4",
-        token: "rETH",
-        namespace: "evm",
-        label: "Ethereum Rinkeby Testnet",
-        rpcUrl: RINKEBY_RPC_URL,
-      },
-    ],
-    appMetadata: {
-      name: "My App",
-      icon: "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg",
-      logo: "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg",
-      description: "My app using Onboard",
-      recommendedInjectedWallets: [
-        { name: "Coinbase", url: "https://wallet.coinbase.com/" },
-        { name: "MetaMask", url: "https://metamask.io" },
-      ],
-    },
-  });
-  const countrylist = [
-    {
-      name: "India",
-    },
-    {
-      name: "USA",
-    },
-    {
-      name: "UK",
-    },
-  ];
+  let ethersProvider: any;
 
-  const connectWallet = async () => {
-    try {
-      const wallets = await onboard.connectWallet();
-      setWalletDetails(wallets);
-      dispatch(walletDetails(wallets))
-    } catch (error) {
+  useEffect(() => {
+    handleWalletConnect();
+  }, [wallet]);
+
+  const handleWalletConnect = async () => {
+    if (wallet) {
+      // if using ethers v6 this is:
+      // ethersProvider = new ethers.BrowserProvider(wallet.provider, 'any')
+      ethersProvider = new ethers.providers.Web3Provider(
+        wallet.provider,
+        "any"
+      );
+      ethersProvider.getSigner().signMessage("hello");
+      dispatch(walletAddress(wallet.accounts[0].address));
+
+
+
+      // const addressToSend = wallet?.accounts?.[0].address;
+      // const result = await callApiPostMethod(
+      //   APIURL?.CUSTOMER_LOGIN,
+      //   addressToSend,
+      //   {},
+      //   false
+      // );
     }
   };
+  const countrylist = [
+    {
+      name: 'India',
+    },
+    {
+      name: 'USA',
+    },
+    {
+      name: 'UK',
+    },
+  ]
 
-  const disconnectWallet = async () => {
-    const [primaryWallet] = await onboard.state.get().wallets;
-    if (primaryWallet) await onboard.disconnectWallet({ label: primaryWallet.label });
-    setWalletDetails([])
-  };
+  useEffect(() => {
+    const handleWalletConnect = async () => {
+      const addressToSend = address;
+      const result = await dispatch(callApiPostMethod(APIURL?.CUSTOMER_LOGIN, { walletAddress: addressToSend }, {}, false))
+      if (result?.data === true) {
+        navigate("/auth/profile-pass")
+      }
+
+    }
+    if (address !== '') {
+      handleWalletConnect();
+    }
+  }, [address]);
+
   return (
     <>
-    
       <header className="site_header sticky-top">
         <Navbar expand="xl" className="">
           <Container>
@@ -91,7 +110,7 @@ const Header = () => {
               <Link to="/">
                 <img src={headerLogo} alt="Logo" />
               </Link>
-              <Form.Control type="text" placeholder="Search" />
+              <Form.Control type="text" placeholder="Anywhere" />
             </div>
             <Navbar.Collapse
               className="justify-content-end"
@@ -123,22 +142,29 @@ const Header = () => {
                       <Dropdown.Item key={i} href="#">
                         <span>{data.name}</span>
                       </Dropdown.Item>
-                    );
+                    )
                   })}
                 </Dropdown.Menu>
               </Dropdown>
               {/* <CommonButton title="Connect Wallet" /> */}
-              {walletDetails && walletDetails.length ? (
+
+              {address ? (
                 <CommonButton
-                  title={"Disconnect wallet"}
-                  onClick={disconnectWallet}
+                  title={"Disconnect"}
+                  // disabled={connecting}
+                  onClick={() => {
+                    wallet && disconnect(wallet);
+                    dispatch(walletAddress(""));
+                  }}
                 />
               ) : (
                 <CommonButton
-                  title={"Connect wallet"}
-                  onClick={connectWallet}
+                  title={connecting ? "Connecting" : "Connect wallet"}
+                  disabled={connecting}
+                  onClick={() => connect()}
                 />
               )}
+
               <Navbar.Toggle
                 className="ms-3"
                 aria-controls="basic-navbar-nav"
@@ -148,7 +174,7 @@ const Header = () => {
         </Navbar>
       </header>
     </>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

@@ -10,6 +10,10 @@
         border: 1px solid $borderclr1;
         padding: 3rem 4rem;
 
+        @media (max-width:1499px) {
+            padding: 3rem 2rem;
+        }
+
         .add_fieldsbtn {
             display: flex;
             align-items: center;

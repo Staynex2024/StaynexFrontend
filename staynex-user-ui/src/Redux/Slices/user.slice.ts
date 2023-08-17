@@ -7,7 +7,7 @@ export const UserSlice = createSlice({
         walletAddress: "",
         isWalletConnected: "",
         walletType: "",
-        walletDetails: {},
+        walletDetails: "",
         userDetails: {},
         network: "matic",
         token: '',
@@ -25,7 +25,7 @@ export const UserSlice = createSlice({
         },
         walletDetails: (state, param) => {
             const { payload } = param;
-            state.walletAddress = payload;
+            state.walletDetails = payload;
         },
         token: (state, param) => {
             const { payload } = param;

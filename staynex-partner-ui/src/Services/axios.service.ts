@@ -74,8 +74,10 @@ function manageErrorConnection(err) {
   }
 }
 
+
 // /**HANDLE AXIOS SUCCESS */
 function handleSuccess(res) {
+
   if (res.status === RESPONSES.SUCCESS || res.status === RESPONSES.CREATED)
     res?.data?.message && toaster.success(res.data.message);
   else if (res.response.status === RESPONSES.BADREQUEST) {

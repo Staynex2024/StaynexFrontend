@@ -6,11 +6,17 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import InputCustom from '../../../../Common/Inputs/InputCustom'
 import { Col, Form, Row } from 'react-bootstrap'
+import { useDispatch } from 'react-redux'
+import { callApiPostMethod } from '../../../../../Redux/Actions/api.action'
+import { APIURL } from '../../../../../Utils'
 
-const MyAccountCard = () => {
+const MyAccountCard = ({customerData} : any) => {
+    const dispatch: any = useDispatch()
+
     const addnewproperty = Yup.object().shape({
         name: Yup.string().required('*This Field is required'),
-        date: Yup.string().required('*This Field is required'),
+        lastName: Yup.string().required('*This Field is required'),
+        gender: Yup.string().required('*This Field is required'),
         contact: Yup.string().required('*This Field is required'),
         eamil: Yup.string().required('*This Field is required'),
         number: Yup.string().required('*This Field is required'),
@@ -19,6 +25,8 @@ const MyAccountCard = () => {
     const formik = useFormik({
         initialValues: {
             name: '',
+            lastName: '',
+            gender: '',
             number: '',
             email: '',
             contact: '',
@@ -27,9 +35,21 @@ const MyAccountCard = () => {
         },
         validationSchema: addnewproperty,
         onSubmit: async (values) => {
-            // await dispatch(loginAdmin(values));
+            let dataToSend = {
+                walletAddress: "",
+                firstName: values?.name,
+                lastName: values?.lastName,
+                gender: values?.gender,
+                email: values?.email,
+                mobileNumber: values?.number,
+                passportNumber: values?.contact
+            }
+            // console.log('dataToSend :>> ', dataToSend);
+            const result = await dispatch(callApiPostMethod(APIURL.UPDATE_CUSTOMER_PROFILE, dataToSend, {}, true))
+            // console.log('result :>> ', result);
         },
     })
+    // console.log('formik.values :>> ', formik.errors);
     return (
         <>
             <div className='tabs_innerContent account_Card'>
@@ -37,7 +57,7 @@ const MyAccountCard = () => {
                 <div className='account_Card_box mt-5'>
                     <div className='d-flex align-items-center justify-content-between'>
                         <div className='account_heading'>
-                            <h5>Welcome, Bruno Fernandes</h5>
+                            <h5>{(customerData && Object.keys(customerData).length > 0) ? `Hello, ${customerData['user']['name']}`: ""}</h5>
                             <p>Save to apply changes</p>
                         </div>
                         <div className='account_profile'>
@@ -70,15 +90,15 @@ const MyAccountCard = () => {
                                     label="Last name"
                                     className="mb-44"
                                     placeholder="Fernandez"
-                                    id="name"
-                                    name="name"
+                                    id="lastName"
+                                    name="lastName"
                                     type="text"
                                     onChange={formik.handleChange}
                                     autoFocus={true}
-                                    value={formik.values.name}
+                                    value={formik.values.lastName}
                                     error={
-                                        formik.errors.name && formik.touched.name ? (
-                                            <span>{formik.errors.name}</span>
+                                        formik.errors.lastName && formik.touched.lastName ? (
+                                            <span>{formik.errors.lastName}</span>
                                         ) : null
                                     }
                                 />
@@ -88,15 +108,15 @@ const MyAccountCard = () => {
                                     label="Gender"
                                     className="mb-44"
                                     placeholder="Female"
-                                    id="name"
-                                    name="name"
+                                    id="gender"
+                                    name="gender"
                                     type="text"
                                     onChange={formik.handleChange}
                                     autoFocus={true}
-                                    value={formik.values.name}
+                                    value={formik.values.gender}
                                     error={
-                                        formik.errors.name && formik.touched.name ? (
-                                            <span>{formik.errors.name}</span>
+                                        formik.errors.gender && formik.touched.gender ? (
+                                            <span>{formik.errors.gender}</span>
                                         ) : null
                                     }
                                 />
@@ -126,7 +146,7 @@ const MyAccountCard = () => {
                                     placeholder="brunofernie@gmail.com"
                                     id="email"
                                     name="email"
-                                    type="text"
+                                    type="email"
                                     onChange={formik.handleChange}
                                     autoFocus={true}
                                     value={formik.values.email}

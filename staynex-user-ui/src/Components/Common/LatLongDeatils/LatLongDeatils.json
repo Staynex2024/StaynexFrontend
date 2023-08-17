@@ -1,0 +1,38 @@
+[
+  {
+    "country": "canada",
+    "latitude": 50.15002545,
+    "longitude": -96.88332178,
+    "image":  "src/Assets/Images/far-slide1.svg"
+  },
+  {
+    "country": "Japan",
+    "latitude": 34.67202964,
+    "longitude": 133.9170865,
+    "image": "src/Assets/Images/far-slide2.svg"
+  },
+  {
+    "country": "LONDON",
+    "latitude": 51.509865,
+    "longitude": -0.118092,
+    "image": "../../../../../Assets/Images/far-slide3.svg"
+  },
+  {
+    "country": "phuket",
+    "latitude": 7.878978,
+    "longitude": 98.398392,
+    "image": "../../../../../Assets/Images/far-slide4.svg"
+  },
+  {
+    "country": "phuk",
+    "latitude": 7.87897,
+    "longitude": 98.398392,
+    "image": "../../../../../Assets/Images/far-slide4.svg"
+  },
+  {
+    "country": "phuket",
+    "latitude": 7.878978,
+    "longitude": 98.398392,
+    "image": "../../../../../Assets/Images/far-slide4.svg"
+  }
+]

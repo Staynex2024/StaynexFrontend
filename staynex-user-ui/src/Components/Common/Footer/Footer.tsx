@@ -4,8 +4,6 @@ import { Col, Container, Dropdown, Row } from 'react-bootstrap'
 import "./Footer.scss"
 import FlagIcon from "../../../Assets/Images/Icons/flags/myr-flag.svg"
 import flag1 from "../../../Assets/Images/Icons/flags/myr-flag.svg"
-import footerLogo from "../../../Assets/Images/white-logo.svg"
-import { DiscordIcon, FacebookIcon, InstagramIcon, SoColIcon, TwitterIcon, YouTubeIcon } from '../../../Assets/Images/svgImgs/svgImgs'
 
 const Footer = () => {
   const countrylist = [
@@ -32,27 +30,21 @@ const Footer = () => {
   ];
   return (
     <>
-      <footer className='site_footer w-100'>
+      <footer className='login_footer w-100'>
         <Container>
-          <div className='text-center'>
-            <Link to="/"><img src={footerLogo} alt="Logo" /></Link>
-            <div className='site_footer_Links flex-wrap d-sm-flex align-items-center justify-content-center py-4 my-4 py-xl-5 my-xl-5'>
-              <Link to="#">StaynexPass</Link>
-              <Link to="#">StaynexClub</Link>
-              <Link to="#">Become A Hotel Partner</Link>
-              <Link to="#">Global partnerships</Link>
-            </div>
-            <div className='site_footer_Socialmedia flex-md-wrap d-flex align-items-center justify-content-center pb-4 my-4 pb-xl-5 my-xl-5'>
-              <Link to="#" target='_blank'><TwitterIcon /></Link>
-              <Link to="#" target='_blank'><DiscordIcon /></Link>
-              <Link to="#" target='_blank'><InstagramIcon /></Link>
-              <Link to="#" target='_blank'><YouTubeIcon /></Link>
-              <Link to="#" target='_blank'><FacebookIcon /></Link>
-              <Link to="#" target='_blank'><SoColIcon /></Link>
-            </div>
-          </div>
-          <Row className='align-items-center justify-content-center site_footer_Copyright'>
-            <Col xs={12} sm={4} className='d-flex order-sm-last justify-content-center justify-content-sm-end mb-4 mt-sm-0'>
+          <Row className='align-items-center'>
+            <Col xs={6} sm={4}>
+              <div className='login_footer_Links d-flex align-items-center justify-content-center justify-content-sm-start'>
+                <Link to="#">Terms</Link>
+                <Link className='ms-4' to="#">Privacy</Link>
+              </div> 
+            </Col>
+            <Col xs={6} sm={4} className='text-center'>
+              <div className='login_footer_Copyright'>
+                <p>© 2023 Staynex</p>
+              </div>
+            </Col>
+            <Col xs={12} sm={4} className='d-flex justify-content-center justify-content-sm-end mt-4 mt-sm-0'>
               <Dropdown>
                 <Dropdown.Toggle variant="" id="dropdown-basic">
                   <img src={FlagIcon} alt="flag" /> <span>MYR</span>
@@ -61,7 +53,7 @@ const Footer = () => {
                 <Dropdown.Menu>
                   {countrylist.map((data, i) => {
                     return (
-                      <Dropdown.Item key={i} href="#">
+                      <Dropdown.Item key={i}>
                         <img src={data.flagicon} alt="flag" />
                         <span>{data.name}</span>
                       </Dropdown.Item>
@@ -69,15 +61,6 @@ const Footer = () => {
                   })}
                 </Dropdown.Menu>
               </Dropdown>
-            </Col>
-            <Col xs={12} sm={4}>
-              <div className='site_footer_Links d-flex align-items-center justify-content-center justify-content-sm-start'>
-                <Link to="#">Terms</Link>
-                <Link className='ms-4' to="#">Privacy</Link>
-              </div>
-            </Col>
-            <Col xs={12} sm={4} className='text-center mt-2 mt-sm-0'>
-              <p>© 2023 Staynex</p>
             </Col>
           </Row>
         </Container>

@@ -4,11 +4,16 @@
     border-radius: 0.6rem;
     border: 1px solid $borderclr1;
 
+    &::-webkit-scrollbar {
+        width: 0;
+        height: 0.7rem;
+    }
 }
 
 .common_table {
     color: transparent;
     margin: 1rem 0;
+    position: relative;
 
     thead {
         border: none;

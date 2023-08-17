@@ -2,11 +2,20 @@ export const APIURL: any = {
   GETPRODUCTS: `/products`,
   CREATE_PARTNER: '/createVendor',
   LOGIN: '/login',
-  INVITATION_SIGNUP: "/requestInvitationInfo",
+  INVITATION_SIGNUP: '/requestInvitationInfo',
   FORGOT_PASSWORD: '/forgotPassword',
-  RESET_PASSWORD:"/resetPassword",
-  VENDOR_DETAILS: "/getVendorDetails",
-  VENDOR_ADD_PROPERTY: "/addProperty",
+  RESET_PASSWORD: '/resetPassword',
+  VENDOR_DETAILS: '/getVendorDetails',
+  VENDOR_ADD_PROPERTY: '/addProperty',
+  VENDOR_UPDATE_PROPERTY: '/updateProperty',
+  
+  CREATE_PASS: '/pass/addPass',
+  PASSES_LIST: '/pass/passesList',
+  GET_PASS_BY_ID: '/pass/passDetailsById',
+  UPDATE_PASS: './pass/editPassPerks',
+  RESUBMIT_PASS: './pass/resubmitPass',
+  LIST_DELIST_PASS: '/pass/actionListing',
+  PASSES_RESUBMIT_PASS:" /pass/resubmitPass"
 }
 
 export const RESPONSES: any = {

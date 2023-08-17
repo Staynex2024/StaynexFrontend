@@ -1,10 +1,10 @@
-import { defaultMaxListeners } from 'events'
-import React from 'react'
+// import { defaultMaxListeners } from 'events'
 import { Col, Container, Row } from 'react-bootstrap'
 import { BlackuserIcon, GlobalIcon, InterfaceIcon, RealtimeIcon, TokenIcon, TransparencyIcon } from '../../../../Assets/Images/svgImgs/svgImgs'
 import './RedefineTime.scss'
 
 const RedefineTime = () => {
+    
     const define = [
         {
             icon: <BlackuserIcon />,
@@ -43,9 +43,9 @@ const RedefineTime = () => {
                     </div>
 
                     <Row>
-                        {define.map((data) => {
+                        {define.map((data ,i) => {
                             return (
-                                <Col sm={6} md={4} xl={4}>
+                                <Col key={i} sm={6} md={4} xl={4}>
                                     <div className='redefine_box'>
                                         <span>
                                             {data.icon}

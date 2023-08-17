@@ -88,6 +88,7 @@
                 p {
                     margin-bottom: 2.4rem;
                     font-size: 1.6rem;
+                    font-weight: 500;
                 }
 
                 .listing {
@@ -104,6 +105,12 @@
                             margin-bottom: 0;
                         }
 
+                        svg {
+                            path {
+                                fill: $orangeclr3;
+                            }
+                        }
+
                         p {
                             font-size: 1.4rem;
                             font-weight: 400;
@@ -114,7 +121,7 @@
                             max-width: 535px;
 
                             span {
-                                color: $redclr2;
+                                color: $orangeclr3;
                                 font-weight: 700;
                             }
                         }

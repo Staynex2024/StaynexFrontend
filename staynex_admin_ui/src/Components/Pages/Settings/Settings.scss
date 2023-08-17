@@ -125,9 +125,15 @@
                                     flex-direction: column;
                                     align-items: flex-start;
                                     justify-content: flex-start;
+                                }
 
-                                    .btn_section {
+                                .btn_section {
+                                    @media (max-width:767px) {
                                         margin-top: 1rem;
+                                    }
+
+                                    .btn-style {
+                                        min-width: auto;
                                     }
                                 }
 

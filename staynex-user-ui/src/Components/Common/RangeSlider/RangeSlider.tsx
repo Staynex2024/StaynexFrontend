@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import MultiRangeSlider from "multi-range-slider-react";
 import "./RangeSlider.scss"
 
-const RangeSlider = () => {
-    const [minValue, set_minValue] = useState(25);
-    const [maxValue, set_maxValue] = useState(75);
-    const handleInput = (e) => {
-        set_minValue(e.minValue);
-        set_maxValue(e.maxValue);
-    };
+const RangeSlider = ({data, minValue, maxValue}) => {
+
+    // const [minValue, set_minValue] = useState(25);
+    // const [maxValue, set_maxValue] = useState(75);
+    // const handleInput = (e) => {
+    //     set_minValue(e.minValue);
+    //     set_maxValue(e.maxValue);
+    // };
+
     return (
         <>
             <MultiRangeSlider
@@ -18,7 +20,7 @@ const RangeSlider = () => {
                 minValue={minValue}
                 maxValue={maxValue}
                 onInput={(e) => {
-                    handleInput(e);
+                    data(e);
                 }}
             />
         </>

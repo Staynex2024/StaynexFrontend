@@ -4,7 +4,11 @@
     .modal-dialog {
         .modal-content {
             .modal-body {
+                padding: 3rem;
 
+                @media (max-width:767px) {
+                    padding: 3rem 1.5rem 3rem;
+                }
                 .main_content {
                     h6 {
                         color: #E55735;
@@ -31,12 +35,12 @@
                                 border: 1px solid #0E0E0B;
 
                                 .select__control {
-                                    height: 4rem;
-                                    width: 11rem;
+                                    height: 3.5rem;
+                                    width: 15rem;
                                     min-height: 2rem;
 
                                     .select__indicators {
-                                        height: 4rem;
+                                        height: 3.5rem;
 
                                         .select__indicator {
                                             width: 1.5rem;
@@ -58,6 +62,10 @@
                                         .select__placeholder {
                                             font-size: 1.4rem;
                                             font-weight: 500;
+                                        }
+
+                                        .select__single-value {
+                                            color: $orangeclr;
                                         }
                                     }
                                 }

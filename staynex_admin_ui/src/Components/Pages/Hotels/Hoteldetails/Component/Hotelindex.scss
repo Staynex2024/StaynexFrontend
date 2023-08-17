@@ -36,7 +36,7 @@
         flex-direction: column;
         border-radius: 1.2rem;
         border: 1px solid $borderclr;
-        padding: 1rem 2rem;
+        padding: 1rem 2rem 1.5rem;
 
         @media (max-width:1279px) {
             padding: 1rem;
@@ -68,17 +68,17 @@
                 border-radius: 1.2rem;
                 border: 1px solid $borderclr;
                 display: flex;
-                padding: 0.5rem;
+                padding: 0.7rem;
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
                 width: 100%;
-                max-width: 5rem;
+                max-width: 6.5rem;
                 margin: 1.6rem auto 1rem;
                 color: $blackclr2;
                 font-size: 1rem;
                 font-weight: 600;
-                line-height: 1;
+                line-height: normal;
                 letter-spacing: -0.09px;
             }
         }
@@ -102,7 +102,7 @@
             p {
                 color: $blackclr2;
                 text-align: center;
-                font-size: 1.1rem;
+                font-size: 1.3rem;
                 font-weight: 400;
                 line-height: 1.1;
             }
@@ -116,14 +116,14 @@
                 li {
                     label {
                         color: $greyclr;
-                        font-size: 0.9rem;
+                        font-size: 1.1rem;
                         font-weight: 400;
                         line-height: 1;
                     }
 
                     p {
                         text-align: left;
-                        font-size: 1.2rem;
+                        font-size: 1.3rem;
                         line-height: 1.2;
                     }
 
@@ -184,7 +184,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                margin: 1.5rem 0;
+                margin: 1.5rem 0 0;
 
                 button {
                     display: flex;
@@ -192,16 +192,16 @@
                     justify-content: center;
                     background: transparent;
                     border: none;
-                    font-size: 1.3rem;
+                    font-size: 1.4rem;
                     font-weight: 600;
                     letter-spacing: -0.117px;
-                    line-height: 1.2;
+                    line-height: normal;
                     color: $greyclr;
                     transition: 0.3s all ease-in-out;
 
                     svg {
                         margin-left: 0.5rem;
-                    }
+                    }                   
 
                     &.active,
                     &:hover {
@@ -209,10 +209,48 @@
                         transition: 0.3s all ease-in-out;
                     }
                 }
+
+                span {
+                    color: rgba(13, 14, 11, 0.47);
+                }
+
+                .rejected_pass {
+                    display: block;
+                    text-align: center;
+                    width: 100%;
+                    font-size: 1.4rem;
+                    color: $redclr;
+                    background-color: #ffe2e2;
+                    padding: 1rem;
+                    text-transform: uppercase;
+                    font-weight: 600;
+                }
+            
+                .delist_pass {
+                    font-size: 1.4rem;
+                    color: $redclr;
+                    font-weight: 600;
+                }
+                .pending_pass {
+                    background: $brownlightbg;
+                    display: block;
+                    text-align: center;
+                    width: 100%;
+                    font-size: 1.4rem;
+                    padding: 1rem;
+                    text-transform: uppercase;
+                    font-weight: 600;
+                }
+                .listed_check {
+                    font-size: 1.4rem;
+                    font-weight: 600;
+                    text-transform: uppercase;
+                    color: $greenclr;
+                }   
             }
 
         }
-    }
+    }    
 }
 
 .stats {
@@ -321,7 +359,7 @@
         .table-responsive {
             &::-webkit-scrollbar {
                 width: 0;
-                height: 0.7rem;
+                height: 0.4rem;
             }
         }
 

@@ -61,7 +61,7 @@ const ForgotPassword = () => {
                                 value={formik.values.email}
                                 error={formik.errors.email}
                             />
-                            <div className="text-center mt-5 linkwhite">
+                            <div className="text-center mt-4 linkwhite">
                                 <button type="submit" className="login_btn">
                                     Send reset link
                                 </button>

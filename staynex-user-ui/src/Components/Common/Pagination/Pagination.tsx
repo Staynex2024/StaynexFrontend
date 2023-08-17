@@ -1,0 +1,29 @@
+import React from 'react'
+import ReactPaginate from 'react-paginate';
+import { LeftArrowIcon, RightArrowIcon } from '../../../Assets/Images/svgImgs/svgImgs';
+// import "./Pagination.scss"
+
+const Pagination = (props: any) => {
+    return (
+        <>
+            <ReactPaginate
+                pageCount={props.totalPage}
+                marginPagesDisplayed={2}
+                onPageChange={props.handlePageChange}
+                containerClassName={`${props.className} ListPagination`}
+                previousLinkClassName={'page'}
+                breakClassName={'page'}
+                nextLinkClassName={'page'}
+                pageClassName={'page'}
+                disabledClassName={'disabled'}
+                activeClassName={'active'}
+                forcePage={props.currentPage - 1}
+                nextLabel={<RightArrowIcon />}
+                previousLabel={<LeftArrowIcon />}
+                // className={props.className}
+            />
+        </>
+    )
+}
+
+export default Pagination

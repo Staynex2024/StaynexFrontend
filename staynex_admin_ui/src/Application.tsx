@@ -15,12 +15,13 @@ import Dashboard from './Components/Pages/Dashboard/Dashboard'
 import Hotels from './Components/Pages/Hotels/Hotels'
 import Hoteldetails from './Components/Pages/Hotels/Hoteldetails/Hoteldetails'
 import LoginLayout from './Components/Common/MainLayout/LoginLayout'
-import Newproperty from './Components/Pages/Hotels/Newproperty/Newproperty'
+// import Newproperty from './Components/Pages/Hotels/Newproperty/Newproperty'
 import Members from './Components/Pages/Members/Members'
 import Management from './Components/Pages/Management/Management'
 import Settings from './Components/Pages/Settings/Settings'
 import Createpass from './Components/Pages/Hotels/Hoteldetails/Component/Createpass'
 import Approvals from './Components/Pages/Dashboard/Component/Approvals'
+import Passes from './Components/Pages/Hotels/Hoteldetails/Component/Passes'
 
 const Application: React.FC = () => {
   const router = createBrowserRouter([
@@ -87,14 +88,14 @@ const Application: React.FC = () => {
         //   path: "login",
         //   element: <AuthLogin />,
         // },
-        {
-          path: 'hotels/new-property',
-          element: (
-            <RequireAuth>
-              <Newproperty />
-            </RequireAuth>
-          ),
-        },
+        // {
+        //   path: 'hotels/new-property',
+        //   element: (
+        //     <RequireAuth>
+        //       <Newproperty />
+        //     </RequireAuth>
+        //   ),
+        // },
         {
           path: 'hotel-details/:id',
           element: (
@@ -143,14 +144,14 @@ const Application: React.FC = () => {
             </RequireAuth>
           ),
         },
-        // {
-        //   path: 'approvals',
-        //   element: (
-        //     <RequireAuth>
-        //       <Approvals />
-        //     </RequireAuth>
-        //   ),
-        // },
+        {
+          path: 'pass-details',
+          element: (
+            <RequireAuth>
+              <Passes />
+            </RequireAuth>
+          ),
+        },
       ],
     },
   ])

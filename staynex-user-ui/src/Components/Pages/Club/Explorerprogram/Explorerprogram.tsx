@@ -14,8 +14,8 @@ const Explorerprogram = () => {
         <>
             <div className='explorer_program'>
                 <ul className='explorer_program_list'>
-                    {explorerlist.map((data) => (
-                        <li> 
+                    {explorerlist.map((data,i) => (
+                        <li key={i}>  
                             <div className='content'>
                                 <h6>{data.headlabel}</h6>
                                 <h4>{data.valuelabel}</h4>

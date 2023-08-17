@@ -34,6 +34,15 @@
         }
     }
 
+    select {
+        &.form-control {
+            background-image: url("../../../Assets/Images/Icons/droparrow.svg");
+            background-repeat: no-repeat;
+            background-position: center right 15px;
+            background-size: 15px;
+        }
+    }
+
     &.input_with_icon {
         .customInput_inner {
             .input_Icon {
@@ -70,7 +79,9 @@
         }
     }
 
-    .error_Msg {
+    .error_Msg,
+    .error-message,
+    .error-msg {
         color: red;
         font-size: 1.3rem;
         margin-top: 0.5rem;
@@ -103,8 +114,8 @@
 
 .checkbox_input {
     display: flex;
-    align-items: left;
-    justify-content: left;
+    align-items: flex-start;
+    justify-content: flex-start;
 
     .label_left {
         margin: 0.2rem 1rem 0 0;

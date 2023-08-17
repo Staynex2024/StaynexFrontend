@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import headerLogo from '../../../Assets/Images/logo.svg'
 import { Col, Container, Dropdown, Form, Offcanvas, Row } from 'react-bootstrap'
 import './Header.scss'
@@ -14,22 +14,22 @@ import ResetModal from '../Reset/ResetModal'
 
 const Header = () => {
   const dispatch: any = useDispatch()
-  const navigate: any = useNavigate()
+  // const navigate: any = useNavigate()
   const isLogin = useSelector((state: any) => state.user.token)
   const email = useSelector((state: any) => state.user.email)
 
   const settingdata = [
-    {
-      name: 'User Profile',
-    },
-    {
-      name: 'Add Properties',
-    },
+    // {
+    //   name: 'User Profile',
+    // },
+    // {
+    //   name: 'Add Properties',
+    // },
     {
       name: 'Logout',
     },
     {
-      name: 'Reset',
+      name: 'Reset Password',
     },
   ]
   const countrylist = [
@@ -54,9 +54,9 @@ const Header = () => {
     await dispatch(logOut())
   }
 
-  const handleNavigation = () => {
-    navigate('/auth/hotels/new-property')
-  }
+  // const handleNavigation = () => {
+  //   navigate('/auth/hotels/new-property')
+  // }
 
   return (
     <>
@@ -141,11 +141,7 @@ const Header = () => {
 
                           data?.name === 'Logout' ? (
                             <Dropdown.Item key={i} onClick={handleLogout}><span >{data.name}</span></Dropdown.Item>
-                          ) : data?.name === 'Add Properties' ? (
-                            <Dropdown.Item key={i} onClick={handleNavigation}><span >
-                              {data.name}
-                            </span></Dropdown.Item>
-                          ) : data?.name === 'Reset' ? (
+                          ) : data?.name === 'Reset Password' ? (
                             <Dropdown.Item key={i} onClick={() => setShowResetModal(true)}><span >
                               {data.name}{' '}
                             </span></Dropdown.Item>

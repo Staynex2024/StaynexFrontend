@@ -104,6 +104,7 @@ export const apiCallPost = (url, data, params = {}, showtoaster = false) =>
 
 /**METHOD FOR SEND API */
 export const apiCallGet = (url, params = {}, showtoaster = false) =>
+
   new Promise((resolve) => {
     axios
       .get(formatUrl(url, params))

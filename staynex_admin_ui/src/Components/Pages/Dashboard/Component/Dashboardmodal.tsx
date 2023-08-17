@@ -20,8 +20,8 @@ const Dashboardmodal = ({ show, handleClose }) => {
         show={show}
         handleClose={handleClose}
         className="dashboardmodal"
-        heading="Monthly Analytics"
-      >
+        heading=""
+      > 
         <div className="main_content">
           <h6>Monthly Analytics</h6>
           <div className="select_valuesyear">

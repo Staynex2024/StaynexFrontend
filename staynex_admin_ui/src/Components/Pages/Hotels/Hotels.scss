@@ -275,6 +275,16 @@
             width: 100%;
         }
     }
+
+    &_topform {
+        .common_select {
+            .select__control {
+                height: 4rem;
+                min-width: 16rem;
+                font-size: 1.4rem;
+            }
+        }
+    }
 }
 
 .images_sliderone {

@@ -18,7 +18,7 @@ function SignupStepOneValidation() {
           .matches(/[A-Z]/, "Password should contain at least one uppercase letter.")
           .matches(/[@$!%*?&<>-]/, "Password should contain at least one special character."),
         cPassword: Yup.string()
-          .required("*This Field is required")
+          .required("This field is required")
           .oneOf([Yup.ref("password")], "Confirm password does not match."),
   });
 

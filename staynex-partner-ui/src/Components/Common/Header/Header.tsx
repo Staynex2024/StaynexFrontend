@@ -129,7 +129,7 @@ const Header = () => {
                   <Dropdown align="end" className="Setting_Dropdown">
                     <Dropdown.Toggle variant="" id="dropdown-basic">
                       <img src={UserImg} alt="flag" />{' '}
-                      <span>Hello, {userData.name}</span>
+                      <span>Hello, {userData?.name}</span>
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                       {settingdata.map((data, i) => {

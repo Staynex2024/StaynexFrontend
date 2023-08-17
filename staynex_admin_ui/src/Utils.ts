@@ -10,6 +10,11 @@ export const APIURL: any = {
   ACTION_PARTNER_REQUEST: '/createActionOnParterRequest',
   PARTNER_PROPERTY_REQUEST_LIST: '/propertyRequestsList',
   ACTION_PARTNER_PROPERTY: '/createActionOnPropertyRequest',
+  PASSES_REQUEST_LIST: "/passesRequestsList",
+  PASS_DETAILS: "/getPassDetails",
+  ACTION_ON_PASS: "/createActionOnPassRequest",
+  LIST_DELIST_PASS: "/createListAndDelistPass",
+  PENDING_PROPERTY_REQUESTLIST: "/pendingPropertyRequestsList",
 }
 
 export const RESPONSES: any = {

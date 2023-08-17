@@ -44,6 +44,24 @@ span {
   display: inline-block;
 }
 
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.8rem;
+}
+
+h4 {
+  font-size: 1.6rem;
+}
+
+h6,
+h5,
+p {
+  font-size: 1.4rem;
+}
+
 h1,
 h2,
 h3,
@@ -74,7 +92,7 @@ body ::-webkit-scrollbar-track {
 }
 
 body ::-webkit-scrollbar-thumb {
-  background-color: $greyclr4;
+  background-color: $grayclr6;
   border-radius: 1rem;
 }
 
@@ -165,7 +183,7 @@ body {
   .form-check-input {
     width: 14px;
     height: 14px;
-    border-color: $borderclr1;
+    border-color: $greyclr;
 
     &:checked {
       background-color: $orangeclr;
@@ -226,6 +244,51 @@ input::-webkit-inner-spin-button {
           border-color: $orangeclr;
           color: $blackclr;
         }
+      }
+    }
+  }
+}
+
+.empty_msg {
+  max-width: 27rem;
+  margin: 0 auto;
+  padding: 16rem 0;
+
+  @media (max-width:991px) {
+    padding: 8rem 0;
+  }
+
+  @media (max-width:991px) {
+    padding: 5rem 0;
+  }
+
+  h2 {
+    margin: 1.8rem 0;
+  }
+
+  .empty_btn {
+    margin: 0 auto;
+    margin-top: 1.8rem;
+  }
+}
+
+.table_checkall_box {
+  &.checkbox_input {
+    position: absolute;
+    top: 0.3rem;
+    left: 1.5rem;
+  }
+}
+
+.property_approval {
+  .common_heading {
+    margin-bottom: 0;
+  }
+
+  .tables_btn {
+    .btn-style {
+      @media (max-width:575px) {
+        width: 100%;
       }
     }
   }

@@ -1,23 +1,29 @@
-import React, { useRef } from 'react'
-import { Col, Container, Row } from 'react-bootstrap'
+import { Col, Row } from 'react-bootstrap'
 import paltform_img from '../../../Assets/Images/platform-img.jpg'
-import { SocolIcon, TwitterBlackIcon, TwitterIcon } from '../../../Assets/Images/svgImgs/svgImgs'
+import {  TwitterBlackIcon } from '../../../Assets/Images/svgImgs/svgImgs'
 import CommonButton from '../../Common/CommonButton/CommonButton'
-import twitter_img from '../../../Assets/Images/Icons/twitter-img.png'
+// import twitter_img from '../../../Assets/Images/Icons/twitter-img.png'
 import './AboutUs.scss'
 import ImagineNFT from './ImagineNFT/ImagineNFT'
 import OfficialPartner from './OfficialPartner/OfficialPartner'
 import BrowseResort from './BrowseResort/BrowseResort'
 import StaynexPass from './StaynexPass/StaynexPass'
-// import aboutvideo from "../../../Assets/videos/video.mp4"
+import aboutvideo from "../../../Assets/videos/about_video.mp4"
+import aboutlogo from "../../../Assets/Images/white-logo.svg"
+import { Link } from 'react-router-dom'
+import stayTwitter from "../../../Assets/Images/staynext_twitte.svg"
 
 const AboutUs = () => {
     return (
         <div className='aboutus'>
-            <section className='aboutus_banner_sec'>
+            <section className='aboutus_banner'>
                 <video autoPlay loop muted>
-                    <source src="../../../Assets/videos/video.mp4" type="video/mp4" />
+                    <source src={aboutvideo} type="video/mp4" />
                 </video>
+                <div className='aboutus_banner_content'>
+                    <img className='about_logo' src={aboutlogo} alt="Logo" />
+                    <h1>The world is your home</h1>
+                </div>
             </section>
             <OfficialPartner />
             <section className='aboutus_platform_sec'>
@@ -35,10 +41,9 @@ const AboutUs = () => {
                                     <CommonButton
                                         title={<>Download Staynex's<br /> Official Press Kit</>}
                                     />
-                                    <CommonButton
-                                        title={<><TwitterBlackIcon /> Follow us<br />@Staynexcom</>}
-                                        className="twitter_btn"
-                                    />
+                                    <Link className="twitter_btn ms-3" to="/">
+                                        <img src={stayTwitter} alt="" />
+                                    </Link>
                                 </div>
                             </div>
                         </div>

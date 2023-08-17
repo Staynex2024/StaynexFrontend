@@ -35,7 +35,7 @@ export default function SliderImage(props: any) {
 
       <Slider
         asNavFor={nav1}
-        ref={(slider) => (slider2 = slider)}
+        ref={(slider: any) => (slider2 = slider)}
         slidesToShow={3}
         swipeToSlide={true}
         focusOnSelect={true}

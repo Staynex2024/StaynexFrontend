@@ -11,7 +11,11 @@
 
             .nav-item {
                 border: none;
-                padding: 0 1rem;
+                padding-right: 2rem;
+
+                &:last-child {
+                    margin-right: 0;
+                }
 
                 .nav-link {
                     color: #01131D;
@@ -34,6 +38,24 @@
                         border: none;
                         border-bottom: 1px solid #E55735;
                         transition: 0.3s all ease-in-out;
+                    }
+                }
+            }
+        }
+
+        .check_box_fields {
+            ul {
+                display: flex;
+                flex-wrap: wrap;
+                max-width: 70rem;
+                margin-bottom: 2rem;
+
+                li {
+                    width: 50%;
+                    padding: 1rem 0;
+
+                    @media (max-width:575px) {
+                        width: 100%;
                     }
                 }
             }

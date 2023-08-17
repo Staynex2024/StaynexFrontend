@@ -1,0 +1,38 @@
+@import "../../../Assets/theme/_var.scss";
+
+.yellow_bg_box {
+    border-radius: 0.6rem;
+    background: #FFC33E;
+    color: $blackclr;
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: normal;
+    padding: 1rem 2rem;
+}
+
+.white_card {
+    border-radius: 0.6rem;
+    border: 1px solid $borderclr1;
+    background: $whiteclr;
+    padding: 3rem 4rem;
+
+    h5 {
+        color: #18181D;
+        font-size: 1.6rem;
+        font-weight: 600;
+        line-height: normal;
+        margin-bottom: 1rem;
+    }
+
+    ol {
+        padding-left: 1.5rem;
+
+        li {
+            font-size: 1.4rem;
+        }
+    }
+
+    p {
+        font-size: 1.4rem;
+    }
+}

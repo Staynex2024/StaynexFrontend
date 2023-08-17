@@ -11,7 +11,7 @@ const Explorerprogram = () => {
     { headlabel: 'Globetrotter', valuelabel: '365', bottomlabel: 'NIGHTS' },
   ]
   return (
-    <>
+    <> 
       <div className="explorer_program">
         <ul className="explorer_program_list">
           {explorerlist.map((data, key) => (

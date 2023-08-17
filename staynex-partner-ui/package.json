@@ -1,6 +1,6 @@
 {
   "name": "partner-portal",
-  "version": "0.1.1",
+  "version": "0.1.10",
   "private": true,
   "dependencies": {
     "@biconomy/mexa": "^2.0.32",

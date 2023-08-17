@@ -1,13 +1,13 @@
 import React from 'react'
 import { Container } from 'react-bootstrap'
 import './StaynexArsenal.scss'
-import arsenalnft1 from '../../../../Assets/Images/arsenalnft1.png'
-import arsenalnft2 from '../../../../Assets/Images/arsenalnft2.png'
-import arsenalnft3 from '../../../../Assets/Images/arsenalnft3.png'
+import arsenalnft1 from '../../../../Assets/Images/arsenal_nft1.png'
+import arsenalnft2 from '../../../../Assets/Images/arsenal_nft2.png'
+import arsenalnft3 from '../../../../Assets/Images/arsenal_nft3.png'
 
 const StaynexArsenal = () => {
     return (
-        <section className='staynex_arsenal red_overlay'>
+        <section className='staynex_arsenal'>
             <Container>
                 <div className='user_heading'>
                     <h3>

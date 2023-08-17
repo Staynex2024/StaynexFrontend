@@ -93,7 +93,7 @@
                     content: "";
                     position: absolute;
                     bottom: -3rem;
-                    width: 2rem;
+                    width: 2rem; 
                     height: 2rem;
                     background-color: $orangeclr;
                     left: 51%;
@@ -133,7 +133,7 @@
                 .hover_content {
                     text-align: left;
                     margin-top: 1.9rem;
-                    border-top: 1px solid $borderclr2;
+                    border-top: 1px solid #FEF9EA;
                     padding-top: 1.3rem;
 
                     p {
@@ -142,6 +142,7 @@
                         justify-content: flex-start;
                         font-size: 1.2rem;
                         margin-bottom: 1rem;
+                        color: $whiteclr;
 
                         @media (max-width:1366px) {
                             font-size: 1rem;
@@ -155,6 +156,7 @@
 
                         span {
                             width: 100%;
+                            color: $whiteclr;
                         }
 
                         &:last-child {

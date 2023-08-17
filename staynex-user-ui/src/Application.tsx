@@ -8,23 +8,22 @@ import Home from "./Components/Pages/Home/Home";
 import Listings from "./Components/Pages/Listings/Listings";
 import ResortDetails from "./Components/Pages/ResortDetails/ResortDetails";
 import Club from "./Components/Pages/Club/Club";
-import DemoPage from "./Components/Pages/DemoPage/DemoPage";
 import AboutUs from "./Components/Pages/AboutUs/AboutUs";
 import GlobalPartners from "./Components/Pages/GlobalPartners/GlobalPartners";
 import ListYourProperty from "./Components/Pages/ListYourProperty/ListYourProperty";
 import ProfileLogin from "./Components/Pages/CustomerProfile/ProfileLogin/ProfileLogin";
 import ProfilePass from "./Components/Pages/CustomerProfile/ProfilePass/ProfilePass";
+import { RequireAuth } from "./Routes/Guard/AuthGuard";
 
 const Application: React.FC = () => {
-
   const router = createBrowserRouter([
     {
-      path: "/",
+      path: '/',
       element: <MainLayout />,
       errorElement: <ErrorBoundary />,
       children: [
         {
-          path: "/",
+          path: '/',
           element: (
             <WithoutAuth>
               <Home />
@@ -32,7 +31,7 @@ const Application: React.FC = () => {
           ),
         },
         {
-          path: "/listing",
+          path: '/listing',
           element: (
             <WithoutAuth>
               <Listings />
@@ -40,7 +39,7 @@ const Application: React.FC = () => {
           ),
         },
         {
-          path: "resort-details",
+          path: 'resort-details/:id',
           element: (
             <WithoutAuth>
               <ResortDetails />
@@ -48,7 +47,7 @@ const Application: React.FC = () => {
           ),
         },
         {
-          path: "club",
+          path: 'club',
           element: (
             <WithoutAuth>
               <Club />
@@ -56,15 +55,7 @@ const Application: React.FC = () => {
           ),
         },
         {
-          path: "demo",
-          element: (
-            <WithoutAuth>
-              <DemoPage />
-            </WithoutAuth>
-          ),
-        },
-        {
-          path: "/about-us",
+          path: '/about-us',
           element: (
             <WithoutAuth>
               <AboutUs />
@@ -72,52 +63,71 @@ const Application: React.FC = () => {
           ),
         },
         {
-          path: "/global-partner",
+          path: '/global-partner',
           element: (
             <WithoutAuth>
               <GlobalPartners />
             </WithoutAuth>
           ),
-        }, 
+        },
         {
-          path: "/list-property",
+          path: '/list-property',
           element: (
             <WithoutAuth>
-              <ListYourProperty/>
-            </WithoutAuth>
-          ),
-        },    
-
-        {
-          path: "/profile-login",
-          element: (
-            <WithoutAuth>
-              <ProfileLogin/>
+              <ListYourProperty />
             </WithoutAuth>
           ),
         },
 
-        {
-          path: "/profile-pass",
-          element: (
-            <WithoutAuth>
-              <ProfilePass/>
-            </WithoutAuth>
-          ),
-        },
+
+
+        // {
+        //   path: "/profile-pass",
+        //   element: (
+        //     <WithoutAuth>
+        //       <ProfilePass/>
+        //     </WithoutAuth>
+        //   ),
+        // },
         // {
         //   path: "*",
         //   element: <ErrorPage />,
         // },
       ], 
     },
-  ]);
+    {
+      path: '/auth',
+      element: <MainLayout />,
+      errorElement: <ErrorBoundary />,
+      children: [
+        {
+          path: "profile-pass",
+          element: (
+            <RequireAuth>
+              <ProfilePass/>
+            </RequireAuth>
+          ),
+        },
+        {
+          path: "profile-login",
+          element: (
+            <RequireAuth>
+              <ProfileLogin/>
+            </RequireAuth>
+          ),
+        },
+        
+       
+         
+      ],
+    },
+  ])
 
   return (
     <>
       <RouterProvider router={router} fallbackElement={<Loader />} />
     </>
-  );
-};
+  )
+}
 
-export default Application;
+export default Application

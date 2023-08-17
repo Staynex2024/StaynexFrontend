@@ -1,4 +1,31 @@
 @import "../../../../../Assets/theme/_var.scss";
+.black_bg_style {
+    &::after {
+        content: "";
+        background-color: $blackclr;
+        min-height: 170px;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+}
+.Usercraete_property_page {
+    .common_heading {
+        h2 {
+            padding-bottom: 0;
+            color: $whiteclr;
+        }
+    }
+
+    .btn-style {
+        &:hover {
+            background-color: $greybg;
+            color: $blackclr;
+        }
+    }
+}
 
 .new_property {
     border-radius: 0.6rem;
@@ -14,7 +41,7 @@
         color: #18181D;
         font-size: 1.3rem;
         font-weight: 600;
-        line-height: 1.3;
+        line-height: 1.3;        
     }
 
     &_section {
@@ -31,36 +58,41 @@
                 justify-content: flex-start;
 
                 li {
-                    width: 4.8rem;
-                    height: 4.8rem;
-                    margin-right: 1.2rem;
+                    &.multi-preview {
+                        display: flex;
+                        flex-wrap: wrap;
+                        align-items: flex-start;
 
-                    img {
-                        height: 100%;
-                        object-fit: cover;
-                    }
-
-                    .image_up {
-                        position: relative;
-                        width: 100%;
-                        height: 100%;
-
-                        span {
-                            width: 100%;
-                            height: 100%;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            background: #F4F4F4;
+                        img {
+                            width: 4.8rem;
+                            height: 4.8rem;
+                            object-fit: cover;
+                            margin-right: 1.2rem;
+                            margin-bottom: 1rem;
                         }
 
-                        .file_up {
-                            width: 100%;
-                            height: 100%;
-                            position: absolute;
-                            top: 0;
-                            z-index: 9;
-                            opacity: 0;
+                        .image_up {
+                            position: relative;
+                            width: 4.8rem;
+                            height: 4.8rem;
+
+                            span {
+                                width: 100%;
+                                height: 100%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                background: #F4F4F4;
+                            }
+
+                            .file_up {
+                                width: 100%;
+                                height: 100%;
+                                position: absolute;
+                                top: 0;
+                                z-index: 9;
+                                opacity: 0;
+                            }
                         }
                     }
                 }
@@ -107,6 +139,10 @@
                     }
 
                     .check_reverse {
+                        &.checkbox_input {
+                            display: block;
+                        }
+
                         .form-check {
                             flex-direction: row-reverse;
                             justify-content: space-between;

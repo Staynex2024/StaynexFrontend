@@ -21,14 +21,14 @@ const Topsection = () => {
         <>
             <section className='top_section'>
                 <Slider {...settings}>
-                    {swaping.map((data) => (
-                        <div className='swip'>
+                    {swaping.map((data ,i) => (
+                        <div key={i} className='swip'>
                             <div className='swip_textsec'>
                                 <h3>Ski the Swiss Alps this winter</h3>
                                 <p>Discover Switzerland’s best ski resorts and plan the perfect holiday</p>
                             </div>
                             <div className='swip_imagesec'>
-                                <img src={data.slideimage} alt='side-image' />
+                                <img src={data.slideimage} alt='sideimage' />
                             </div>
                         </div>
                     ))}

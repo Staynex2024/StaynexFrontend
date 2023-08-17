@@ -6,6 +6,10 @@
         padding: 3rem 4rem;
         border-radius: 0.6rem;
 
+        @media (max-width:767px) {
+            padding: 2rem 1.5rem;
+        }
+
         .account_heading {
             h5 {
                 font-size: 1.5rem;

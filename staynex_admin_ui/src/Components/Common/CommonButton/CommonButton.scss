@@ -17,6 +17,10 @@
     color: $whiteclr;
     min-width: 150px;
 
+    @media (max-width:1199px) {
+        min-width: 120px;
+    }
+
     &:hover {
         background-color: $blackclr;
         border-color: $blackclr;
@@ -39,11 +43,13 @@
 
     &.border-btn {
         background-color: transparent;
-        border-color: $orangeclr;
+        border-color: $blackclr;
+        color: $blackclr;
 
         &:hover {
             background-color: $blackclr;
             border-color: $blackclr;
+            color: $whiteclr;
         }
     }
 

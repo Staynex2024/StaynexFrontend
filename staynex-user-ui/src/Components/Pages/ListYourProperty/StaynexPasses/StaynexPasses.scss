@@ -67,7 +67,7 @@
             p {
                 margin-left: 1.5rem;
                 font-size: 1.2rem;
-                font-weight: 700;
+                font-weight: 500;
                 width: calc(100% - 25px);
                 max-width: 268px;
             }
@@ -171,6 +171,11 @@
 
                         .list_icon {
                             margin: 3rem 0 0.9rem 0;
+                            
+                            svg {
+                                width: 20px;
+                                height: 20px;
+                            }
                         }
                         .red_clr{
                             svg{
@@ -183,6 +188,7 @@
                         h5 {
                             font-size: 3.5rem;
                             font-weight: 500;
+                            font-family: $baseFont1;
                         }
 
                         p {

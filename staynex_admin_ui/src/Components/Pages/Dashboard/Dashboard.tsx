@@ -26,11 +26,13 @@ const Dashboard = () => {
   const [partnerListCount, setPartnerListCount] = useState(0)
   const [partnerPropertyListCount, setPartnerPropertyListCount] = useState(0)
   const [checkStatus, setCheckStatus] = useState(false)
+  const [passRequestList, setPassRequestList] = useState([])
+  const [passRequestListCount, setPassRequestListCount] = useState(0)
 
   // table heading
   const fields = [
     'Sr. No.',
-    'Name',
+    'Account Name',
     'Email Id',
     'Created At (UTC)',
     'Invite Code',
@@ -38,10 +40,17 @@ const Dashboard = () => {
   ]
   const propertyFields = [
     'Sr. No.',
-    'Name',
-    'Email Id',
+    'Property Name',
+    'Account Name',
     'Created At (UTC)',
-    'Contact No.',
+    'Actions',
+  ]
+  const passfield = [
+    'Sr. No.',
+    'Property Name',
+    'Account Name',
+    'Pass type',
+    'Created At (UTC)',
     'Actions',
   ]
 
@@ -50,28 +59,6 @@ const Dashboard = () => {
     { label: 'Total pass available', value: '45' },
     { label: 'Nights redeemed', value: '120' },
     { label: 'Total properties', value: '120' },
-  ]
-
-  const passfield = [
-    'Property Name',
-    'Account Name',
-    'Pass type',
-    'Created',
-    '',
-  ]
-  const tablepassdata = [
-    {
-      propertyname: 'Kunang-kunang Resort',
-      accountname: 'Kylee Arroyo',
-      passtype: 'SP7',
-      created: 'Monday, July 17, 2023 09:30:45 AM',
-    },
-    {
-      propertyname: 'Kunang-kunang Resort',
-      accountname: 'Kylee Arroyo',
-      passtype: 'SP7',
-      created: 'Monday, July 17, 2023 09:30:45 AM',
-    },
   ]
 
   useEffect(() => {
@@ -100,11 +87,27 @@ const Dashboard = () => {
           false,
         ),
       )
-      setPartnerPropertyList(result?.data?.data)
-      setPartnerPropertyListCount(result?.data?.count)
+      setPartnerPropertyList(result?.data)
+      setPartnerPropertyListCount(result?.count)
     }
+
+    // get passesList function
+    const retreivePassesRequestList = async () => {
+      const result = await dispatch(
+        callApiGetMethod(
+          APIURL.PASSES_REQUEST_LIST,
+          { page: 1, limit: 2, search: '' },
+          true,
+          false,
+        ),
+      )
+      setPassRequestList(result?.data?.data)
+      setPassRequestListCount(result?.data?.count)
+    }
+
     retreivePartnerRequestList()
     retreivePartnerPropertyList()
+    retreivePassesRequestList()
     // eslint-disable-next-line
   }, [checkStatus])
 
@@ -116,6 +119,7 @@ const Dashboard = () => {
   }
 
   const handleAction = async (type: string, item: any, reqType: string) => {
+    
     if (reqType === 'vendorRequest') {
       Swal.fire({
         title: 'Are you sure?',
@@ -194,12 +198,84 @@ const Dashboard = () => {
           });
         }
       })
+    } else if (reqType === "passRequest") {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Accepted!',
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const result = await dispatch(
+            callApiPostMethod(
+              APIURL.ACTION_ON_PASS,
+              {
+                User_id: item?.property?.user?.id,
+                Pass_id: item?.id,
+                Property_id: item?.property?.id,
+                action: type,
+                message: ''
+              },
+              {},
+              true,
+            ),
+          )
+          if (result?.statusCode === 200) {
+            setCheckStatus(true)
+          } else if (result?.statusCode === 400) {
+            setCheckStatus(true)
+          }
+        } 
+        // else if (result.isConfirmed && type === 'rejected') {
+        //   Swal.fire({
+        //     title: "Rejecting Request Of Pass!",
+        //     text: "Reason for Rejecting",
+        //     icon: 'warning',
+        //     input: 'text',
+        //     showCancelButton: true
+        //   }).then(async (result) => {
+        //     if (result.value) {
+        //       const res = await dispatch(
+        //         callApiPostMethod(
+        //           APIURL.ACTION_ON_PASS,
+        //           {
+        //             User_id: item?.property?.user?.id,
+        //             Pass_id: item?.id,
+        //             Property_id: item?.property?.id,
+        //             action: type,
+        //             message: result.value,
+        //           },
+        //           {},
+        //           true,
+        //         ),
+        //       )
+        //       if (res?.statusCode === 200) {
+        //         setCheckStatus(true)
+        //       } else if (res?.statusCode === 400) {
+        //         setCheckStatus(true)
+        //       }
+        //     } else {
+        //       toaster.error("Please mention reason before rejecting")
+        //     }
+        //   });
+        // }
+      })
     }
   }
 
   const propertyInfo = async (item: any) => {
     const vendorEmail: string = item?.user?.email
     navigate('/auth/hotel-details/' + vendorEmail)
+  }
+
+  const handlePassInfo = async (item: any) => {
+    const Pass_id: string = item?.id;
+    const User_id: string = item?.property?.user?.id;
+    const Property_id: string = item?.property?.id;
+    navigate('/auth/pass-details/?passId=' + Pass_id + "&userId=" + User_id + "&propertyId=" + Property_id)
   }
 
   return (
@@ -254,19 +330,19 @@ const Dashboard = () => {
                 </p>
               </li>
             </ul>
-            <div className="create_btn">
+            {/* <div className="create_btn">
               <CommonButton
                 title="Create new"
                 className="btncreate"
                 onClick={() => setShow(true)}
               />
-            </div>
+            </div> */}
           </div>
 
           <div className="approval">
             <div className="approval_tophead">
               <h5>
-                <span>{partnerListCount ? partnerListCount : 0}</span> user
+                <span>{partnerListCount ? partnerListCount : ''}</span> user
                 pending approval for vendor
               </h5>
               <Link to="/auth/members?tab=vendor_request" className="viewbtn">
@@ -291,7 +367,7 @@ const Dashboard = () => {
                         {item?.createdAt
                           ? moment(item?.createdAt)
                             .utc()
-                            .format('D MMMM YYYY, hh:mm:ss A')
+                            .format('dddd, MMMM D, YYYY, hh:mm:ss A')
                           : '---'}
                       </td>
                       <td>
@@ -361,7 +437,7 @@ const Dashboard = () => {
             <div className="approval_tophead">
               <h5>
                 <span>
-                  {partnerPropertyListCount ? partnerPropertyListCount : 0}
+                  {partnerPropertyListCount ? partnerPropertyListCount : ''}
                 </span>{' '}
                 property pending approval
               </h5>
@@ -376,19 +452,18 @@ const Dashboard = () => {
                   partnerPropertyList.map((item: any, key: any) => (
                     <tr key={key}>
                       <td>{key + 1}</td>
-                      <td>{item?.name ? item?.name : '---'}</td>
+                      <td>{item?.name ? item?.name?.charAt(0).toUpperCase() +
+                          item?.name?.slice(1).toLowerCase() : '---'}</td>
                       <td>
-                        {item?.user?.email ? item?.user?.email : '---'}
+                        {item?.user?.name ? item?.user?.name?.charAt(0).toUpperCase() +
+                          item?.user?.name?.slice(1).toLowerCase() : '---'}
                       </td>
                       <td>
                         {item?.createdAt
                           ? moment(item?.createdAt)
                             .utc()
-                            .format('D MMMM YYYY, hh:mm:ss A')
+                            .format('dddd, MMMM D, YYYY, hh:mm:ss A')
                           : '---'}
-                      </td>
-                      <td>
-                        {item?.user?.mobile_number ? item?.user?.mobile_number : '---'}
                       </td>
                       <td>
                         <div className="tables_btn">
@@ -452,7 +527,7 @@ const Dashboard = () => {
           <div className="approval">
             <div className="approval_tophead">
               <h5>
-                <span>2</span> passes pending approval
+                <span>{passRequestListCount ? passRequestListCount : ''}</span> passes pending approval
               </h5>
               <Link to="/auth/members?tab=passes" className="viewbtn">
                 View all
@@ -460,27 +535,78 @@ const Dashboard = () => {
             </div>
             <div className="approval_table">
               <CustomTable fields={passfield}>
-                {tablepassdata.map((item, key) => (
-                  <tr key={key}>
-                    <td>{item.propertyname}</td>
-                    <td>{item.accountname}</td>
-                    <td>{item.passtype}</td>
-                    <td>{item.created}</td>
-                    <td>
-                      <div className="tables_btn">
-                        <CommonButton
-                          title="View"
-                          className="border-black-btn"
-                        />
-                        <CommonButton
-                          title="Reject"
-                          className="dark-greenbtn"
-                        />
-                        <CommonButton title="Approve" className="btncreate" />
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                {passRequestList && passRequestList.length &&
+                  passRequestList.map((item: any, key: number) => (
+                    <tr key={key}>
+                      <td>{key + 1}</td>
+                      <td>{item?.property?.name ? item?.property?.name?.charAt(0).toUpperCase() +
+                          item?.property?.name?.slice(1).toLowerCase() : "---"}</td>
+                      <td>{item?.property?.user?.name ? item?.property?.user?.name?.charAt(0).toUpperCase() +
+                          item?.property?.user?.name?.slice(1).toLowerCase() : "---"}</td>
+                      <td>{item?.redeemable_nights ? `SP${item?.redeemable_nights}` : "---"}</td>
+                      <td>
+                        {item?.createdAt
+                          ? moment(item?.createdAt)
+                            .utc()
+                            .format('dddd, MMMM D, YYYY, hh:mm:ss A')
+                          : '---'}
+                      </td>
+                      <td>
+                        <div className="tables_btn">
+                          <CommonButton
+                            title="View"
+                            className="border-black-btn"
+                            onClick={() => handlePassInfo(item)}
+                          />
+
+                          {item?.approval === 'pending' ? (
+                            <>
+                              <CommonButton
+                                title="Reject"
+                                className="dark-greenbtn"
+                                onClick={() =>
+                                  handleAction('rejected', item, 'passRequest')
+                                }
+                              />
+                              <CommonButton
+                                title="Approve"
+                                className="btncreate"
+                                onClick={() =>
+                                  handleAction('accepted', item, 'passRequest')
+                                }
+                              />
+                            </>
+                          ) : item?.approval === 'rejected' ? (
+                            <span
+                              className="fa fa-close"
+                              style={{
+                                marginLeft: '8px',
+                                color: 'red',
+                              }}
+                            >
+                              Rejected
+                            </span>
+                          ) : (
+                            <span
+                              className="fa fa-check"
+                              style={{
+                                marginLeft: '8px',
+                                color: 'green',
+                              }}
+                            >
+                              Accepted
+                            </span>
+                          )}
+
+                          {/* <CommonButton
+                            title="Reject"
+                            className="dark-greenbtn"
+                          />
+                          <CommonButton title="Approve" className="btncreate" /> */}
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
               </CustomTable>
             </div>
           </div>

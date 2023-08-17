@@ -97,6 +97,10 @@
             .nav-item {
                 margin-right: 5rem;
 
+                @media (max-width:767px) {
+                    margin-right: 3rem;
+                }
+
                 &:last-child {
                     margin-right: 0;
                 }
@@ -107,6 +111,14 @@
                     padding-bottom: 1rem;
                 }
             }
+        }
+    }
+
+    &_tabsContent {
+        padding-bottom: 20rem;
+
+        @media (max-width:767px) {
+            padding-bottom: 14rem;
         }
     }
 }

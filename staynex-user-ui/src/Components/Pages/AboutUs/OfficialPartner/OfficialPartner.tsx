@@ -1,4 +1,3 @@
-import React from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import '../AboutUs.scss'
 import partner_img from '../../../../Assets/Images/partner-img.png'
@@ -9,17 +8,17 @@ const OfficialPartner = () => {
             content: "Stay at your most favourite places in London",
         },
         {
-            content: "Stay at your most favourite places in London",
+            content: "Watch Arsenal FC matches at the Emirates Stadium",
         },
         {
-            content: "Stay at your most favourite places in London",
+            content: "Get a 'behind-the-scenes' tour of London Colney",
         },
         {
-            content: "Stay at your most favourite places in London",
+            content: "And a whole lot more!",
         },
     ];
     return (
-        <section className='partner_sec red_overlay'>
+        <section className='partner_sec'>
             <Container>
                 <div className='partner_area'>
                     <div className='partner_head'>
@@ -31,10 +30,10 @@ const OfficialPartner = () => {
                     </div>
                     <div className='partner_box'>
                         <Row className="mx-0">
-                            {partner.map((data) => {
+                            {partner.map((data, i) => {
                                 return (
-                                    <Col sm={6} md={3}>
-                                        <div className='partner_card'>
+                                    <Col key={i} sm={6} md={3} className='d-flex'>
+                                        <div className='partner_card w-100'>
                                             <p>{data.content}</p>
                                         </div>
                                     </Col>

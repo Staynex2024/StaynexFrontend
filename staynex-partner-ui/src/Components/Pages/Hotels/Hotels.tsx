@@ -7,6 +7,8 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { callApiGetMethod } from "../../../Redux/Actions/api.action";
 import { APIURL } from "../../../Utils";
+import { propertyDetails } from "../../../Redux/Slices/user.slice";
+import "./Hotels.scss"
 
 const Hotels = () => {
   const dispatch: any = useDispatch();
@@ -35,83 +37,108 @@ const Hotels = () => {
       const result = await dispatch(
         callApiGetMethod(APIURL.VENDOR_DETAILS, {}, true, false)
       );
-      setVendorProperty(result?.data);
+
+      if (result?.statusCode === 200) {
+        setVendorProperty(result?.data);
+        dispatch(propertyDetails(result?.data))
+      }
     };
+
 
     retreiveVendorProperty();
     // eslint-disable-next-line
   }, []);
 
   const handleViewPage = () => {
-    navigate("/auth/new-property", {state : vendorProperty})
+    if (vendorProperty?.property?.[0]?.property_status === 'pending') {
+      navigate("/auth/new-property", { state: vendorProperty })
+    } else {
+      navigate("/auth/update-property", { state: vendorProperty })
+    }
   }
+  let listOnly = (propertyList: any) => {
+    return propertyList.map(d => d.price)
+};
   return (
     <>
-      <section className="hotels">
-        {vendorProperty && Object.keys(vendorProperty).length ? (
-          vendorProperty?.property?.map((details) => {
-            return (
-              <>
-                <div className="hotels_section">
-                  <div className="hotels_section_cards">
-                    {/* <div className="top_headbtn">
-                      <button className="active">
-                        LISTED <GreentickIcon />
-                      </button>
-                      <button>UNLIST</button>
-                    </div> */}
-                    <div className="main_containt">
-                      <div className="main_containt_left">
-                        <SliderImage />
-                      </div>
-                      <div className="main_containt_right">
-                        <div className="right_textsec">
-                          <h3>$4,300</h3>
-                          <h4>{details?.name}</h4>
-                          <p>Indonesia</p>
-                          <ul className="list_text">
-                            {listspno.map((item) => (
-                              <li>
-                                <span>{item.sptitle}</span>
-                              </li>
-                            ))}
-                          </ul>
-                          <div className="resort_contact">
-                            <div className="resort_number">
-                              <label>Resort Contact</label>
-                              <p>{vendorProperty?.mobile_number}</p>
-                            </div>
-                            <p>{vendorProperty?.email}</p>
-                          </div>
+      <div className="black_bg_style">
+        <section className="hotels">
+          {
+            vendorProperty?.property?.[0]?.verification === "pending" ?  <p className="yellow_bg_box mb-3">Approval pending. Until the approval process is complete, you will not be able to create any passes. Once your request is approved, you will receive further instructions on pass creation.</p> : null
+          }
+          {vendorProperty?.property && Object.keys(vendorProperty?.property).length ? (
+            vendorProperty?.property?.map((details) => {
+              return (
+                <>
+                  <div className="hotels_section">
+                    <div className="hotels_section_cards">
+                      {/* <div className="top_headbtn">
+                        <button className="active">
+                          LISTED <GreentickIcon />
+                        </button>
+                        <button>UNLIST</button>
+                      </div> */}
+                      <div className="main_containt">
+                        <div className="main_containt_left">
+                          <SliderImage />
                         </div>
-                        <div className="right_btnsec">
-                          <CommonButton onClick={handleViewPage} title="See Details"/>
+                        <div className="main_containt_right">
+                          <div className="right_textsec">
+                            <h3> {vendorProperty?.property?.[0]?.passes.length > 0 ? `$ ${Math.min.apply(Math, listOnly(vendorProperty?.property?.[0]?.passes))}` : ''}</h3>
+                            <h4>{details?.name}</h4>
+                            <p>Indonesia</p>
+                            <ul className="list_text">
+                              {vendorProperty?.property?.[0]?.passes.map((item) => (
+                                <li>  
+                                  <span>{item.name}</span>
+                                </li>
+                              ))}
+                            </ul>
+                            <div className="resort_contact mt-3">
+                              <div className="resort_number">
+                                <label>Resort Contact</label>
+                                <p>{vendorProperty?.property?.[0]?.location?.contact_number}</p>
+                              </div>
+                              <p>{vendorProperty?.email}</p>
+                            </div>
+                          </div>
+                          <div className="right_btnsec">
+                            {
+                              <CommonButton className="grey-btn w-100" onClick={() => handleViewPage()} title={vendorProperty?.property[0]?.property_status === 'pending' ? "Add property" : vendorProperty?.property[0]?.property_status === 'drafted' ? 'Continue' : vendorProperty?.property[0]?.property_status === 'saved' ? 'View page' : ''} />
+                            }
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </>
-            );
-          })
-        ) : (
-          <>
-            <Link to="/auth/new-property">
-              <CommonButton title="Add New Property" className="mt-3 mt-sm-0" />
-            </Link>
-            <p>
-              No property created yet. 1. Click on the "Create New" button. 2.
-              Fill in the required details, such as property name, location, and
-              other relevant information. 3. Save your changes and confirm the
-              property creation. Once you have successfully created a property,
-              you will gain access to a range of options and tools to create
-              pass and manage your property-related tasks. If you require any
-              assistance or have further inquiries, please feel free to contact
-              our support team.
-            </p>
-          </>
-        )}
-      </section>
+                </>
+              );
+            })
+          ) : (
+            <>
+              <div className="text-end">
+                <Link to="/auth/new-property">
+                  <CommonButton title="Create New" className="mt-3 mt-sm-0" />
+                </Link>
+              </div>
+              <div className="white_card mt-4">
+                <h5>No property created yet.</h5>
+                <ol>
+                  <li>Click on the "Create New" button.</li>
+                  <li>Fill in the required details, such as property name, location, and
+                    other relevant information.</li>
+                  <li>Save your changes and confirm the property creation.</li>
+                </ol>
+                <p>Once you have successfully created a property,
+                  you will gain access to a range of options and tools to create
+                  pass and manage your property-related tasks. If you require any
+                  assistance or have further inquiries, please feel free to contact
+                  our support team.</p>
+              </div>
+            </>
+          )}
+        </section>
+      </div>
     </>
   );
 };

@@ -4,7 +4,7 @@ import CreateListForm from '../CreateListForm/CreateListForm'
 import { CheckwhiteIcon } from '../../../../Assets/Images/svgImgs/svgImgs'
 import logo from '../../../../Assets/Images/partner-img.png'
 
-const PropertyStaynex = () => {
+const PropertyStaynex = () => { 
     return (
         <section className='listproperty_sec'>
             <div className='listproperty_sec_colleftsec'>

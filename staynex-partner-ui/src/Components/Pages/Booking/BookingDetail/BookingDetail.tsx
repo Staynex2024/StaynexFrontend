@@ -57,7 +57,7 @@ const BookingDetail = () => {
                     <Col xs={12} md={7}>
                         <div className='d-sm-flex justify-content-end'>
                             <CommonButton title="Decline Booking" onClick={() => setShow(true)} className="grey-btn me-sm-3" />
-                            <CommonButton title="Add New Property" onClick={() => setShowdecline(true)} className="mt-3 mt-sm-0" />
+                            <CommonButton title="Confirm Booking" onClick={() => setShowdecline(true)} className="mt-3 mt-sm-0" />
                         </div>
                     </Col>
                 </Row>

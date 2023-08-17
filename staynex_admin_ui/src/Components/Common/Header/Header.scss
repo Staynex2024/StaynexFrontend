@@ -21,11 +21,16 @@
     padding: 1.1rem 1.5rem;
   }
 
+  @media (max-width:767px) {
+    padding: 1.1rem 1rem;
+  }
+
   &_search {
     width: 100%;
 
     label {
       font-weight: 600;
+      text-transform: uppercase;
     }
 
     .form-control {
@@ -47,7 +52,7 @@
       &::placeholder {
         color: $greyclr4;
       }
-        
+
       &:focus {
         box-shadow: none;
         border: 1px solid $borderclr;
@@ -73,6 +78,7 @@
 
       .dropdown-menu {
         padding: 1rem;
+        width: 420px;
 
         @media (max-width:767px) {
           width: 300px;
@@ -107,6 +113,27 @@
             background-color: transparent;
             color: $orangeclr;
           }
+        }
+      }
+    }
+  }
+
+  .Setting_Dropdown {
+    &.dropdown {
+      // overflow: hidden;
+      @media (max-width:575px) {
+        width: 60%;
+      }
+
+      .dropdown-toggle {
+        @media (max-width:575px) {
+          width: 90%;
+        }
+
+        span {
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
         }
       }
     }

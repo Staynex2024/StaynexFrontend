@@ -3,6 +3,10 @@
 .favorite_destination {
     padding: 15rem 0 13rem;
 
+    @media (max-width:991px) {
+        padding: 5rem 0 6rem;
+    }
+
     @media (max-width:767px) {
         padding: 5rem 0;
     }
@@ -13,15 +17,30 @@
         }
 
         .slick-slider {
+            &:focus {
+                outline: 0;
+                box-shadow: none;
+            }
             .slick-list {
+                &:focus {
+                    outline: 0;
+                    box-shadow: none;
+                }
                 .slick-track {
-                    padding: 5rem 0;
+                    padding: 25rem 0 5rem;
 
-                    @media (max-width:1199px) {
-                        padding: 0;
+                    &:focus {
+                        outline: 0;
+                        box-shadow: none;
+                    }
+
+                    @media (max-width:991px) {
+                        padding: 3em 0 0rem;
                     }
 
                     .slick-slide {
+                        transition: all ease-in-out 0.3s;
+
                         &:focus {
                             outline: 0;
                             box-shadow: none;
@@ -43,27 +62,34 @@
                                 margin-top: 2rem;
                                 text-transform: uppercase;
                                 font-weight: 600;
+                                color: $blackclr2;
                             }
                         }
 
-                        // &+.slick-active {
-                        //     margin-top: -200px;
+                        // &.slick-active {
+                        //     transform: translateY(-200px) !important;
                         // }
-                        // &.slick-slide+.slick-slide.slick-active+.slick-active {
-                        //     margin-top: -120px;
-                        // }
-
-                        // &+.slick-slide+.slick-active+.slick-active > .slick-current {
-                        //     margin-top: 0px;
-                        // }
-
-                        &.slick-current {
-                            &+.slick-active {
-                                margin-top: -120px;
+                        @media (min-width:992px) {
+                            &.slick-slide {
+                                transform: translateY(-250px) !important;
                             }
 
-                            &+.slick-active+.slick-active {
-                                margin-top: -200px;
+                            &+.slick-slide+.slick-active {
+                                transform: translateY(-150px) !important;
+                            }
+
+                            &.slick-current {
+                                &.slick-center {
+                                    transform: translateY(0) !important;
+                                }
+
+                                &+.slick-slide {
+                                    transform: translateY(-150px) !important;
+                                }
+
+                                &+.slick-active+.slick-slide {
+                                    transform: translateY(-250px) !important;
+                                }
                             }
                         }
                     }

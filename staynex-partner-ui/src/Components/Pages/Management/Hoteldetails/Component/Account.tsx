@@ -40,7 +40,7 @@ const Account = () => {
         <>
             <section className='account'>
                 <Form onSubmit={formik.handleSubmit}>
-                    <Row className='align-items-end'>
+                    <Row>
                         <Col lg={6} md={6}>
                             <InputCustom
                                 label="Name"

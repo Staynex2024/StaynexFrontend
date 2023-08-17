@@ -1,6 +1,6 @@
 import React from 'react'
 import './ArasenalFC.scss'
-import logo from '../../../../Assets/Images/partner-img.png'
+import logo from '../../../../Assets/Images/Arsenal_FC.svg'
 import arsenal_img from '../../../../Assets/Images/arasel-img.png'
 
 const ArasenalFC = () => {

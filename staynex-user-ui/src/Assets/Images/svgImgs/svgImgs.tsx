@@ -650,7 +650,7 @@ export const SpeakerIcon = () => {
 export const RedrightIcon = () => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="23" height="17" viewBox="0 0 23 17" fill="none">
-    <g clip-path="url(#clip0_313_13026)">
+    <g clipPath="url(#clip0_313_13026)">
       <path d="M13.835 0.165283L12.348 1.61728L18.193 7.46528H0V9.53928H18.193L12.383 15.3503L13.87 16.8023L22.17 8.50228L13.835 0.165283Z" fill="#E55735"/>
     </g>
     <defs>
@@ -664,7 +664,7 @@ export const RedrightIcon = () => {
 export const OccupancyIcon = () => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 18" fill="none">
-    <g clip-path="url(#clip0_313_13031)">
+    <g clipPath="url(#clip0_313_13031)">
       <mask id="mask0_313_13031" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="18">
         <path d="M24 0.165283H0V17.1653H24V0.165283Z" fill="white"/>
       </mask>
@@ -697,7 +697,7 @@ export const RedSpeakerIcon = () => {
 export const DemandIcon = () => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="19" height="20" viewBox="0 0 19 20" fill="none">
-    <g clip-path="url(#clip0_313_13055)">
+    <g clipPath="url(#clip0_313_13055)">
       <mask id="mask0_313_13055"  maskUnits="userSpaceOnUse" x="0" y="0" width="19" height="20">
         <path d="M19 0.165283H0V19.1653H19V0.165283Z" fill="white"/>
       </mask>
@@ -716,7 +716,7 @@ export const DemandIcon = () => {
 export const BookingsIcon = () => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="16" viewBox="0 0 24 16" fill="none">
-    <g clip-path="url(#clip0_313_13065)">
+    <g clipPath="url(#clip0_313_13065)">
       <mask id="mask0_313_13065"  maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="16">
         <path d="M23.475 0.165283H0V15.7713H23.475V0.165283Z" fill="white"/>
       </mask>
@@ -837,8 +837,8 @@ export const CardIcon = () => {
 export const RightGreyIcon = () => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="46" height="15" viewBox="0 0 46 15" fill="none">
-    <path d="M3.45996 7.38843H38.735" stroke="black" stroke-width="2.00831" stroke-dasharray="3.01 3.01"/>
-    <path d="M38.5078 3.83032L42.0659 7.38837L38.5078 10.9464" stroke="black" stroke-width="2.00831"/>
+    <path d="M3.45996 7.38843H38.735" stroke="black" strokeWidth="2.00831" strokeDasharray="3.01 3.01"/>
+    <path d="M38.5078 3.83032L42.0659 7.38837L38.5078 10.9464" stroke="black" strokeWidth="2.00831"/>
   </svg>
   );
 };
@@ -873,8 +873,28 @@ export const UsercircleIcon = () => {
     </svg>
   );
 };
+export const LogoredIcon = () => {
+  return (
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5.82259 0.712402H16.6559C17.0205 0.712402 17.333 1.0249 17.333 1.44157V12.8999C17.333 13.2645 17.1768 13.6812 16.9163 13.9416L13.583 17.327C13.4788 17.4312 13.2705 17.5353 13.0622 17.5353C12.6976 17.5353 12.333 17.2228 12.333 16.8582V12.3791C12.333 12.1707 12.2809 12.0145 12.1247 11.8582C10.0413 9.7749 8.73926 8.47282 6.70801 6.38949C6.44759 6.12907 5.97884 6.12907 5.71843 6.38949C4.20801 7.8999 3.16634 8.99365 1.81217 10.2957C1.34342 10.7124 0.614258 10.3999 0.614258 9.7749V5.86865C0.614258 5.60824 0.718424 5.29574 0.926758 5.0874L4.98926 1.0249C5.24967 0.816569 5.51009 0.712402 5.82259 0.712402Z" fill="#F26B43"/>
+    </svg>
+  );
+};
+export const HomefillIcon = () => {
+  return (
+    <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4.66699 22.4729V9.9729L13.0003 3.7229L21.3337 9.9729V22.4729H15.0837V15.1812H10.917V22.4729H4.66699Z" fill="#F26B43"/>
+    </svg>
+  );
+};
 // export const Icon = () => {
 //   return (
   
 //   );
 // };
+// export const Icon = () => {
+//   return (
+  
+//   );
+// };
+

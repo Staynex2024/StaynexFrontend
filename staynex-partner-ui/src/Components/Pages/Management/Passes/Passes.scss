@@ -24,7 +24,7 @@
         flex-direction: column;
         border-radius: 1.2rem;
         border: 1px solid $borderclr;
-        padding: 1rem 2rem;
+        padding: 1rem 2rem 1.5rem;
 
         @media (max-width:1279px) {
             padding: 1rem;
@@ -90,7 +90,7 @@
             p {
                 color: $blackclr2;
                 text-align: center;
-                font-size: 1.1rem;
+                font-size: 1.3rem;
                 font-weight: 400;
                 line-height: 1.1;
             }
@@ -104,14 +104,14 @@
                 li {
                     label {
                         color: $greyclr;
-                        font-size: 0.9rem;
+                        font-size: 1.1rem;
                         font-weight: 400;
                         line-height: 1;
                     }
 
                     p {
                         text-align: left;
-                        font-size: 1.2rem;
+                        font-size: 1.3rem;
                         line-height: 1.2;
                     }
 
@@ -140,7 +140,7 @@
 
                 label {
                     color: $greyclr;
-                    font-size: 0.9rem;
+                    font-size: 1.1rem;
                     font-weight: 400;
                     line-height: 1;
                 }
@@ -172,7 +172,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                margin: 1.5rem 0;
+                margin: 1.5rem 0 0;
 
                 &.addlist {
                     justify-content: center;
@@ -184,12 +184,16 @@
                     justify-content: center;
                     background: transparent;
                     border: none;
-                    font-size: 1.3rem;
+                    font-size: 1.4rem;
                     font-weight: 600;
                     letter-spacing: -0.117px;
-                    line-height: 1.2;
+                    line-height: normal;
                     color: $greyclr;
                     transition: 0.3s all ease-in-out;
+
+                    @media (max-width:1365px) {
+                        font-size: 1.2rem;
+                    }
 
                     svg {
                         margin-left: 0.5rem;
@@ -199,6 +203,68 @@
                     &:hover {
                         color: $blackclr2;
                         transition: 0.3s all ease-in-out;
+                    }
+                }
+
+                span {
+                    color: rgba(13, 14, 11, 0.47);
+                    font-weight: 600;
+                    font-size: 1.4rem;
+
+                    @media (max-width:1365px) {
+                        font-size: 1.2rem;
+                    }
+                }
+
+                .rejected_pass {
+                    display: block;
+                    text-align: center;
+                    width: 100%;
+                    font-size: 1.4rem;
+                    color: $redclr;
+                    background-color: #ffe2e2;
+                    padding: 1rem;
+                    text-transform: uppercase;
+                    font-weight: 600;
+
+                    @media (max-width:1365px) {
+                        font-size: 1.2rem;
+                    }
+                }
+
+                .delist_pass {
+                    font-size: 1.4rem;
+                    color: $redclr;
+                    font-weight: 600;
+
+                    @media (max-width:1365px) {
+                        font-size: 1.2rem;
+                    }
+                }
+
+                .pending_pass {
+                    background: $brownlightbg;
+                    display: block;
+                    text-align: center;
+                    width: 100%;
+                    font-size: 1.4rem;
+                    padding: 1rem;
+                    text-transform: uppercase;
+                    font-weight: 600;
+
+                    @media (max-width:1365px) {
+                        font-size: 1.2rem;
+                    }
+                }
+
+                .listed_check {
+                    font-size: 1.4rem;
+                    font-weight: 600;
+                    text-transform: uppercase;
+                    color: $greenclr;
+
+                    @media (max-width:1365px) {
+                        font-size: 1.2rem;
                     }
                 }
             }
@@ -221,7 +287,7 @@
                 color: $orangeclr2;
                 font-size: 2rem;
                 font-weight: 600;
-                line-height: 1.4;
+                line-height: normal;
                 letter-spacing: -0.18px;
                 margin-bottom: 1rem;
                 display: flex;
@@ -267,6 +333,61 @@
                 margin-left: 1rem;
             }
 
+        }
+
+        .hotel_image {
+            border-radius: 12px;
+            background: $whiteclr;
+            box-shadow: 3px 3px 10px 0px rgba(0, 0, 0, 0.05) inset, -3px -3px 10px 0px rgba(0, 0, 0, 0.05) inset;
+            padding: 4rem 2.6rem;
+            text-align: center;
+        }
+    }
+}
+
+
+
+
+.custom_card_pass {
+    -webkit-mask: url("../../../../Assets/Images/pass_mask_img.png")center/contain no-repeat;
+    background-image: linear-gradient(180deg, rgb(27, 70, 52) 40%, rgba(255, 255, 255, 0)), url(../../../../Assets/Images/real_home.jpg);
+    width: 107px;
+    height: 300px;
+    text-align: center;
+    background-size: cover;
+    background-position: center bottom;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin: 0 auto;
+
+    .pass_number {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        text-align: right;
+        color: $whiteclr;
+
+        h5 {
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+
+        p {
+            font-size: 1.2rem;
+        }
+    }
+
+    .pass_content_icon {
+        margin-top: -1.5rem;
+        position: absolute;
+
+        p {
+            font-weight: 600;
+            color: $whiteclr;
+            margin-top: 0.4rem;
+            font-size: 1.3rem;
         }
     }
 }

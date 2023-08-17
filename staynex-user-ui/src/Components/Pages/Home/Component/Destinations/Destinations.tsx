@@ -1,118 +1,137 @@
-import React from 'react';
-import { BathroomIcon, BedroomIcon, SquareareaIcon } from '../../../../../Assets/Images/svgImgs/svgImgs';
-import CommonHeading from '../../../../Common/CommonHeading/CommonHeading';
-import './Destinations.scss';
-import destination1 from '../../../../../Assets/Images/destination1.png';
-import destination2 from '../../../../../Assets/Images/destination2.png';
-import destination3 from '../../../../../Assets/Images/destination3.png';
-import destination4 from '../../../../../Assets/Images/destination4.png';
-import Slider from "react-slick";
-import Commoncard from '../../../../Common/CommonCard/Commoncard';
+import React, { useEffect, useState } from 'react'
+// import { BathroomIcon, BedroomIcon, SquareareaIcon } from '../../../../../Assets/Images/svgImgs/svgImgs';
+import CommonHeading from '../../../../Common/CommonHeading/CommonHeading'
+import './Destinations.scss'
+import Slider from 'react-slick'
+import Commoncard from '../../../../Common/CommonCard/Commoncard'
+import { useDispatch } from 'react-redux'
+import { callApiGetMethod } from '../../../../../Redux/Actions/api.action'
+import { APIURL } from '../../../../../Utils'
+import CommonButton from '../../../../Common/CommonButton/CommonButton'
+import { useNavigate } from 'react-router-dom'
 
-const Destinations = () => {
-    const destinationlist = [
-        {
-            hotelimag: destination1, hoteltitle: 'Nazeki Villa', adderss: 'Amber Villa, Indonesia',
-            bedroom: '2 bedrooms', bathroom: '1 Bathroom', area: '950sqft', price: '$4,999',
+const Destinations = (props: any) => {
+  const dispatch: any = useDispatch()
+  const navigate: any = useNavigate()
+  const [propertyList, setPropertyList]: any = useState([])
+
+  const settings = {
+    dots: true,
+    arrows: false,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 1365,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
         },
-        {
-            hotelimag: destination2, hoteltitle: 'Kunang Kunang Tent Resort', adderss: 'Banyuwangi, Indonesia',
-            bedroom: '2 bedrooms', bathroom: '1 Bathroom', area: '950sqft', price: '$4,999',
+      },
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
         },
-        {
-            hotelimag: destination3, hoteltitle: 'Mohini Komodo', adderss: 'Labuan Bajo, Indonesia',
-            bedroom: '2 bedrooms', bathroom: '1 Bathroom', area: '950sqft', price: '$4,999',
+      },
+      {
+        breakpoint: 767,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
         },
-        {
-            hotelimag: destination4, hoteltitle: 'Be Home', adderss: 'Phuket, Thailand',
-            bedroom: '2 bedrooms', bathroom: '1 Bathroom', area: '950sqft', price: '$4,999',
+      },
+      {
+        breakpoint: 479,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
         },
-        {
-            hotelimag: destination1, hoteltitle: 'Nazeki Villa', adderss: 'Amber Villa, Indonesia',
-            bedroom: '2 bedrooms', bathroom: '1 Bathroom', area: '950sqft', price: '$4,999',
-        },
-        {
-            hotelimag: destination2, hoteltitle: 'Kunang Kunang Tent Resort', adderss: 'Banyuwangi, Indonesia',
-            bedroom: '2 bedrooms', bathroom: '1 Bathroom', area: '950sqft', price: '$4,999',
-        },
-        {
-            hotelimag: destination3, hoteltitle: 'Mohini Komodo', adderss: 'Labuan Bajo, Indonesia',
-            bedroom: '2 bedrooms', bathroom: '1 Bathroom', area: '950sqft', price: '$4,999',
-        },
-        {
-            hotelimag: destination4, hoteltitle: 'Be Home', adderss: 'Phuket, Thailand',
-            bedroom: '2 bedrooms', bathroom: '1 Bathroom', area: '950sqft', price: '$4,999',
-        },
-    ]
-    const settings = {
-        dots: true,
-        arrows: false,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 4,
-        slidesToScroll: 1,
-        responsive: [
-            {
-                breakpoint: 1365,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 1,
-                }
-            },
-            {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 1,
-                }
-            },
-            {
-                breakpoint: 767,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                }
-            },
-            {
-                breakpoint: 479,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                }
-            },
-        ]
-    };
-    return (
-        <>
-            <section className='destination'>
-                <CommonHeading
-                    className='text_size'
-                    heading='Stay at our finest destinations'
-                    paragraph='Discover Switzerland’s best ski resorts and plan the perfect holiday'
-                />
-                <div className='destination_section'>
-                    <ul className='list'>
-                        <Slider {...settings}>
-                            {destinationlist.map((data) => (
-                                <li>
-                                    <Commoncard
-                                        hotelimag={data.hotelimag}
-                                        hoteltitle={data.hoteltitle}
-                                        adderss={data.adderss}
-                                        hotellist
-                                        bedroom={<><BedroomIcon /> {data.bedroom}</>}
-                                        bathroom={<><BathroomIcon /> {data.bathroom}</>}
-                                        area={<><SquareareaIcon /> {data.area}</>}
-                                        price={<>From <strong>{data.price}</strong></>}
-                                    />
-                                </li>
-                            ))}
-                        </Slider>
-                    </ul>
-                </div>
-            </section>
-        </>
-    )
+      },
+    ],
+  }
+
+  useEffect(() => {
+    //Get propertyList function
+    const retreivePropertyList: any = async () => {
+      const result: any = await dispatch(
+        callApiGetMethod(
+          APIURL.GET_PROPERTY_LIST,
+          { page: 1, limit: 10 },
+          true,
+          false,
+        ),
+      )
+      setPropertyList(result?.data)
+    }
+    retreivePropertyList()
+  }, [dispatch])
+
+  let listOnly = (propertyList: any) => {
+    return propertyList.map((d) => d.price)
+  }
+
+  const GetIndividualData = async (data) => {
+    navigate('/resort-details/' + data.id)
+    props?.HotelDetails && props?.HotelDetails()
+  }
+
+  return (
+    <>
+      <section className="destination">
+        <CommonHeading
+          className="text_size"
+          heading="Stay at our finest destinations"
+          paragraph="Discover Switzerland’s best ski resorts and plan the perfect holiday"
+        />
+        <div className="destination_section">
+          <ul className="list">
+            {propertyList && propertyList.length > 0 && (
+              <Slider {...settings}>
+                {propertyList && propertyList.length > 0
+                  ? propertyList.map((data: any, index: number) => (
+                      <li key={index}>
+                        <Commoncard
+                          hotelimag={data?.images ? data?.images[0] : ''}
+                          hoteltitle={
+                            data?.name
+                              ? data?.name?.charAt(0).toUpperCase() +
+                                data?.name?.slice(1).toLowerCase()
+                              : ''
+                          }
+                          GetIndividualData={() => GetIndividualData(data)}
+                          address={data?.location ? data?.location : ''}
+                          bedroom={data?.rooms ? data?.rooms?.total : ''}
+                          price={
+                            data?.passes.length > 0
+                              ? `$ ${Math.min.apply(
+                                  Math,
+                                  listOnly(data?.passes),
+                                )}`
+                              : ''
+                          }
+                        />
+                      </li>
+                    ))
+                  : 'No Data Found'}
+              </Slider>
+            )}
+            {propertyList && propertyList.length > 10 ? (
+              <CommonButton
+                title={'Show More'}
+                onClick={() => navigate('/listing')}
+              />
+            ) : (
+              ''
+            )}
+          </ul>
+        </div>
+      </section>
+    </>
+  )
 }
 
 export default Destinations

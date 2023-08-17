@@ -1,7 +1,12 @@
 import React from 'react'
 import { Col, Row } from 'react-bootstrap'
 import './StaynexPass.scss'
-import staynex_img from '../../../../Assets/Images/Icons/staynex1.png'
+import staynex_img from '../../../../Assets/Images/Icons/kind_icon1.svg'
+import staynex_img2 from '../../../../Assets/Images/Icons/kind_icon2.svg'
+import staynex_img3 from '../../../../Assets/Images/Icons/kind_icon3.svg'
+import staynex_img4 from '../../../../Assets/Images/Icons/kind_icon4.svg'
+import staynex_img5 from '../../../../Assets/Images/Icons/kind_icon5.svg'
+import staynex_img6 from '../../../../Assets/Images/Icons/kind_icon6.svg'
 import staycard_img1 from '../../../../Assets/Images/card2.png'
 import staycard_img2 from '../../../../Assets/Images/card-img.png'
 
@@ -13,29 +18,29 @@ const StaynexPass = () => {
             info: "You will be guaranteed a set number of Stays (as per your SP) every year at the selected property of your choice."
         },
         {
-            staynex_img: staynex_img,
-            title: "Guaranteed annual free nights",
+            staynex_img: staynex_img2,
+            title: "Store of value",
             info: "The value of your NFT is theoretically the number of Stays multiplied by the number of years and multiplied by the average daily rate at the property."
         },
         {
-            staynex_img: staynex_img,
-            title: "Guaranteed annual free nights",
-            info: "If you don’t see yourself spending all of your travel days at one destination, you may choose to trade, sell or rent out your Stays."
+            staynex_img: staynex_img3,
+            title: "Trade, sell & rent unused stays",
+            info: "If you don’t see yourself spending all of your travel days at one destination, you may choose to trade, sell or rent out your Stays. "
         },
         {
-            staynex_img: staynex_img,
-            title: "Guaranteed annual free nights",
+            staynex_img: staynex_img4,
+            title: "Your ownership evolves with you",
             info: "Building a collection of SPs will last you a lifetime. Purchase 12 monthly passes around the world and travel and live all year round for FREE."
         },
         {
-            staynex_img: staynex_img,
-            title: "Guaranteed annual free nights",
+            staynex_img: staynex_img5,
+            title: "You can pass it on ",
             info: "Your NFT is uniquely yours. It belongs to your wallet and you may sell it on an open marketplace or auction it off."
         },
         {
-            staynex_img: staynex_img,
-            title: "Guaranteed annual free nights",
-            info: "Our experts create strategies tailored to your specific business goals, so you can achieve real results online."
+            staynex_img: staynex_img6,
+            title: "Earn rewards from properties ",
+            info: "Our experts create strategies tailored to your specific business goals, so you can achieve real results online. "
         },
     ];
     return (
@@ -45,7 +50,7 @@ const StaynexPass = () => {
                     <div className='staynex_data_box'>
                         <div className='staynex_head text-center text-lg-start d-md-flex align-items-center'>
                             <svg width="140" height="30" viewBox="0 0 140 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <g clip-path="url(#clip0_1019_12611)">
+                                <g clipPath="url(#clip0_1019_12611)">
                                     <mask id="mask0_1019_12611" maskUnits="userSpaceOnUse" x="0" y="0" width="140" height="30">
                                         <path d="M140 0H0V30H140V0Z" fill="white" />
                                     </mask>
@@ -62,9 +67,9 @@ const StaynexPass = () => {
                             <h3 className='mt-3 mt-lg-0 mb-0 ms-lg-3'>The first of its kind</h3>
                         </div>
                         <Row className="mx-0">
-                            {Staynex.map((data) => {
+                            {Staynex.map((data ,i) => {
                                 return (
-                                    <Col sm={6} md={6} xl={4}>
+                                    <Col key={i} sm={6} md={6} xl={4}>
                                         <div className='staynex_box'>
                                             <img src={data.staynex_img} alt="staynex-img" />
                                             <h6>{data.title}</h6>

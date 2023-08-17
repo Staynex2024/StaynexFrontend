@@ -175,7 +175,7 @@ const Newproperty = () => {
       </div>
       <section className="new_property">
         <h6>Property information</h6>
-        <div className="new_property_section">
+        <div className="new_property_section mt-4">
           <Form onSubmit={formik.handleSubmit}>
             <Row className="">
               <Col lg={4} md={6}>

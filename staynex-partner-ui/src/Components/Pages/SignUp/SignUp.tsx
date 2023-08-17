@@ -62,7 +62,7 @@ const SignUp = () => {
           propertyName: values.propertyName,
           name: formDetails?.invited_name,
           invite_code: formDetails?.invite_code,
-          mobile_number: "+62" + formDetails?.mob_no,
+          mobile_number: formDetails?.mob_no,
           role: "VENDOR",
         };
 
@@ -93,8 +93,7 @@ const SignUp = () => {
   let query = useQuery();
 
   const handlePrefilledSignupForm = async () => {
-    const code = 'rsWJMDNhVc';
-
+    const code = query.get('token');
     const formData: any = await dispatch(
       callApiGetMethod(
         APIURL.INVITATION_SIGNUP,

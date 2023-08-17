@@ -10,6 +10,7 @@
   // }
 
   &_search {
+
     .form-control {
       border-radius: 15px;
       border: 1px solid $borderclr;
@@ -17,7 +18,7 @@
       color: $greyclr4;
       font-size: 1.4rem;
       font-weight: 500;
-      margin-left: 1.5rem;
+      margin-left: 1rem;
       padding: 0.9rem 1.5rem;
       border-radius: 5rem;
       min-width: 26.7rem;
@@ -35,6 +36,10 @@
       &:focus {
         box-shadow: none;
         border: 1px solid $borderclr;
+      }
+
+      &::placeholder {
+        color: $greyclr4;
       }
     }
 
@@ -76,8 +81,9 @@
       .navbar-nav {
         .nav-link {
           padding: 0 1rem;
-          font-size: 1.5rem;
+          font-size: 1.4rem;
           font-weight: 500;
+          color: $blackclr2;
 
           @media (max-width:1199px) {
             padding: 1.5rem 2rem;

@@ -2,7 +2,7 @@ import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import "./Sidebar.scss";
 import headerLogo from "../../../Assets/Images/white-logo.svg"
-import { BookingIcon, DashboardIcon, LogoutIcon, LoyaltyIcon, ManageIcon, SettingIcon, SupportIcon } from "../../../Assets/Images/svgImgs/svgImgs";
+import { BookingIcon, DashboardIcon, HomeIcon, LogoutIcon, LoyaltyIcon, ManageIcon, SettingIcon, SupportIcon } from "../../../Assets/Images/svgImgs/svgImgs";
 import { Dropdown } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { logOut } from "../../../Redux/Actions/user.action";
@@ -23,10 +23,10 @@ const Sidebar = ({ handleSidebar }: { handleSidebar?: () => void }) => {
     },
   ];
 
-    // Logut Function
-    const handleLogout = async () => {
-      await dispatch(logOut());
-    };
+  // Logut Function
+  const handleLogout = async () => {
+    await dispatch(logOut());
+  };
 
   return (
     <aside className="sidebar">
@@ -85,22 +85,24 @@ const Sidebar = ({ handleSidebar }: { handleSidebar?: () => void }) => {
       </div>
       <div className="sidebar_footerMenu">
         <ul className="sidebar_inner">
-            {NavfooterLinks.map((item) => (
-              <li key={item.label}>
-                <NavLink to={item.to} className="nav_link" onClick={handleSidebar}>
+          {NavfooterLinks.map((item) => (
+            <li key={item.label}>
+              <NavLink to={item.to} className="nav_link" onClick={handleSidebar}>
                 {item?.label === "Logout" ?
                   <>
-                    <span className="nav_link_icon" onClick={handleLogout}>{item.icon}
-                    {item.label}</span>
+                    <div className="d-flex w-100" onClick={handleLogout}>
+                      <span className="nav_link_icon">{item.icon}</span>
+                      {item.label}
+                    </div>
                   </>
                   :
                   <>
                     <span className="nav_link_icon">{item.icon}</span>
                     {item.label}
                   </>}
-                </NavLink>
-              </li>
-            ))}
+              </NavLink>
+            </li>
+          ))}
         </ul>
       </div>
     </aside>

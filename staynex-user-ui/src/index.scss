@@ -1,5 +1,6 @@
 @import "./Assets/theme/_var.scss";
 @import "./Assets/theme/_mixins.scss";
+
 :root {
   // --onboard-font-size: 100%;
   --onboard-font-size-1: 1.6rem;
@@ -12,9 +13,10 @@
   --onboard-font-family-normal: 'Be Vietnam Pro', sans-serif;
   --onboard-line-height-6: 2.6rem;
   --account-select-modal-font-line-height-1: 24px;
-  --notify-onboard-hash-time-font-line-height:26px;
+  --notify-onboard-hash-time-font-line-height: 26px;
   line-height: 24px;
 }
+
 html {
   font-size: 62.5%;
 }
@@ -41,7 +43,8 @@ body {
 img {
   max-width: 100%;
 
-  &:focus, &:focus-visible {
+  &:focus,
+  &:focus-visible {
     outline: none;
     box-shadow: none;
     border: 0;
@@ -69,19 +72,21 @@ span {
   display: inline-block;
 }
 
-h4,
+h4, 
 h5,
 h6,
 p,
 label {
   margin-bottom: 0;
   font-family: Be Vietnam Pro;
+  color: $blackclr2;
 }
 
 h1,
 h2,
 h3 {
   margin-bottom: 1rem;
+  color: $blackclr2;
 }
 
 h2 {
@@ -107,11 +112,11 @@ p {
 }
 
 .text-org {
-  color: $orangeclr !important;
+  color: $orangeclr  !important;
 }
 
 .black-bg {
-  background-color: $blackclr !important;
+  background-color: $blackclr  !important;
 }
 
 .py-60 {
@@ -412,16 +417,18 @@ body {
   }
 }
 
-.pagination {
+.ListPagination {
   flex-wrap: wrap;
+  display: flex;
+  align-items: center;
 
-  .page-item {
+  li {
     margin: 0.5rem 0;
 
-    .page-link {
+    a {
       border: 0;
       font-size: 1.4rem;
-      color: $greyclr;
+      color: $greyclr !important;
       width: 28px;
       height: 28px;
       border-radius: 5rem;
@@ -432,33 +439,32 @@ body {
       outline: 0;
       box-shadow: none;
 
-      span {
-        color: $blackclr;
-      }
+      &:focus,
+      &:hover {
+        background-color: $blackclr;
+        color: $whiteclr !important;
 
-      &:focus {
-        .page-link {
-          background-color: $blackclr;
-          color: $whiteclr;
-
-          span {
-            color: $whiteclr;
+        svg {
+          path {
+            fill: $whiteclr;
           }
         }
       }
     }
 
-    &.active,
-    &:hover {
-      .page-link {
+    &.active {
+      a {
         background-color: $blackclr;
-        color: $whiteclr;
+        color: $whiteclr !important;
 
-        span {
-          color: $whiteclr;
+        svg {
+          path {
+            fill: $whiteclr;
+          }
         }
       }
     }
+
   }
 }
 
@@ -473,11 +479,19 @@ body {
 
   &-header {
     background-color: transparent;
+    border-bottom: 1px solid $borderclr2;
 
     .accordion-button {
       background-color: transparent;
       font-size: 1.4rem;
       color: $black1;
+      padding: 1.5rem 1.2rem;
+
+      &:focus {
+        border-color: transparent;
+        outline: 0;
+        box-shadow: none;
+      }
     }
   }
 }
@@ -488,6 +502,7 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
 .red_overlay {
   position: relative;
   z-index: 1;
