@@ -9,11 +9,14 @@ import ConditioningIcon from '../../../../../Assets/Images/Icons/ConditioningIco
 import KitchenIcon from '../../../../../Assets/Images/Icons/KitchenIcon.svg'
 import TVIcon from '../../../../../Assets/Images/Icons/TVIcon.svg'
 import './Hotelindex.scss'
+import CommonButton from '../../../../Common/CommonButton/CommonButton'
+import { useDispatch } from 'react-redux'
 
-const Propertydetail = ({ data }: any) => {
+const Propertydetail = ({ data, handleAction }: any) => {
 
   let Country = require("country-state-city").Country;
   let State = require("country-state-city").State;
+
   return (
     <>
       <section className="property_detail">
@@ -21,6 +24,27 @@ const Propertydetail = ({ data }: any) => {
           <h6>Property information</h6>
           <div className="new_property_section mt-4">
             <Form>
+              {data?.verification === 'pending' && (
+                <div className='d-flex align-items-center mb-4'>
+                  <CommonButton
+                    title="Reject"
+                    type='button'
+                    className="dark-greenbtn"
+                    onClick={() =>
+                      handleAction('rejected', data)
+                    }
+                  />
+                  <CommonButton
+                    title="Approve"
+                    type='button'
+                    className="btncreate ms-3"
+                    onClick={() =>
+                      handleAction('accepted', data)
+                    }
+                  />
+                </div>
+              )}
+              {data?.verification === 'rejected' ? <span style={{color: "red"}}>Property Rejected</span> : data?.verification === 'accepted' ? <span style={{color: "green"}}>Property Accepted</span> : ""}
               <Row>
                 <Col lg={4} md={6}>
                   <InputCustom

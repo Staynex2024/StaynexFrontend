@@ -102,15 +102,13 @@ const SimilarProperties = ({ hotelDetailsData }: any) => {
           heading="Similar Properties"
           paragraph={
             hotelDetailsData?.location?.state !== undefined
-              ? `Discover ${
-                  State.getStateByCodeAndCountry(
-                    hotelDetailsData?.location?.state,
-                    hotelDetailsData?.location?.country,
-                  )?.name
-                }, ${
-                  Country.getCountryByCode(hotelDetailsData?.location?.country)
-                    ?.name
-                } best resorts and plan the perfect holiday`
+              ? `Discover ${State.getStateByCodeAndCountry(
+                hotelDetailsData?.location?.state,
+                hotelDetailsData?.location?.country,
+              )?.name
+              }, ${Country.getCountryByCode(hotelDetailsData?.location?.country)
+                ?.name
+              } best resorts and plan the perfect holiday`
               : 'Discover best resorts and plan the perfect holiday'
           }
         />
@@ -120,30 +118,30 @@ const SimilarProperties = ({ hotelDetailsData }: any) => {
               <Slider {...settings}>
                 {propertyList && propertyList.length > 0
                   ? propertyList.map((data: any, index: number) => (
-                      <li key={index}>
-                        <Commoncard
-                          hotelimag={data?.images ? data?.images[0] : ''}
-                          //   onClick={() => getUserData(data?.id)}
-                          hoteltitle={
-                            data?.name
-                              ? data?.name?.charAt(0).toUpperCase() +
-                                data?.name?.slice(1).toLowerCase()
-                              : ''
-                          }
-                          GetIndividualData={() => GetIndividualData(data)}
-                          address={data?.location ? data?.location : ''}
-                          bedroom={data?.rooms ? data?.rooms?.total : ''}
-                          price={
-                            data?.passes.length > 0
-                              ? `$ ${Math.min.apply(
-                                  Math,
-                                  listOnly(data?.passes),
-                                )}`
-                              : ''
-                          }
-                        />
-                      </li>
-                    ))
+                    <li key={index}>
+                      <Commoncard
+                        hotelimag={data?.images ? data?.images[0] : ''}
+                        //   onClick={() => getUserData(data?.id)}
+                        hoteltitle={
+                          data?.name
+                            ? data?.name?.charAt(0).toUpperCase() +
+                            data?.name?.slice(1).toLowerCase()
+                            : ''
+                        }
+                        GetIndividualData={() => GetIndividualData(data)}
+                        address={data?.location ? data?.location : ''}
+                        bedroom={data?.rooms ? data?.rooms?.total : ''}
+                        price={
+                          data?.passes.length > 0
+                            ? `${Math.min.apply(
+                              Math,
+                              listOnly(data?.passes),
+                            )}`
+                            : ''
+                        }
+                      />
+                    </li>
+                  ))
                   : 'No Data Found'}
               </Slider>
             ) : (

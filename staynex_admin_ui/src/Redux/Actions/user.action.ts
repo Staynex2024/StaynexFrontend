@@ -4,9 +4,9 @@ import toaster from '../../Components/Common/Toast'
 import {
   CHAIN_ID,
   EXPLORAR_LINK,
-  NETWORK_DECIMALS,
+  // NETWORK_DECIMALS,
   NETWORK_NAME,
-  NETWORK_SYMBOL,
+  // NETWORK_SYMBOL,
   RPC_URL,
 } from '../../Constant'
 import {
@@ -15,6 +15,7 @@ import {
   storeInstance,
 } from '../../Services/axios.service'
 import { APIURL } from '../../Utils'
+import { loader } from '../Slices/loader.slice'
 import { email, token, walletAddress, walletType } from '../Slices/user.slice'
 
 /**DECLARE ETHEREUM TYPE */
@@ -60,6 +61,7 @@ export const connectmetamask = () => {
       try {
         let address
         if (installed) {
+          dispatch(loader(true))
           const { ethereum } = window
 
           /**VERIFY METAMASK HAVE OUR NETWORK AND METAMASK SHOULD BE ON OUR NETWORK */
@@ -84,6 +86,9 @@ export const connectmetamask = () => {
               method: 'eth_requestAccounts',
             })
             address = accounts[0]
+            if (!walletAddress || accounts) {
+              await ethereum.request({ method: 'personal_sign', params: [Web3.utils.fromUtf8("Welcome to stayNex app."), address] });
+            }
 
             /**SAVE WALLET ADDRESS AND WALLET TYPE IN REDUX */
             dispatch(walletType('MetaMask'))
@@ -91,14 +96,17 @@ export const connectmetamask = () => {
             return dispatch(walletAddress(address))
           } else {
             reject(false)
+            dispatch(loader(false))
           }
         } else {
           /**IF METAMASK NOT INSTALLED */
+          dispatch(loader(false))
           reject(false)
           return toaster.error('Please install Metamask.')
         }
-      } catch (error:any) {
-        reject(error)
+      } catch (error: any) {
+        // reject(error)
+        dispatch(loader(false))
         return toaster.error(error.message)
       }
     })
@@ -107,53 +115,69 @@ export const connectmetamask = () => {
 /**VERIFY METAMASK HAVE OUR NETWORK AND METAMASK SHOULD BE ON OUR NETWORK */
 export const approveNetwork = async () => {
   return new Promise(async (resolve, reject) => {
-    const { ethereum } = window
-    /**IF METAMASK IS ON DIFFRENT NETWORK */
-    if (ethereum.networkVersion !== CHAIN_ID) {
-      try {
-        /**SWITCH METAMASK TO OUR NETWORK */
-
-        await ethereum.request({
-          method: 'wallet_switchEthereumChain',
-          params: [{ chainId: Web3.utils.toHex(CHAIN_ID) }],
+    try {
+      const { ethereum } = window as any;
+      await ethereum
+        .request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: CHAIN_ID }],
         })
-        resolve(true)
-      } catch (err:any) {
-        /**IF METAMASK DO'NT HAVE OUR NETWORK. ADD NEW NETWORK */
-        if (err.code === 4902) {
-          await ethereum.request({
-            method: 'wallet_addEthereumChain',
-            params: [
-              {
-                chainId: Web3.utils.toHex(CHAIN_ID),
-                chainName: NETWORK_NAME,
-                nativeCurrency: {
-                  name: NETWORK_NAME,
-                  symbol: NETWORK_SYMBOL,
-                  decimals: NETWORK_DECIMALS,
-                },
-                rpcUrls: [RPC_URL],
-                blockExplorerUrls: [EXPLORAR_LINK],
-              },
-            ],
-          })
-          resolve(true)
-        } else {
-          resolve(err)
-        }
+        .then((result: any) => {
+          resolve(true);
+        });
+    } catch (switchError: any) {
+      const { ethereum } = window as any;
+
+      if (!ethereum) {
+        resolve(false);
+        return
       }
-    } else {
-      resolve(true)
+      if (switchError.code === 4902) {
+        try {
+          const { ethereum } = window as any;
+          await ethereum
+            .request({
+              method: "wallet_addEthereumChain",
+              params: [
+                {
+                  chainId: CHAIN_ID,
+                  chainName: NETWORK_NAME,
+                  rpcUrls: [
+                    RPC_URL,
+                  ],
+                  blockExplorerUrls: [EXPLORAR_LINK],
+                  iconUrls: [
+                    "",
+                  ],
+                  nativeCurrency: {
+                    name: "MATIC",
+                    symbol: "MATIC",
+                    decimals: 18,
+                  },
+                },
+              ],
+            })
+            .then((result: any) => {
+              resolve(true);
+            });
+        } catch (addError: any) {
+          toaster.error(addError.message);
+          resolve(false);
+        }
+      } else {
+        toaster.error(switchError.message);
+        resolve(false);
+      }
     }
-  })
-}
+  });
+};
 
 /**DISCONNECT WALLET */
 export const disconnectWallet = () => async (dispatch: DispatchType) => {
   try {
     dispatch(walletType(''))
     dispatch(walletAddress(''))
-  } catch (error:any) {
+  } catch (error: any) {
     return toaster.error(error.message)
   }
 }
@@ -187,7 +211,7 @@ export const logOut = (message = true) => async (
     if (message) {
       toaster.success('Logged out successfully')
     }
-  } catch (error:any) {
+  } catch (error: any) {
     return toaster.error(error.message)
   }
 }
@@ -257,18 +281,18 @@ export const seeDetails = (data: any) => {
 
 // add property
 export const addProperty = (data: any) => {
-    return (dispatch: any) =>
-        new Promise((resolve, reject) => {
-            apiCallPost(APIURL.ADD_PROPERTY, data, {}, false, true)
-                .then(async (result) => {
-                    resolve(result);
-                })
-                .catch((error) => {
-                    reject(error);
-                });
+  return (dispatch: any) =>
+    new Promise((resolve, reject) => {
+      apiCallPost(APIURL.ADD_PROPERTY, data, {}, false, true)
+        .then(async (result) => {
+          resolve(result);
+        })
+        .catch((error) => {
+          reject(error);
         });
+    });
 };
- 
+
 
 // Reset passowrd Function
 // export const resetPassword = (data: any) => {

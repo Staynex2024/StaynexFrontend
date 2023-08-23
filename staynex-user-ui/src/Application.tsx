@@ -16,6 +16,7 @@ import ProfilePass from "./Components/Pages/CustomerProfile/ProfilePass/ProfileP
 import { RequireAuth } from "./Routes/Guard/AuthGuard";
 
 const Application: React.FC = () => {
+ 
   const router = createBrowserRouter([
     {
       path: '/',

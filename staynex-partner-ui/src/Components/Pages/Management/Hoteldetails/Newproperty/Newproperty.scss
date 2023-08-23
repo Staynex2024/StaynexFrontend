@@ -51,6 +51,24 @@
             margin-top: 2rem;
         }
 
+        .address_selectbox {
+            position: relative;
+
+            ul {
+                position: absolute;
+                top: 80px;
+                background-color: $whiteclr;
+                border: 1px solid $borderclr;
+                width: 100%;
+                padding: 0px;
+                z-index: 1;
+
+                li {
+                    padding: 10px 15px;
+                }
+            }
+        }
+
         .upload_image {
             &_listed {
                 display: flex;

@@ -1,33 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Col, Container, Dropdown, Row } from 'react-bootstrap'
+import { Col, Container, Row } from 'react-bootstrap'
 import "./Footer.scss"
-import FlagIcon from "../../../Assets/Images/Icons/flags/myr-flag.svg"
-import flag1 from "../../../Assets/Images/Icons/flags/myr-flag.svg"
+// import FlagIcon from "../../../Assets/Images/Icons/flags/myr-flag.svg"
+// import flag1 from "../../../Assets/Images/Icons/flags/myr-flag.svg"
+import CurrencyDropdown from '../CurrencyDropdown/CurrencyDropdown'
 
 const Footer = () => {
-  const countrylist = [
-    {
-      flagicon: flag1,
-      name: "AR",
-    },
-    {
-      flagicon: flag1,
-      name: "AR",
-    },
-    {
-      flagicon: flag1,
-      name: "AR",
-    },
-    {
-      flagicon: flag1,
-      name: "AR",
-    },
-    {
-      flagicon: flag1,
-      name: "AR",
-    },
-  ];
+
   return (
     <>
       <footer className='login_footer w-100'>
@@ -45,7 +25,7 @@ const Footer = () => {
               </div>
             </Col>
             <Col xs={12} sm={4} className='d-flex justify-content-center justify-content-sm-end mt-4 mt-sm-0'>
-              <Dropdown>
+              {/* <Dropdown>
                 <Dropdown.Toggle variant="" id="dropdown-basic">
                   <img src={FlagIcon} alt="flag" /> <span>MYR</span>
                 </Dropdown.Toggle>
@@ -60,7 +40,8 @@ const Footer = () => {
                     )
                   })}
                 </Dropdown.Menu>
-              </Dropdown>
+              </Dropdown> */}
+              <CurrencyDropdown />
             </Col>
           </Row>
         </Container>

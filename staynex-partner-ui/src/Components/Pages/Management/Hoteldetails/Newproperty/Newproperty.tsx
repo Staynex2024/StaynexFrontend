@@ -22,34 +22,40 @@ import { callApiPostMethod } from "../../../../../Redux/Actions/api.action";
 import { APIURL } from "../../../../../Utils";
 import NewPropertyValidation from "./NewPropertyValidation";
 import CommonHeading from "../../../../Common/CommonHeading/CommonHeading";
+import LocationPicker from "../../../../Common/LocationPicker/LocationPicker";
+import { v4 as uuidv4 } from 'uuid';
 
 const Newproperty = () => {
-  const dispatch: any = useDispatch();
+  const dispatch: any = useDispatch()
   const userDetails: any = useSelector<any>(
-    (state: any) => state.user.userDetails
-  );
+    (state: any) => state.user.userDetails,
+  )
 
-  const [fileArray, setFileArray] = useState([]);
-  const [uploadFile, setUploadFile] = useState([]);
-  const [draftKey, setDraftKey] = useState(false);
-  const [sizeInput, setSizeInput] = useState(false);
-  const [bedroomSize, setBedroomSize] = useState<any>([]);
+  const [fileArray, setFileArray] = useState([])
+  const [uploadFile, setUploadFile] = useState([])
+  const [draftKey, setDraftKey] = useState(false)
+  const [sizeInput, setSizeInput] = useState(false)
+  const [bedroomSize, setBedroomSize] = useState<any>([])
+  const [selectedLatLong, setSelectedLatLong] = useState<any>({})
+  const [uplaodData, setUplaodData] = useState<any>([])
 
   let Country = require("country-state-city").Country;
   let State = require("country-state-city").State;
   const navigate: any = useNavigate();
+  const uniqueId = uuidv4();
 
   const formik = useFormik({
     initialValues: {
-      name: "",
-      address: "",
-      country: "",
-      state: "",
-      location: "",
-      description: "",
-      propertyType: "",
-      bedrooms: "",
-      images: [],
+      name: '',
+      address: '',
+      country: '',
+      state: '',
+      latitude: '',
+      longitude: '',
+      description: '',
+      propertyType: '',
+      bedrooms: '',
+      images: '',
       size: bedroomSize,
       pool: false,
       workspace: false,
@@ -59,9 +65,9 @@ const Newproperty = () => {
       pet: false,
       wifi: false,
       washer: false,
-      email: "",
-      contact: "",
-      website: "",
+      email: '',
+      contact: '',
+      website: '',
     },
     validationSchema: NewPropertyValidation,
     onSubmit: async (values) => {
@@ -70,8 +76,8 @@ const Newproperty = () => {
         country: values?.country,
         state: values?.state,
         address: values?.address,
-        longitude: values?.location,
-        latitude: values?.location,
+        longitude: values?.longitude,
+        latitude: values?.latitude,
         description: values?.description,
         type: values?.propertyType,
         bedbedrooms: values?.bedrooms,
@@ -80,7 +86,7 @@ const Newproperty = () => {
           sizes: bedroomSize,
         },
         email: values?.email,
-        mobile_number: "+62" + values?.contact,
+        mobile_number: '+62' + values?.contact,
         outdoor_pool: values?.pool,
         workspace: values?.workspace,
         pet_allowed: values?.pet,
@@ -90,20 +96,16 @@ const Newproperty = () => {
         kitchen: values?.kitchen,
         hd_tv: values?.hdtv,
         free_washer: values?.washer,
-        images: [
-          "https://media.istockphoto.com/id/1083982928/photo/jaipur-metro.jpg?s=2048x2048&w=is&k=20&c=h9FYPJHd-TfFQNjbRCELPG93tcNj8Zb1Qgcr_lM5Zog=",
-          "https://media.istockphoto.com/id/1083982928/photo/jaipur-metro.jpg?s=2048x2048&w=is&k=20&c=h9FYPJHd-TfFQNjbRCELPG93tcNj8Zb1Qgcr_lM5Zog=",
-          "https://media.istockphoto.com/id/1083982928/photo/jaipur-metro.jpg?s=2048x2048&w=is&k=20&c=h9FYPJHd-TfFQNjbRCELPG93tcNj8Zb1Qgcr_lM5Zog=",
-          "https://media.istockphoto.com/id/1083982928/photo/jaipur-metro.jpg?s=2048x2048&w=is&k=20&c=h9FYPJHd-TfFQNjbRCELPG93tcNj8Zb1Qgcr_lM5Zog=",
-          "https://media.istockphoto.com/id/1083982928/photo/jaipur-metro.jpg?s=2048x2048&w=is&k=20&c=h9FYPJHd-TfFQNjbRCELPG93tcNj8Zb1Qgcr_lM5Zog=",
-        ],
+        images: uplaodData,
+
         website: values?.website,
+        uu_id: uniqueId.replace(/-/g, "")
       };
       const res: any = await dispatch(
-        callApiPostMethod(APIURL.VENDOR_ADD_PROPERTY, dataToSend, {}, true)
-      );
+        callApiPostMethod(APIURL.VENDOR_ADD_PROPERTY, dataToSend, {}, true),
+      )
       if (res.statusCode === 201) {
-        navigate("/auth/hotel-details");
+        navigate('/auth/hotel-details')
       }
       // const result = await dispatch(addProperty(dataToSend))
       // if (result?.statusCode === 201) {
@@ -113,65 +115,83 @@ const Newproperty = () => {
       //   toaster.error(result?.message)
       // }
     },
-  });
+  })
 
   const options = [
-    { value: "resort", label: "Resort" },
-    { value: "villa", label: "Villa and Mansion" },
-    { value: "hotel", label: "Hotel" },
-    { value: "boutique", label: "Boutique Hotel" },
-  ];
+    { value: 'resort', label: 'Resort' },
+    { value: 'villa', label: 'Villa and Mansion' },
+    { value: 'hotel', label: 'Hotel' },
+    { value: 'boutique', label: 'Boutique Hotel' },
+  ]
+  const uploadMultipleFiles = async (e: any) => {
+    let formData = new FormData()
+    let fileData = e.target.files[0]
+    const name = e.target.value.split(`\\`)
+    const fileName = name[name.length - 1]
+    formData.append('file', fileData, fileName)
+    const res: any = await dispatch(
+      callApiPostMethod(APIURL.VENDOR_UPLAOD, formData, {}, true),
+    )
+    setUplaodData([...uplaodData, res?.data])
 
-  const uploadMultipleFiles = (e: any) => {
-    const uploadedFiles = Array.from(e.target.files);
+    const uploadedFiles: any = Array.from(e.target.files)
     const filteredFiles = uploadedFiles.filter((file: any) => {
       // Check if the file already exists in the uploadFile array based on its name
       const existingFile = uploadFile.find(
-        (existing: any) => existing.name === file.name
-      );
-      return !existingFile && file.size < 2000000; // Only add if it's not a duplicate and size is less than 2 MB
-    });
+        (existing: any) => existing.name === file.name,
+      )
+      return !existingFile && file.size < 2000000 // Only add if it's not a duplicate and size is less than 2 MB
+    })
     if (filteredFiles.length > 0) {
-      setUploadFile((prevFile): any => [...prevFile, ...filteredFiles]);
+      setUploadFile((prevFile): any => [...prevFile, ...filteredFiles])
       const fileURLs: any = filteredFiles.map((file: any) =>
-        URL.createObjectURL(file)
-      );
-      setFileArray((prevFileArray): any => [...prevFileArray, ...fileURLs]);
+        URL.createObjectURL(file),
+      )
+      setFileArray((prevFileArray): any => [...prevFileArray, ...fileURLs])
     } else {
-      toaster.error("Files must be less than 2 MB and not duplicates.");
+      toaster.error('Files must be less than 2 MB and not duplicates.')
     }
-  };
+  }
 
   useEffect(() => {
-    formik.setFieldValue("images", uploadFile);
+    formik.setFieldValue('images', uploadFile)
     // eslint-disable-next-line
-  }, [formik.values.images, uploadFile]);
+  }, [formik.values.images, uploadFile])
 
   const uploadFiles = (e: any) => {
-    e.preventDefault();
-  };
+    e.preventDefault()
+  }
 
-  const numberOfBedrooms = parseInt(formik.values.bedrooms);
-  const bedroomArray: any = Array.from({ length: numberOfBedrooms });
+  const numberOfBedrooms = parseInt(formik.values.bedrooms)
+  const bedroomArray: any = Array.from({ length: numberOfBedrooms })
 
   const handleSizes = (e: any, ind: any) => {
-    const newBedroomSize = [...bedroomSize];
-    newBedroomSize[ind] = { [e.target.name]: e.target.value };
-    setBedroomSize(newBedroomSize);
+    const newBedroomSize = [...bedroomSize]
+    newBedroomSize[ind] = { [e.target.name]: e.target.value }
+    setBedroomSize(newBedroomSize)
 
     // Assuming `formik` is a reference to your Formik instance
-    formik.setFieldValue(`room_${ind + 1}`, e.target.value);
-  };
+    formik.setFieldValue(`room_${ind + 1}`, e.target.value)
+  }
+
+  useEffect(() => {
+    if (selectedLatLong.lat && selectedLatLong?.lon) {
+      formik.setFieldValue('longitude', selectedLatLong?.lon)
+      formik.setFieldValue('latitude', selectedLatLong?.lat)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedLatLong])
 
   //  For formik validation , will do later do not remove useEffect
   useEffect(() => {
-    let len = Array.from({ length: parseInt(formik.values.bedrooms) });
+    let len = Array.from({ length: parseInt(formik.values.bedrooms) })
     len.map((element, index) => {
-      formik.setFieldError(`room_${index + 1}`, "Required");  
-    });
+      formik.setFieldError(`room_${index + 1}`, 'Required')
+    })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formik.values]);
 
+  
   return (
     <>
       <div className="Usercraete_property_page black_bg_style">
@@ -199,7 +219,7 @@ const Newproperty = () => {
                     type="text"
                     onChange={(event: any) => {
                       if (/^([A-Za-z ]|)+$/.test(event.target.value)) {
-                        formik.handleChange(event);
+                        formik.handleChange(event)
                       }
                     }}
                     maxLength={25}
@@ -224,13 +244,13 @@ const Newproperty = () => {
                           onChange={(e) => formik.handleChange(e)}
                           value={formik.values.country}
                         >
-                          <option value={""}>{"Select country"}</option>
+                          <option value={''}>{'Select country'}</option>
                           {Country.getAllCountries().map(
                             (data: any, index: any) => (
                               <option value={data.isoCode} key={index}>
                                 {data.name}
                               </option>
-                            )
+                            ),
                           )}
                         </Form.Control>
                         {formik.errors.country && formik.touched.country ? (
@@ -254,13 +274,13 @@ const Newproperty = () => {
                           onChange={(e) => formik.handleChange(e)}
                           value={formik.values.state}
                         >
-                          <option value={""}>{"Select State"}</option>
+                          <option value={''}>{'Select State'}</option>
                           {State.getStatesOfCountry(formik.values.country).map(
                             (data: any, index: any) => (
                               <option value={data.isoCode} key={index}>
                                 {data.name}
                               </option>
-                            )
+                            ),
                           )}
                         </Form.Control>
                         {formik.errors.state && formik.touched.state ? (
@@ -273,7 +293,7 @@ const Newproperty = () => {
                   </div>
                 </Col>
                 <Col lg={4} md={6}>
-                  <InputCustom
+                  {/* <InputCustom
                     label="Address"
                     className="mb-44"
                     placeholder="Enter Address"
@@ -290,6 +310,10 @@ const Newproperty = () => {
                         <span>{formik.errors.address}</span>
                       ) : null
                     }
+                  /> */}
+                  <LocationPicker
+                    setSelectedLatLong={setSelectedLatLong}
+                    formik={formik}
                   />
                 </Col>
                 <Col lg={8} md={12}>
@@ -299,34 +323,37 @@ const Newproperty = () => {
                       <InputCustom
                         className="mb-44"
                         placeholder="Enter Longitude"
-                        id="location"
-                        name="location"
+                        id="longitude"
+                        name="longitude"
                         type="text"
+                        readOnly
                         onChange={formik.handleChange}
                         autoFocus={true}
-                        value={formik.values.location}
-                        error={
-                          formik.errors.location && formik.touched.location ? (
-                            <span>{formik.errors.location}</span>
-                          ) : null
-                        }
+                        value={formik.values.longitude}
+                        // error={
+                        //   formik.errors.longitude &&
+                        //   formik.touched.longitude ? (
+                        //     <span>{formik.errors.longitude}</span>
+                        //   ) : null
+                        // }
                       />
                     </Col>
                     <Col lg={6} md={6}>
                       <InputCustom
                         className="mb-44"
                         placeholder="Enter Latitude"
-                        id="location"
-                        name="location"
+                        id="latitude"
+                        name="latitude"
                         type="text"
+                        readOnly
                         onChange={formik.handleChange}
                         autoFocus={true}
-                        value={formik.values.location}
-                        error={
-                          formik.errors.location && formik.touched.location ? (
-                            <span>{formik.errors.location}</span>
-                          ) : null
-                        }
+                        value={formik.values.latitude}
+                        // error={
+                        //   formik.errors.latitude && formik.touched.latitude ? (
+                        //     <span>{formik.errors.latitude}</span>
+                        //   ) : null
+                        // }
                       />
                     </Col>
                   </Row>
@@ -355,9 +382,9 @@ const Newproperty = () => {
                     classgroup="mb-44"
                     options={options}
                     onChange={(option: any) =>
-                      formik.setFieldValue("propertyType", option.value)
+                      formik.setFieldValue('propertyType', option.value)
                     }
-                    name={"propertyType"}
+                    name={'propertyType'}
                     placeholder="Select"
                     isSearchable={false}
                     error={
@@ -379,8 +406,8 @@ const Newproperty = () => {
                     name="bedrooms"
                     onChange={(event) => {
                       if (/^\d*(\.\d{0,8})?$/.test(event.target.value)) {
-                        formik.handleChange(event);
-                        setSizeInput(!sizeInput);
+                        formik.handleChange(event)
+                        setSizeInput(!sizeInput)
                       }
                     }}
                     type="number"
@@ -464,7 +491,7 @@ const Newproperty = () => {
                             }
                           />
                         </Col>
-                      );
+                      )
                     })
                   : null}
 
@@ -479,7 +506,7 @@ const Newproperty = () => {
                         <div className="image_up">
                           <Form.Control
                             type="file"
-                            id="images"
+                            id="formik .uplaodData.images"
                             name="images"
                             multiple
                             onChange={uploadMultipleFiles}
@@ -498,6 +525,7 @@ const Newproperty = () => {
                     ) : null}
                   </div>
                 </Col>
+
                 <hr className="spaceline" />
                 <Col lg={12}>
                   <div className="check_box_fields">
@@ -654,7 +682,7 @@ const Newproperty = () => {
                     onWheel={(e: any) => e.target.blur()}
                     onChange={(event) => {
                       if (/^\d*(\.\d{0,8})?$/.test(event.target.value)) {
-                        formik.handleChange(event);
+                        formik.handleChange(event)
                       }
                     }}
                     autoFocus={true}
@@ -675,7 +703,7 @@ const Newproperty = () => {
                     name="website"
                     type="text"
                     onChange={(event) => {
-                      formik.handleChange(event);
+                      formik.handleChange(event)
                     }}
                     autoFocus={true}
                     value={formik.values.website}
@@ -711,7 +739,7 @@ const Newproperty = () => {
         </section>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Newproperty;
+export default Newproperty

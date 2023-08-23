@@ -9,7 +9,6 @@ import {
   disconnectWallet,
 } from "../../../Redux/Actions/user.action";
 import { custmizeAddress } from "../../../Services/common.service";
-import { useTranslation } from "react-i18next";
 import Spinner from "react-bootstrap/Spinner";
 
 /**CONNECT WALLET MODAL */
@@ -34,7 +33,6 @@ const ConnectWallet = () => {
     setConnectionStatus({});
   }, [show]);
 
-  const { t } = useTranslation();
 
   const connectToWallet = async (wallet) => {
     setConnectionStatus({ wallet, status: "pending" });
@@ -57,7 +55,7 @@ const ConnectWallet = () => {
         title={
           walletAddress
             ? custmizeAddress(walletAddress)
-            : t("header.connect_wallet_text")
+            : 'Connect Wallet'
         }
         onClick={() => {
           setShow(true);

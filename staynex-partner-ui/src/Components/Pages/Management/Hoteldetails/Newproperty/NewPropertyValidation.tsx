@@ -15,9 +15,9 @@ function NewPropertyValidation(){
       .required("This field is required")
       .min(8, "Address should be at least 8 characters long")
       .max(50, "Address should be at least 50 characters long")
-      .matches(/^(?! ).*(?<! )$/, "Space is not allowed at start or end places")
       .matches(/^[0-9a-zA-Z\s,.-]+$/, "Please enter valid address"),
-    location: Yup.string().required("This field is required"),
+    // latitude: Yup.string().required("This field is required"),
+    // longitude: Yup.string().required("This field is required"),
     description: Yup.string()
       .min(30, "Description should be at least 30 characters long")
       .max(300, "Description should be at most 300 characters long")

@@ -1,20 +1,18 @@
 
-export const API_HOST = "https://stage-api.staynex.io/";
+// export const API_HOST = "https://stage-api.staynex.io/";
 
-// export const API_HOST= 'http://10.1.8.97:3000'
+export const API_HOST= 'http://10.1.8.97:3000'
 
 export const PAGE_LIMIT = 10
 
-export const CHAIN_ID = '97'
-export const RPC_URL = 'https://data-seed-prebsc-1-s1.binance.org:8545'
-export const NETWORK_NAME = 'BSC Testnet'
-export const NETWORK_SYMBOL = 'bsc'
+export const CHAIN_ID = '0x13881'
+export const RPC_URL = 'https://rpc.ankr.com/polygon_mumbai'
+export const NETWORK_NAME = 'Mumbai Testnet'
+export const NETWORK_SYMBOL = 'matic'
 export const NETWORK_DECIMALS = 18
-export const EXPLORAR_LINK = 'https://testnet.bscscan.com'
+export const EXPLORAR_LINK = 'https://mumbai.polygonscan.com/'
+export const CONTRACT_ADDRESS = '0x9422CdF04D6B9EF9a365D2a81d2aE2c6B2000cB0'
 
-export const TOKEN_ADDRESS = '0x93aa5b199127887BD0099B7E0A97648b20D0d450'
-export const USDT_ADDRESS = '0xac62424c3d7A06ED1065d73102e9805d6B670ad5'
-export const ICO_ADDRESS = '0xdb0Bbdb4692bb7a1d334Da0972C590718A98c07f'
 
 export const BICONOMY_API_KEY = ''
 

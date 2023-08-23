@@ -78,7 +78,7 @@ const FavoriteDestinations = () => {
             if (result.count > 0) {
                 navigate('/listing/?country=' + item?.country + "&state=" + item?.state)
             } else {
-                toaster.error("No data found")
+                toaster.error("No property found")
             }
         } else if (result?.statusCode === 400) {
             toaster.error(result.message)

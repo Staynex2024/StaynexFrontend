@@ -32,6 +32,7 @@ import { Link, useParams } from 'react-router-dom'
 import SimilarProperties from './SimilarProperties'
 
 const ResortDetails = () => {
+  // const descriptionLengeth = 50
   const [show, setShow] = useState(false)
   const dispatch: any = useDispatch()
   const [hotelDetailsData, setHotelDetailsData] = useState<any>()
@@ -40,6 +41,7 @@ const ResortDetails = () => {
 
   useEffect(() => {
     HotelDetails()
+    window.scroll(0, 0)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
 
@@ -110,10 +112,7 @@ const ResortDetails = () => {
             </button>
           </div>
           <div className="resort_socialicon">
-            <Link
-              to="https://www.instagram.com/"
-              target="_blank"
-            >
+            <Link to="https://www.instagram.com/" target="_blank">
               <InstagramIcon />
             </Link>
             <Link to="https://www.facebook.com/" target="_blank">
@@ -135,15 +134,35 @@ const ResortDetails = () => {
                     <span>Read more</span>
                     <GrouparrowIcon />
                   </div> */}
-                  
+
                   <h4 className="villa_info_icon">
-                    
-                    {isReadMore  ? hotelDetailsData?.description.slice(0, 50): hotelDetailsData?.description}
+                    {/* {isReadMore && isReadMore.length > 50 ? (
+
+              )} */}
+
+                    {isReadMore
+                      ? hotelDetailsData?.description.slice(0, 50)
+                      : hotelDetailsData?.description}
                   </h4>
-                  <span onClick={toggleReadMore} className="read-or-hide ">
-                    {isReadMore ? ' Read more' : ' Read Less'}
-                  </span>
-                  <GrouparrowIcon />
+
+                  {isReadMore && hotelDetailsData?.description.length > 50 ? (
+                    <>
+                      {' '}
+                      <span onClick={toggleReadMore} className="read-or-hide ">
+                        {' '}
+                        Read more{' '}
+                      </span>{' '}
+                      <GrouparrowIcon />
+                    </>
+                  ) : isReadMore ? null : (
+                    <>
+                      <span onClick={toggleReadMore} className="read-or-hide ">
+                        Read less
+                      </span>
+                      <GrouparrowIcon />
+                    </>
+                  )}
+
                   <div className="villa_info_icon"></div>
                 </div>
               </Col>

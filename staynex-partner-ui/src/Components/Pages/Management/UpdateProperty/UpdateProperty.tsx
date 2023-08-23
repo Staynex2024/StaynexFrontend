@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
 import "./UpdateProperty.scss";
 import { useFormik } from "formik";
-import * as Yup from "yup";
 import InputCustom from "../../../Common/Inputs/InputCustom";
-import CustomSelect from "../../../Common/Select/Select";
 import TextArea from "../../../Common/FormInputs/TextArea";
-import slider1 from "../../../../Assets/Images/slider1.png";
 import { PlusIcon } from "../../../../Assets/Images/svgImgs/svgImgs";
 import Checkbox from "../../../Common/FormInputs/Checkbox";
 import PoolIcon from "../../../../Assets/Images/Icons/PoolIcon.svg";
@@ -21,15 +18,12 @@ import { callApiPostMethod } from "../../../../Redux/Actions/api.action";
 import { APIURL } from "../../../../Utils";
 import { useNavigate } from "react-router-dom";
 import UpdatePropertyValidation from "./UpdatePropertyValidation";
-import { callGetMethod } from "../../../../Services/contract.service";
 
 const UpdateProperty = () => {
   /**CREATE DISPATCH OBJECT */
   const dispatch: any = useDispatch();
   const navigate: any = useNavigate();
 
-  // const location = useLocation()
-  // const { from } = location.state
   const propertyDetails: any = useSelector(
     (state: any) => state.user?.propertyDetails.property[0]
   );
@@ -39,9 +33,7 @@ const UpdateProperty = () => {
 
   const [fileArray, setFileArray] = useState([]);
   const [uploadFile, setUploadFile] = useState([]);
-  const [draftKey, setDraftKey] = useState(false);
-  const [sizeInput, setSizeInput] = useState(false);
-  const [bedroomSize, setBedroomSize] = useState<any>([]);
+  const [bedroomSize, setBedroomSize] = useState<any>(propertyDetails.rooms?.sizes);
 
   let Country = require("country-state-city").Country;
   let State = require("country-state-city").State;
@@ -70,7 +62,7 @@ const UpdateProperty = () => {
       propertyType: "",
       bedrooms: propertyDetails.rooms.total,
       images: [],
-      size: bedroomSize,
+      size: propertyDetails.rooms?.sizes,
       pool: propertyDetails.amenity?.outdoor_pool,
       workspace: propertyDetails.amenity?.workspace,
       ac: propertyDetails.amenity?.air_conditioner,
@@ -103,8 +95,6 @@ const UpdateProperty = () => {
                 {room_1: 120},
                 {room_2: 200},
           ]
-        
-        
         ,
         },
         images: [
@@ -195,6 +185,15 @@ const UpdateProperty = () => {
   //     text += e[x] + " ";
   //   }
   // });
+
+  const handleBedrooms = (e: any, index: any) => {
+    const inputdata = [...bedroomSize]
+    inputdata[index][`room_${index + 1}`] = e.target.value
+    formik.setFieldValue('size', inputdata)
+    setBedroomSize(inputdata)
+  }
+
+
   return (
     <>
       <div className="Usercraete_property_page black_bg_style">
@@ -451,11 +450,9 @@ const UpdateProperty = () => {
                       </Col>
                     );
                   })
-                : null} */}
+                : null}  ((()))*/}
               {propertyDetails?.rooms?.total &&
-                Array.from({
-                  length: Number(propertyDetails?.rooms?.total),
-                }).map((item: any, index: any) => (
+                propertyDetails.rooms.sizes.map((item: any, index: any) => (
                   <InputCustom
                     label="Size (sqft)"
                     className="mb-44"
@@ -465,8 +462,8 @@ const UpdateProperty = () => {
                     type="text"
                     maxLength={25}
                     autoFocus={true}
-                    value={propertyDetails.rooms.sizes[index][`room_` + (index + 1)]}
-                    readOnly
+                    onChange={(e) => handleBedrooms(e, index)}
+                    value={formik.values.size[index][`room_${index + 1}`]}
                   />
                 ))}
 
@@ -520,7 +517,7 @@ const UpdateProperty = () => {
                           id="pool"
                           name="pool"
                           onChange={formik.handleChange}
-                          checked={propertyDetails?.amenity?.outdoor_pool}
+                          checked={formik.values.pool}
                           value={formik.values.pool}
                         />
                       </li>
@@ -535,7 +532,7 @@ const UpdateProperty = () => {
                           id="pet"
                           name="pet"
                           onChange={formik.handleChange}
-                          checked={propertyDetails?.amenity?.pet_allowed}
+                          checked={formik.values.pet}
                           value={formik.values.pet}
                         />
                       </li>
@@ -551,8 +548,8 @@ const UpdateProperty = () => {
                           id="workspace"
                           name="workspace"
                           onChange={formik.handleChange}
-                          value={formik.values.pool}
-                          checked={propertyDetails?.amenity?.workspace}
+                          value={formik.values.workspace}
+                          checked={formik.values.workspace}
                         />
                       </li>
                       <li>
@@ -566,8 +563,8 @@ const UpdateProperty = () => {
                           id="wifi"
                           name="wifi"
                           onChange={formik.handleChange}
-                          checked={propertyDetails?.amenity?.wifi}
-                          value={formik.values.pool}
+                          checked={formik.values.wifi}
+                          value={formik.values.wifi}
                         />
                       </li>
                       <li>
@@ -582,8 +579,8 @@ const UpdateProperty = () => {
                           id="ac"
                           name="ac"
                           onChange={formik.handleChange}
-                          checked={propertyDetails?.amenity?.air_conditioner}
-                          value={formik.values.pool}
+                          checked={formik.values.ac}
+                          value={formik.values.ac}
                         />
                       </li>
                       <li>
@@ -599,7 +596,7 @@ const UpdateProperty = () => {
                           name="washer"
                           onChange={formik.handleChange}
                           value={formik.values.washer}
-                          checked={propertyDetails?.amenity?.free_washer}
+                          checked={formik.values.washer}
                         />
                       </li>
                       <li>
@@ -613,8 +610,8 @@ const UpdateProperty = () => {
                           id="kitchen"
                           name="kitchen"
                           onChange={formik.handleChange}
-                          checked={propertyDetails?.amenity?.kitchen}
-                          value={formik.values.pool}
+                          checked={formik.values.kitchen}
+                          value={formik.values.kitchen}
                         />
                       </li>
                       <li>
@@ -627,9 +624,9 @@ const UpdateProperty = () => {
                           }
                           id="hdtv"
                           name="hdtv"
-                          checked={propertyDetails?.amenity?.hd_tv}
+                          checked={formik.values.hdtv}
                           onChange={formik.handleChange}
-                          value={formik.values.pool}
+                          value={formik.values.hdtv}
                         />
                       </li>
                     </ul>

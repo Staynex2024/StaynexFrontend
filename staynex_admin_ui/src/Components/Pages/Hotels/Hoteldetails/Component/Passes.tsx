@@ -4,10 +4,10 @@ import { GreentickIcon } from '../../../../../Assets/Images/svgImgs/svgImgs';
 import Passes1 from '../../../../../Assets/Images/Passes1.png';
 import { useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { callApiGetMethod, callApiPostMethod } from '../../../../../Redux/Actions/api.action';
+import { callApiGetMethod } from '../../../../../Redux/Actions/api.action';
 import { APIURL } from '../../../../../Utils';
-import Swal from 'sweetalert2';
-import toaster from '../../../../Common/Toast';
+// import Swal from 'sweetalert2';
+// import toaster from '../../../../Common/Toast';
 
 const Passes = () => {
     const dispatch: any = useDispatch();
@@ -20,7 +20,7 @@ const Passes = () => {
     let query = useQuery()
 
     const [passList, setPassList] = useState({})
-    const [isUnList, setIsUnlist] = useState(false)
+    // const [isUnList, setIsUnlist] = useState(false)
 
 
     useEffect(() => {
@@ -43,41 +43,40 @@ const Passes = () => {
 
         retreivePassesList()
         // eslint-disable-next-line
-    }, [query, isUnList])
+    }, [query])
 
 
-    const handleAction = async (type: string) => {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'info',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Confirm!',
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                setIsUnlist(false)
-                let dataToSend = {
-                    list: type === "true" ? true : false,
-                    User_id: Number(query.get('userId')),
-                    Pass_id: Number(query.get('passId')),
-                    Property_id: Number(query.get('propertyId'))
-                }
-                let result = await dispatch(
-                    callApiPostMethod(APIURL.LIST_DELIST_PASS, dataToSend, {}, false),
-                )
-                if (result?.statusCode === 201) {
-                    toaster.success(result?.message)
-                    setIsUnlist(true)
-                } else if (result?.statusCode === 400) {
-                    toaster.error(result?.message)
-                    setIsUnlist(false)
-                } 
-            }
-        })
-    }
-
+    // const handleAction = async (type: string) => {
+    //     Swal.fire({
+    //         title: 'Are you sure?',
+    //         text: "You won't be able to revert this!",
+    //         icon: 'info',
+    //         showCancelButton: true,
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         confirmButtonText: 'Yes, Confirm!',
+    //     }).then(async (result) => {
+    //         if (result.isConfirmed) {
+    //             setIsUnlist(false)
+    //             let dataToSend = {
+    //                 list: type === "true" ? true : false,
+    //                 User_id: Number(query.get('userId')),
+    //                 Pass_id: Number(query.get('passId')),
+    //                 Property_id: Number(query.get('propertyId'))
+    //             }
+    //             let result = await dispatch(
+    //                 callApiPostMethod(APIURL.LIST_DELIST_PASS, dataToSend, {}, false),
+    //             )
+    //             if (result?.statusCode === 201) {
+    //                 toaster.success(result?.message)
+    //                 setIsUnlist(true)
+    //             } else if (result?.statusCode === 400) {
+    //                 toaster.error(result?.message)
+    //                 setIsUnlist(false)
+    //             }
+    //         }
+    //     })
+    // }
     return (
         <>
             <section className='passes'>
@@ -119,22 +118,22 @@ const Passes = () => {
                                                 : passList['approval'] === "accepted" && passList['listing_status'] === "unlisted"
                                                     ?
                                                     <>
-                                                        <button type='button' className='active' onClick={() => handleAction('true')}>LIST</button>
+                                                        {/* <button type='button' className='active' onClick={() => handleAction('true')}>LIST</button> */}
                                                         {/* <button onClick={() => handleAction('false')}>UNLIST</button> */}
-                                                        <span >DELIST</span>
+                                                        <span className="fa fa-times text-red delist_pass">&nbsp;UNLISTED</span>
                                                     </>
                                                     : passList['approval'] === "accepted" && passList['listing_status'] === "listed"
                                                         ?
                                                         <>
                                                             <span className='listed_check'>Listed <GreentickIcon /></span>
-                                                            <button onClick={() => handleAction('false')}>UNLIST</button>
+                                                            {/* <button onClick={() => handleAction('false')}>UNLIST</button> */}
                                                         </>
                                                         : passList['approval'] === "accepted" && passList['listing_status'] === "delisted"
                                                             ?
                                                             <>
-                                                                <button className='active' onClick={() => handleAction('true')}>LIST</button>
+                                                                {/* <button className='active' onClick={() => handleAction('true')}>LIST</button> */}
                                                                 {/* <button onClick={() => handleAction('false')}>UNLIST</button> */}
-                                                                <span className='text-red delist_pass'>DELISTED</span>
+                                                                <span className='text-red delist_pass fa fa-times'>&nbsp;DELISTED</span>
                                                             </>
                                                             :
                                                             passList['approval'] === "rejected"

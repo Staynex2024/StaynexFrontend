@@ -6,6 +6,7 @@ import { persistStore } from "redux-persist";
 import Application from "./Application";
 import { Toaster } from "react-hot-toast";
 import Loader from "./Components/Common/Loader";
+import { useEffect } from "react";
 // import { io } from "socket.io-client";
 
 /**CREATE STORE PERSIST INSTANCE */
@@ -17,6 +18,10 @@ let persistor = persistStore(store);
 // });
 
 function App() {
+
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scrolls to the top of the page
+  }, []);
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>

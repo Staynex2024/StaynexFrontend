@@ -3,7 +3,9 @@ import { Col, Row } from 'react-bootstrap';
 import { GreentickIcon } from '../../../../../Assets/Images/svgImgs/svgImgs';
 import Passes1 from '../../../../../Assets/Images/Passes1.png';
 
-const PropertyPass = ({ data, handleAction }: any) => {
+const PropertyPass = ({ data }: any) => {
+
+
 
     return (
         <>
@@ -50,22 +52,22 @@ const PropertyPass = ({ data, handleAction }: any) => {
                                                     : item?.approval === "accepted" && item?.listing_status === "unlisted"
                                                         ?
                                                         <>
-                                                            <button className='active' onClick={() => handleAction('true', item)}>LIST</button>
+                                                            {/* <button className='active' onClick={() => handleAction('true', item)}>LIST</button> */}
                                                             {/* <button onClick={() => handleAction('false')}>UNLIST</button> */}
-                                                            <span >DELIST</span>
+                                                            <span className="fa fa-times text-red delist_pass">&nbsp;UNLISTED</span>
                                                         </>
                                                         : item?.approval === "accepted" && item?.listing_status === "listed"
                                                             ?
                                                             <>
                                                                 <span className='listed_check'>Listed <GreentickIcon /></span>
-                                                                <button onClick={() => handleAction('false', item)}>UNLIST</button>
+                                                                {/* <button onClick={() => handleAction('false', item)}>UNLIST</button> */}
                                                             </>
                                                             : item?.approval === "accepted" && item?.listing_status === "delisted"
                                                                 ?
                                                                 <>
-                                                                    <button className='active' onClick={() => handleAction('true', item)}>LIST</button>
+                                                                    {/* <button className='active' onClick={() => handleAction('true', item)}>LIST</button> */}
                                                                     {/* <button onClick={() => handleAction('false')}>UNLIST</button> */}
-                                                                    <span className='text-red delist_pass'>DELISTED</span>
+                                                                    <span className='text-red delist_pass fa fa-times'>&nbsp;DELISTED</span>
                                                                 </>
                                                                 :
                                                                 item?.approval === "rejected"

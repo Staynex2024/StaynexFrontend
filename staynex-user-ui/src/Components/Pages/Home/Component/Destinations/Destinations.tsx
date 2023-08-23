@@ -93,29 +93,28 @@ const Destinations = (props: any) => {
               <Slider {...settings}>
                 {propertyList && propertyList.length > 0
                   ? propertyList.map((data: any, index: number) => (
-                      <li key={index}>
-                        <Commoncard
-                          hotelimag={data?.images ? data?.images[0] : ''}
-                          hoteltitle={
-                            data?.name
-                              ? data?.name?.charAt(0).toUpperCase() +
-                                data?.name?.slice(1).toLowerCase()
-                              : ''
-                          }
-                          GetIndividualData={() => GetIndividualData(data)}
-                          address={data?.location ? data?.location : ''}
-                          bedroom={data?.rooms ? data?.rooms?.total : ''}
-                          price={
-                            data?.passes.length > 0
-                              ? `$ ${Math.min.apply(
-                                  Math,
-                                  listOnly(data?.passes),
-                                )}`
-                              : ''
-                          }
-                        />
-                      </li>
-                    ))
+                    <li key={index}>
+                      <Commoncard
+                        hotelimag={data?.images ? data?.images[0] : ''}
+                        hoteltitle={
+                          data?.name
+                            ? data?.name?.charAt(0).toUpperCase() +
+                            data?.name?.slice(1).toLowerCase()
+                            : ''
+                        }
+                        GetIndividualData={() => GetIndividualData(data)}
+                        address={data?.location ? data?.location : ''}
+                        bedroom={data?.rooms ? data?.rooms?.total : ''}
+                        price={data?.passes.length > 0
+                          ? `${Math.min.apply(
+                            Math,
+                            listOnly(data?.passes),
+                          )}`
+                          : ''
+                        }
+                      />
+                    </li>
+                  ))
                   : 'No Data Found'}
               </Slider>
             )}

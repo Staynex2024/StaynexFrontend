@@ -1,35 +1,37 @@
-import React, { useEffect, useState } from 'react'
-import './Listings.scss'
-import { Col, Container, Dropdown, Form, Row } from 'react-bootstrap'
-import CommonHeading from '../../Common/CommonHeading/CommonHeading'
-import Checkbox from '../../Common/FormInputs/Checkbox'
-import InputCustom from '../../Common/Inputs/InputCustom'
+import React, { useEffect, useState } from "react";
+import "./Listings.scss";
+import "../Home/Component/Topsection/Topsection.scss";
+import { Col, Container, Dropdown, Row } from "react-bootstrap";
+import CommonHeading from "../../Common/CommonHeading/CommonHeading";
+import Checkbox from "../../Common/FormInputs/Checkbox";
+import InputCustom from "../../Common/Inputs/InputCustom";
 import {
   CrosscircleIcon,
   FilterIcon,
   FilterToggleIcon,
-} from '../../../Assets/Images/svgImgs/svgImgs'
-import ListingCard from '../../Common/ListingCard/ListingCard'
-import CommonButton from '../../Common/CommonButton/CommonButton'
-import RangeSlider from '../../Common/RangeSlider/RangeSlider'
-import { useDispatch } from 'react-redux'
-import { callApiGetMethod } from '../../../Redux/Actions/api.action'
-import { APIURL } from '../../../Utils'
-import { PAGE_LIMIT } from '../../../Constant'
-import Pagination from '../../Common/Pagination/Pagination'
-import useDebounce from '../../../hooks/useDebounce'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
+} from "../../../Assets/Images/svgImgs/svgImgs";
+import ListingCard from "../../Common/ListingCard/ListingCard";
+import CommonButton from "../../Common/CommonButton/CommonButton";
+import RangeSlider from "../../Common/RangeSlider/RangeSlider";
+import { useDispatch } from "react-redux";
+import { callApiGetMethod } from "../../../Redux/Actions/api.action";
+import { APIURL } from "../../../Utils";
+import { PAGE_LIMIT } from "../../../Constant";
+import Pagination from "../../Common/Pagination/Pagination";
+import useDebounce from "../../../hooks/useDebounce";
+import { useLocation } from "react-router-dom";
+import TomtomLocation from "../../Common/LocationPicker/LocationPicker";
 
 const Listings = () => {
-  const dispatch: any = useDispatch()
-  const navigate: any = useNavigate()
+  const dispatch: any = useDispatch();
+  const { state } = useLocation();
 
   function useQuery() {
-    const { search } = useLocation()
-    return React.useMemo(() => new URLSearchParams(search), [search])
+    const { search } = useLocation();
+    return React.useMemo(() => new URLSearchParams(search), [search]);
   }
 
-  let query = useQuery()
+  let query = useQuery();
 
   // const [propertyList, setPropertyList]: any = useState([])
   // const [currentPage, setcurrentPage]: any = useState(1)
@@ -54,116 +56,85 @@ const Listings = () => {
   //   maxPrice: 0,
   // })
 
-  const [propertyList, setPropertyList]: any = useState([])
-  const [currentPage, setcurrentPage]: any = useState(1)
-  const [totalPage, setTotalPage] = useState(0)
-  const [propertyCount, setPropertyCount] = useState(0)
-  const [isActive, setActive] = useState(false)
-  const [loader, setLoader] = useState(false)
+  const [propertyList, setPropertyList]: any = useState([]);
+  const [selectedLatLong, setSelectedLatLong] = useState<any>({});
+  const [currentPage, setcurrentPage]: any = useState(1);
+  const [totalPage, setTotalPage] = useState(0);
+  const [propertyCount, setPropertyCount] = useState(0);
+  const [isActive, setActive] = useState(false);
+  const [loader, setLoader] = useState(false);
   const [search, setSearch]: any = React.useState({
     rooms: 0,
     unitSize: 0,
     numberOfNight: 0,
-  })
+  });
   const [search_Debounce, setSearch_Debounce] = useState({
     rooms: 0,
     unitSize: 0,
     numberOfNight: 0,
-  })
-  const [minValue, set_minValue] = useState(0)
-  const [maxValue, set_maxValue] = useState(100)
+  });
+  const [minValue, set_minValue] = useState(0);
+  const [maxValue, set_maxValue] = useState(100);
   const [search_DebounceMinMax, setSearch_DebounceMinMax] = useState({
     minPrice: 0,
     maxPrice: 0,
-  })
-  const [selectedPropertyType, setSelectedPropertyType]: any = useState([])
+  });
+  const [selectedPropertyType, setSelectedPropertyType]: any = useState([]);
 
   const toggleClass = () => {
-    setActive(!isActive)
-  }
+    setActive(!isActive);
+  };
   const fliterlist = [
-    { name: 'Our top picks' },
-    { name: 'Most popular' },
-    { name: 'Price (lowest first)' },
-  ]
-
-  //   setLoader(true)
-  //   //Get propertyList function
-  //   const retreivePropertyList = async () => {
-  //     // const queryParams = selectedPropertyType.map(id => `${id}`).join('&');
-  //     // console.log('selectedPropertyType :>> ', queryParams);
-  //     let dataToSend: any = {
-  //       page: currentPage,
-  //       limit: PAGE_LIMIT,
-  //     }
-  //     if (search_DebounceMinMax.minPrice > 0) {
-  //       dataToSend.min = search_DebounceMinMax.minPrice
-  //     }
-  //     if (search_DebounceMinMax.maxPrice > 0) {
-  //       dataToSend.max = search_DebounceMinMax.maxPrice
-  //     }
-  //     if (search_Debounce.numberOfNight > 0) {
-  //       dataToSend.nights = search_Debounce.numberOfNight
-  //     }
-  //     if (search_Debounce.rooms > 0) {
-  //       dataToSend.rooms = search_Debounce.rooms
-  //     }
-  //     const result = await dispatch(
-  //       callApiGetMethod(APIURL.GET_PROPERTY_LIST, dataToSend, true, false),
-  //     )
-  //     setPropertyList(result?.data)
-  //     setTotalPage(result?.totalPages)
-  //     setPropertyCount(result?.count)
-  //     setLoader(false)
-
-  //   const toggleClass = () => {
-  //       setActive(!isActive);
-  //   };
-  //   const fliterlist = [
-  //       { name: "Our top picks", },
-  //       { name: "Most popular", },
-  //       { name: "Price (lowest first)", },
-  //   ];
+    { name: "Our top picks" },
+    { name: "Most popular" },
+    { name: "Price (lowest first)" },
+  ];
 
   useEffect(() => {
-    setLoader(true)
+    setLoader(true);
     //Get propertyList function
     const retreivePropertyList = async () => {
       let dataToSend: any = {
         page: currentPage,
         limit: PAGE_LIMIT,
+      };
+      if (search_DebounceMinMax?.minPrice > 0) {
+        dataToSend.min = search_DebounceMinMax.minPrice;
       }
-      if (search_DebounceMinMax.minPrice > 0) {
-        dataToSend.min = search_DebounceMinMax.minPrice
+      if (search_DebounceMinMax?.maxPrice > 0) {
+        dataToSend.max = search_DebounceMinMax.maxPrice;
       }
-      if (search_DebounceMinMax.maxPrice > 0) {
-        dataToSend.max = search_DebounceMinMax.maxPrice
+      if (search_Debounce?.numberOfNight > 0) {
+        dataToSend.nights = search_Debounce.numberOfNight;
       }
-      if (search_Debounce.numberOfNight > 0) {
-        dataToSend.nights = search_Debounce.numberOfNight
+      if (search_Debounce?.rooms > 0) {
+        dataToSend.rooms = search_Debounce.rooms;
       }
-      if (search_Debounce.rooms > 0) {
-        dataToSend.rooms = search_Debounce.rooms
+      if (selectedPropertyType?.length) {
+        dataToSend.propertyType = selectedPropertyType.join(",");
       }
-      if (selectedPropertyType.length) {
-        dataToSend.propertyType = selectedPropertyType.join(',')
+      if (query.get("country") !== null) {
+        dataToSend.country = query.get("country");
       }
-      if (query.get('country') !== null) {
-        dataToSend.country = query.get('country')
+      if (query.get("state") !== null) {
+        dataToSend.state = query.get("state");
       }
-      if (query.get('state') !== null) {
-        dataToSend.state = query.get('state')
+      if (selectedLatLong?.lat) {
+        dataToSend.latitude = selectedLatLong?.lat;
+      }
+      if (selectedLatLong?.lon) {  
+        dataToSend.longitude = selectedLatLong?.lon;
       }
       const result = await dispatch(
-        callApiGetMethod(APIURL.GET_PROPERTY_LIST, dataToSend, true, false),
-      )
-      setPropertyList(result?.data)
-      setTotalPage(result?.totalPages)
-      setPropertyCount(result?.count)
-      setLoader(false)
-    }
-
-    retreivePropertyList()
+        callApiGetMethod(APIURL.GET_PROPERTY_LIST, dataToSend, true, false)
+      );
+      setPropertyList(result?.data);
+      setTotalPage(result?.totalPages);
+      setPropertyCount(result?.count);
+      setLoader(false);
+    };
+      retreivePropertyList();
+    
   }, [
     dispatch,
     currentPage,
@@ -173,75 +144,82 @@ const Listings = () => {
     search_Debounce.rooms,
     selectedPropertyType,
     query,
-  ])
+    state,
+    selectedLatLong,
+  ]);
+
+  useEffect(() => {
+    setSelectedLatLong(state?.selectedLatLong);
+    window.scroll(0, 0);
+  }, []);
 
   // Pagination
   const handlePageChange = (selectedObject: any) => {
-    setcurrentPage(selectedObject.selected + 1)
-  }
+    setcurrentPage(selectedObject.selected + 1);
+  };
 
   const propertyType = [
     {
-      label: 'Resorts',
-      value: 'resort',
+      label: "Resorts",
+      value: "resort",
     },
     {
-      label: 'Hotels',
-      value: 'hotel',
+      label: "Hotels",
+      value: "hotel",
     },
     {
-      label: 'Villas & mansions',
-      value: 'villa',
+      label: "Villas & mansions",
+      value: "villa",
     },
     {
-      label: 'Boutique hotels',
-      value: 'boutique',
+      label: "Boutique hotels",
+      value: "boutique",
     },
-  ]
+  ];
 
   const handlePropertyType = (e: any) => {
-    const id = e.target.id
+    const id = e.target.id;
 
     if (e.target.checked) {
-      setSelectedPropertyType([...selectedPropertyType, id])
+      setSelectedPropertyType([...selectedPropertyType, id]);
     } else {
-      let latestMemberList = selectedPropertyType.filter((f: any) => f !== id)
-      setSelectedPropertyType(latestMemberList)
+      let latestMemberList = selectedPropertyType.filter((f: any) => f !== id);
+      setSelectedPropertyType(latestMemberList);
     }
-  }
+  };
 
-  useDebounce(() => handleSearchDebounce(search.rooms), 1000, [search.rooms])
+  useDebounce(() => handleSearchDebounce(search.rooms), 1000, [search.rooms]);
   useDebounce(() => handleSearchDebounceUnitSize(search.unitSize), 1000, [
     search.unitSize,
-  ])
+  ]);
   useDebounce(
     () => handleSearchDebounceNumberOfNight(search.numberOfNight),
     1000,
-    [search.numberOfNight],
-  )
+    [search.numberOfNight]
+  );
 
   const handleSearchDebounce = (room: any) => {
-    setSearch_Debounce({ ...search_Debounce, rooms: room })
-  }
+    setSearch_Debounce({ ...search_Debounce, rooms: room });
+  };
   const handleSearchDebounceUnitSize = (unitSize: any) => {
-    setSearch_Debounce({ ...search_Debounce, unitSize: unitSize })
-  }
+    setSearch_Debounce({ ...search_Debounce, unitSize: unitSize });
+  };
   const handleSearchDebounceNumberOfNight = (numberOfNight: any) => {
-    setSearch_Debounce({ ...search_Debounce, numberOfNight: numberOfNight })
-  }
+    setSearch_Debounce({ ...search_Debounce, numberOfNight: numberOfNight });
+  };
 
   // range slider
   const handleInput = (e: any) => {
-    set_minValue(e.minValue)
-    set_maxValue(e.maxValue)
-  }
+    set_minValue(e.minValue);
+    set_maxValue(e.maxValue);
+  };
 
-  useDebounce(() => handleDebounceMinPrice(minValue), 1000, [minValue])
-  useDebounce(() => handleDebounceMaxPrice(maxValue), 1000, [maxValue])
+  useDebounce(() => handleDebounceMinPrice(minValue), 1000, [minValue]);
+  useDebounce(() => handleDebounceMaxPrice(maxValue), 1000, [maxValue]);
 
   const handleDebounceMinPrice = (minValue: any) => {
-    setSearch_DebounceMinMax({ ...search_DebounceMinMax, minPrice: minValue })
-  }
+    setSearch_DebounceMinMax({ ...search_DebounceMinMax, minPrice: minValue });
+  };
 
   const handleDebounceMaxPrice = (maxValue: any) => {
     setSearch_DebounceMinMax({ ...search_DebounceMinMax, maxPrice: maxValue })
@@ -261,8 +239,11 @@ const Listings = () => {
                 />
               </Col>
               <Col xs={12} md={5}>
-                <div className="common_search mt-5 mt-md-0">
-                  <Form.Control type="text" placeholder="Search" />
+                <div className="customInput">
+                  <TomtomLocation
+                    setSelectedLatLong={setSelectedLatLong}
+                    placeholder={"Search"}
+                  />
                 </div>
               </Col>
             </Row>
@@ -270,7 +251,7 @@ const Listings = () => {
         </section>
         <section
           className={
-            isActive ? 'Listings_Filter openFilter' : 'Listings_Filter'
+            isActive ? "Listings_Filter openFilter" : "Listings_Filter"
           }
         >
           <Container>
@@ -295,7 +276,7 @@ const Listings = () => {
                       <Dropdown.Item key={i} href="#">
                         <span>{data.name}</span>
                       </Dropdown.Item>
-                    )
+                    );
                   })}
                 </Dropdown.Menu>
               </Dropdown>
@@ -394,7 +375,7 @@ const Listings = () => {
                     className="mt-5 justify-content-center"
                   />
                 ) : (
-                  ''
+                  ""
                 )}
               </Col>
             </Row>
@@ -402,7 +383,7 @@ const Listings = () => {
         </section>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Listings
+export default Listings;

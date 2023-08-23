@@ -1,0 +1,26 @@
+[
+  {
+    "country": "United States",
+    "currency_code": "USD"
+  },
+  {
+    "country": "Malaysia",
+    "currency_code": "MYR"
+  },
+  {
+    "country": "singapore",
+    "currency_code": "SGD"
+  },
+  {
+    "country":"Indonesia",
+    "currency_code":"IDR"
+  }
+  ,{
+    "country":"India",
+    "currency_code":"INR"
+  },
+  {
+    "country":"United Kingdom",
+    "currency_code":"GBP"
+  }
+]

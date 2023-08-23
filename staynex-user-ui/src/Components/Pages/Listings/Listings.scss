@@ -60,7 +60,7 @@
                 }
 
                 .dropdown-menu {
-                    // width: 100%;
+                    width: 100%;
                 }
             }
         }
@@ -76,15 +76,18 @@
                 z-index: 9999;
                 left: -320px;
                 width: 320px;
-                height: 100vh;
-                overflow-y: auto;
+                // height: 100vh;
+                // overflow-y: auto;
                 transition: all ease-in-out 0.3s;
             }
 
             .listing_filter_centerbox {
                 padding: 3rem 1.5rem;
+
                 @media (max-width:1199px) {
-                    padding: 3rem 1.5rem 8.5rem
+                    padding: 3rem 1.5rem 3rem;
+                    height: calc(100vh - 100px);
+                    overflow-y: auto;
                 }
             }
 

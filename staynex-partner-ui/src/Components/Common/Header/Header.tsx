@@ -10,12 +10,16 @@ import closeicon from '../../../Assets/Images/Cancel.svg'
 import Sidebar from '../Sidebar/Sidebar'
 import menuToggle from '../../../Assets/Images/Icons/menu-toggle.svg'
 import { logOut } from '../../../Redux/Actions/user.action'
+import ConnectWallet from '../ConnectWallet'
+import CommonButton from '../CommonButton/CommonButton'
+import copy from 'copy-to-clipboard'
 
 const Header = () => {
   const dispatch: any = useDispatch()
   const navigate: any = useNavigate()
   const isLogin = useSelector((state: any) => state.user.token)
   const userData = useSelector((state: any) => state.user?.userDetails)
+  const walletAddress = useSelector((state: any) => state?.user?.walletAddress);
   const settingdata = [
     {
       name: userData?.name,
@@ -51,6 +55,7 @@ const Header = () => {
     await dispatch(logOut())
   }
 
+  
   const handleNavigation = () => {
     navigate('/auth/new-property')
   }
@@ -90,6 +95,8 @@ const Header = () => {
               </Col>
               <Col md={6} className="mt-3 mt-md-0">
                 <div className="d-flex justify-content-between justify-content-md-end align-items-center">
+              <ConnectWallet />
+
                   <Dropdown align="end" className="Notification_Dropdown">
                     <Dropdown.Toggle variant="" id="dropdown-basic">
                       <NotificationIcon />

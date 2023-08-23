@@ -1,11 +1,11 @@
 // export const API_HOST = "http://10.1.8.97:3001/vendor";
 export const API_HOST = 'https://stage-api.staynex.io/vendor'
-export const CHAIN_ID = '97'
-export const RPC_URL = 'https://data-seed-prebsc-1-s1.binance.org:8545'
-export const NETWORK_NAME = 'BSC Testnet'
-export const NETWORK_SYMBOL = 'bsc'
+export const CHAIN_ID = '0x13881'
+export const RPC_URL = 'https://rpc.ankr.com/polygon_mumbai'
+export const NETWORK_NAME = 'Mumbai Testnet'
+export const NETWORK_SYMBOL = 'matic'
 export const NETWORK_DECIMALS = 18
-export const EXPLORAR_LINK = 'https://testnet.bscscan.com'
+export const EXPLORAR_LINK = 'https://mumbai.polygonscan.com/'
 
 export const TOKEN_ADDRESS = '0x93aa5b199127887BD0099B7E0A97648b20D0d450'
 export const USDT_ADDRESS = '0xac62424c3d7A06ED1065d73102e9805d6B670ad5'

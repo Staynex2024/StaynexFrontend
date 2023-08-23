@@ -30,7 +30,7 @@ const UpdatePass = () => {
 
   const params = useParams();
   const addnewproperty = Yup.object().shape({
-    perks: Yup.array().required("*This field is required"),
+    perks: Yup.array().of(Yup.string().required('This field is required').min(5, 'minimum 5 characters required').max(50, 'maximum 50 characters allowed')),
   });
   const formik = useFormik({
     initialValues: {
@@ -47,8 +47,8 @@ const UpdatePass = () => {
     validationSchema: addnewproperty,
     onSubmit: async (values) => {
       const dataToSend: any = {
-        perks: perkArray,
-        passId : Number(params?.id)
+        perks: values?.perks,
+        passId: Number(params?.id)
       };
       const createPassResult = await dispatch(
         callApiPostMethod(APIURL.UPDATE_PASS, dataToSend, {}, true)
@@ -98,28 +98,14 @@ const UpdatePass = () => {
       formik.setFieldValue("pricepass", result?.data?.price);
       formik.setFieldValue("redeemable", result?.data?.redeemable_nights);
       formik.setFieldValue("passtier", result?.data?.name);
+      formik.setFieldValue("perks", result?.data['perks'].map((item: any, index: number) => (
+        item
+      )));
     }
   };
 
-  // const handlePerks = () => {
-  //   if (perkArray.length <= 9) {
-  //     const abc:any =[...perkArray,[]]
-  //     console.log('abc', abc)
-  //     setPerkArray(abc);
-  //   }
-  // }
-
-  // const handleClose = (i:any) => {
-  //   console.log(i,"index number ");
-  //   if(perkArray.length > 3){
-  //     const arr = [...perkArray]
-  //     arr.splice(i,1);
-  //     setPerkArray(arr);
-  //   }
-  // }
-
   const handlePerksOnchange = (e: any, index: any) => {
-    const inputdata = [...perkArray];
+    const inputdata = [...formik.values.perks];
     inputdata[index] = e.target.value;
     formik.setFieldValue("perks", inputdata);
     setPerkArray(inputdata);
@@ -131,7 +117,7 @@ const UpdatePass = () => {
       setPerkArray([...perkArray, ""]);
     }
   };
-
+  console.log('perkArray :>> ', perkArray);
   const handleRemoveField = (index: number) => {
     setPerkArray(perkArray.filter((field: any, i: number) => i !== index));
     formik.setFieldValue(
@@ -150,7 +136,7 @@ const UpdatePass = () => {
                 <div className="pass_form">
                   <h4 className="pass_name">
                     Pass Name{" "}
-                    <span  onClick={() => setEditPerks(!editPerks)}>
+                    <span onClick={() => setEditPerks(!editPerks)}>
                       <EditIcon />
                     </span>
                   </h4>
@@ -168,7 +154,7 @@ const UpdatePass = () => {
                     value={formik.values.residenceName}
                     error={
                       formik.errors.residenceName &&
-                      formik.touched.residenceName ? (
+                        formik.touched.residenceName ? (
                         <span>{formik.errors.residenceName}</span>
                       ) : null
                     }
@@ -219,7 +205,7 @@ const UpdatePass = () => {
                     value={formik.values.totalCopies}
                     error={
                       formik.errors.totalCopies &&
-                      formik.touched.totalCopies ? (
+                        formik.touched.totalCopies ? (
                         <span>{formik.errors.totalCopies}</span>
                       ) : null
                     }
@@ -241,7 +227,7 @@ const UpdatePass = () => {
                     value={formik.values.tier_number}
                     error={
                       formik.errors.tier_number &&
-                      formik.touched.tier_number ? (
+                        formik.touched.tier_number ? (
                         <span>{formik.errors.tier_number}</span>
                       ) : null
                     }
@@ -316,13 +302,13 @@ const UpdatePass = () => {
                       ) : null
                     }
                   />
-                  {passDetails &&
-                    passDetails?.perks?.length &&
-                    passDetails?.perks?.map((item: any, index: any) => (
+                  {perkArray &&
+                    perkArray?.length &&
+                    perkArray.map((item: any, index: any) => (
                       <>
                         <InputCustom
                           label={`Perks (${index + 1})`}
-                          disabled = {editPerks ? false : true}
+                          disabled={editPerks ? false : true}
                           className="mb-3"
                           placeholder="Enter Perks"
                           id="perks"
@@ -335,10 +321,10 @@ const UpdatePass = () => {
                           }}
                           autoFocus={true}
                           name="perks"
-                          value={editPerks ? formik.values.perks[index]: item}
+                          value={editPerks ? formik.values.perks[index] : formik.values.perks[index]}
                           error={
-                            formik.errors.perks && formik.touched.perks ? (
-                              <span>{formik.errors.perks}</span>
+                            formik.errors.perks && formik.touched.perks && formik.errors.perks[index] ? (
+                              <span>{formik.errors.perks[index]}</span>
                             ) : null
                           }
                         />
@@ -350,49 +336,15 @@ const UpdatePass = () => {
                         )}
                       </>
                     ))}
-                    <div className="add_fieldsbtn">
-                    {/* {perkArray.length <= 9 ? (
+                  <div className="add_fieldsbtn">
+                    {perkArray.length <= 9 ? (
                       <button type="button" onClick={handleAddField}>
                         <PlusgrayIcon />
                       </button>
                     ) : (
                       ""
-                    )} */}
+                    )}
                   </div>
-                  {/* Expiry date has been set to 10 years from backend so  */}
-                  {/* <InputCustom
-                    label="Pass Expiry Date"
-                    className="mb-3"
-                    placeholder="Enter Pass Expiry Date"
-                    id="passexpiry"
-                    name="passexpiry"
-                    type="date"
-                    onChange={formik.handleChange}
-                    autoFocus={true}
-                    value={formik.values.passexpiry}
-                    error={
-                      formik.errors.passexpiry && formik.touched.passexpiry ? (
-                        <span>{formik.errors.passexpiry}</span>
-                      ) : null
-                    }
-                  /> */}
-                  {/* <InputCustom
-                    label="Booking link"
-                    className="mb-3"
-                    placeholder="Enter Booking link"
-                    id="bookinglink"
-                    name="bookinglink"
-                    type="text"
-                    onChange={formik.handleChange}
-                    autoFocus={true}
-                    value={formik.values.bookinglink}
-                    error={
-                      formik.errors.bookinglink &&
-                      formik.touched.bookinglink ? (
-                        <span>{formik.errors.bookinglink}</span>
-                      ) : null
-                    }
-                  /> */}
                 </div>
               </Col>
               <Col lg={5} md={5}>
@@ -404,13 +356,13 @@ const UpdatePass = () => {
             <div className="createpass_btns">
               {
                 editPerks ?
-                <CommonButton
-                title="Update"
-                type="submit"
-                className="confirm_btn"
-              /> : null
+                  <CommonButton
+                    title="Update"
+                    type="submit"
+                    className="confirm_btn"
+                  /> : null
               }
-        
+
             </div>
           </div>
         </Form>

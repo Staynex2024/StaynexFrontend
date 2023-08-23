@@ -320,3 +320,14 @@ const toCustomFixed = (num: any, fixed: number) => {
   const re = new RegExp("^-?\\d+(?:.\\d{0," + (fixed || -1) + "})?");
   return num.toString().match(re)[0];
 };
+
+export const addCommas = (num: any) => {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+export const handleConversion = (conversionRate: number, price: number) => {
+  let convertedPrice = (conversionRate * price).toFixed(2)
+  let addComma = addCommas(convertedPrice)
+  return addComma
+}
+

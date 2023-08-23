@@ -19,6 +19,7 @@ type propsType = {
   placeholder?: any;
   isSearchable?: any;
   error?: any;
+  value?: any;
 };
 
 const CustomSelect = ({
@@ -36,6 +37,7 @@ const CustomSelect = ({
   placeholder,
   isSearchable,
   error,
+  value,
 }: propsType) => {
   return (
     <>
@@ -57,6 +59,7 @@ const CustomSelect = ({
           name={name}
           placeholder={placeholder}
           isSearchable={isSearchable}
+          value={value}
           />
           {error ? error : ""}
       </Form.Group>

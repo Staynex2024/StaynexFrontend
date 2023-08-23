@@ -8,7 +8,8 @@ export const APIURL: any = {
   CHECK_DUPLICATE_NAME: 'checkDuplicateUserName',
   ADD_CUSTOMER_NAME: 'addCustomerName',
   CUSTOMER_DETAILS: 'getCustomerDetails',
-  UPDATE_CUSTOMER_PROFILE: 'customerUpdateProfile'
+  UPDATE_CUSTOMER_PROFILE: 'customerUpdateProfile',
+  GET_EXCHANGE_RATE: 'getExchangeRateList'
 }
 
 export const RESPONSES: any = {

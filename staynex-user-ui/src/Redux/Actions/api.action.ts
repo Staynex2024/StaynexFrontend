@@ -1,5 +1,5 @@
 import { apiCallPost, apiCallGet } from '../../Services/axios.service'
-import { APIURL } from '../../Utils'
+// import { APIURL } from '../../Utils'
 import { useDispatch } from 'react-redux'
 import { Dispatch } from 'redux'
 import { loader } from '../Slices/loader.slice'

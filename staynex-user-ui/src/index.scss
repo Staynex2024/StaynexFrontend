@@ -115,6 +115,10 @@ p {
   color: $orangeclr  !important;
 }
 
+.text_green {
+  color: green !important;
+}
+
 .black-bg {
   background-color: $blackclr  !important;
 }
@@ -528,5 +532,24 @@ input::-webkit-inner-spin-button {
     path {
       fill: $blackclr;
     }
+  }
+}
+
+.location_Search {
+  position: relative;
+  width: 100%;
+
+  ul {
+      position: absolute;
+      left: 0;
+      background-color: #fff;
+      width: 100%;
+      border: 1px solid #ddd;
+      margin-top: 10px;
+      z-index: 2;
+
+      li {
+          padding: 10px 15px;
+      }
   }
 }

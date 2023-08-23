@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import headerLogo from '../../../Assets/Images/logo.svg'
 import { Col, Container, Dropdown, Form, Offcanvas, Row } from 'react-bootstrap'
@@ -11,12 +11,17 @@ import Sidebar from '../Sidebar/Sidebar'
 import menuToggle from '../../../Assets/Images/Icons/menu-toggle.svg'
 import { logOut } from '../../../Redux/Actions/user.action'
 import ResetModal from '../Reset/ResetModal'
+import ConnectWallet from '../ConnectWallet'
+import Swal from 'sweetalert2'
+import { callContractGetMethod } from '../../../Redux/Actions/contract.action'
+import { disconnectWallet } from "../../../Redux/Actions/user.action";
 
 const Header = () => {
   const dispatch: any = useDispatch()
   // const navigate: any = useNavigate()
   const isLogin = useSelector((state: any) => state.user.token)
   const email = useSelector((state: any) => state.user.email)
+  const walletAddress = useSelector((state: any) => state.user.walletAddress)
 
   const settingdata = [
     // {
@@ -58,6 +63,26 @@ const Header = () => {
   //   navigate('/auth/hotels/new-property')
   // }
 
+  useEffect(() => {
+    if (walletAddress) {
+      validateAdmin()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [walletAddress])
+
+  // function to validate admin wallet address
+  const validateAdmin = async () => {
+    let owner = await dispatch(callContractGetMethod('owner', [], 'factory', true));
+    if (owner.toLowerCase() !== walletAddress) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Please Connect Correct Wallet',
+        text: 'You have to connect correct wallet to access admin panel',
+      })
+      dispatch(disconnectWallet());
+    }
+  };
+
   return (
     <>
       {isLogin === '' ? (
@@ -94,6 +119,9 @@ const Header = () => {
               </Col>
               <Col md={6} className="mt-3 mt-md-0">
                 <div className="d-flex justify-content-md-end align-items-center">
+                  <>
+                    <ConnectWallet />
+                  </>
                   <Dropdown align="end" className="Notification_Dropdown">
                     <Dropdown.Toggle variant="" id="dropdown-basic">
                       <NotificationIcon />

@@ -34,7 +34,8 @@ const ProfileLogin = () => {
         setShow(false)
         const checkDuplicateUserName = async () => {
             setfafaSpin(true)
-            const result = await dispatch(callApiGetMethod(APIURL.CHECK_DUPLICATE_NAME, { name: debounce_search }, false, false))
+            const result = await dispatch(callApiGetMethod(APIURL.CHECK_DUPLICATE_NAME, { name: debounce_search.trim() }, false, false))
+            console.log('result', result)
             if (result?.statusCode === 200) {
                 setfafaSpin(false)
                 setMessage(result?.message)
@@ -42,6 +43,10 @@ const ProfileLogin = () => {
             } else if (result?.statusCode === 400) {
                 setfafaSpin(false)
                 setMessage(result?.message)
+                setShow(false)
+            } else if (result === null) {
+                setfafaSpin(false)
+                setMessage("Only alphanumeric allowed")
                 setShow(false)
             }
         }
@@ -55,7 +60,7 @@ const ProfileLogin = () => {
     const handleCustomerProfile = async () => {
         const result = await dispatch(callApiPostMethod(APIURL?.ADD_CUSTOMER_NAME, {
             walletAddress: address,
-            name: debounce_search,
+            name: debounce_search.trim(),
             profileImage: "image"
         }, {}, false))
         console.log('result :>> ', result);
@@ -80,15 +85,20 @@ const ProfileLogin = () => {
                             placeholder='type your name here'
                             onChange={(event: any) => setSearch(event.target.value)}
                         />
-                        {fafaSpin && <i className="fa fa-spinner fa-spin" style={{ fontSize: "20px" }}></i>}
-                        {message}
+                        <div className='text_green w-100'>
+                            {fafaSpin && <i className="fa fa-spinner fa-spin" style={{ fontSize: "20px" }}></i>}
+                            {message && message === 'Username available' ? <span className='text_green'>{message}</span> : <span className='red_text'>{message}</span>}
+                        </div>
                     </div>
                     {show &&
-                        <CommonButton
-                            title={"Create Profie"}
+                        <div className='text-center mt-4'>
+                            <CommonButton
+                            title={"Create Profile"}
                             // disabled={connecting}
                             onClick={() => handleCustomerProfile()}
-                        />}
+                            className="mx-auto"
+                        />
+                            </div>}
                 </Container>
             </div>
         </>

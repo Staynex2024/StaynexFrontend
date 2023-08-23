@@ -23,7 +23,6 @@ export const callContractGetMethod = (
     try {
       /**SHOW LOADING */
       if (loading) dispatch(loader(true));
-
       /**CALL GET METHOD */
       const result = await callGetMethod(
         method,

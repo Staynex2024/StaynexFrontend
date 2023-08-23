@@ -105,9 +105,9 @@ const CommonPropertyRequest = () => {
 
     return (
         <>
-            <div className="property_approval mb-5 p-4 p-md-5 border rounded">
-                {pendingPropertyList && pendingPropertyList.length > 0
-                    ?
+            {pendingPropertyList && pendingPropertyList.length > 0
+                ?
+                <div className="property_approval mb-5 p-4 p-md-5 border rounded">
                     <Row>
                         <Col xs={12} md={4} xl={5}>
                             <CommonHeading heading="Property pending approval" />
@@ -157,94 +157,10 @@ const CommonPropertyRequest = () => {
                             </div>
                         </Col>
                     </Row>
-                    : ""
-                }
-                {/* <CustomTable fields={fields}>
-                    {pendingPropertyList &&
-                        pendingPropertyList.length &&
-                        pendingPropertyList.map((item: any, key: any) => (
-                            <tr key={key}>
-                                <td>{key + 1}</td>
-                                <td>
-                                    {item?.invited_name
-                                        ? item?.invited_name?.charAt(0).toUpperCase() +
-                                        item?.invited_name?.slice(1).toLowerCase()
-                                        : '---'}{' '}
-                                </td>
-                                <td>{item?.email_id ? item?.email_id : '---'}</td>
-                                <td>
-                                    {item?.createdAt
-                                        ? moment(item?.createdAt)
-                                            .utc()
-                                            .format('dddd, MMMM D, YYYY, hh:mm:ss A')
-                                        : '---'}
-                                </td>
-                                <td>
-                                    {item?.invite_code ? item?.invite_code : '---'}
-                                    {item?.invite_code ? (
-                                        <i
-                                            style={{
-                                                cursor: 'pointer',
-                                                marginLeft: '8px',
-                                                color: 'black',
-                                            }}
-                                            title="copy"
-                                            className="fa fa-clone"
-                                            onClick={() =>
-                                                copy(item?.invite_code, 'Invite code copied')
-                                            }
-                                        ></i>
-                                    ) : (
-                                        ''
-                                    )}
-                                </td>
-                                <td>
-                                    <div className="tables_btn">
-                                        <>
-                                            <Link to="/auth/members?tab=vendor_request" className="viewbtn">
-                                                View all
-                                            </Link>
-                                            {item?.invitation_status === 'pending' ? (
-                                                <>
-                                                    <CommonButton
-                                                        title="Reject"
-                                                        className="dark-greenbtn"
-                                                        onClick={() => handleAction('rejected', item, 'vendorRequest')}
-                                                    />
-                                                    <CommonButton
-                                                        title="Approve"
-                                                        className="btncreate"
-                                                        onClick={() => handleAction('accepted', item, 'vendorRequest')}
-                                                    />
-                                                </>
-                                            ) : item?.invitation_status === 'rejected' ? (
-                                                <span
-                                                    className="fa fa-close"
-                                                    style={{
-                                                        marginLeft: '8px',
-                                                        color: 'red',
-                                                    }}
-                                                >
-                                                    Rejected
-                                                </span>
-                                            ) : (
-                                                <span
-                                                    className="fa fa-check"
-                                                    style={{
-                                                        marginLeft: '8px',
-                                                        color: 'green',
-                                                    }}
-                                                >
-                                                    Accepted
-                                                </span>
-                                            )}
-                                        </>
-                                    </div>
-                                </td>
-                            </tr>
-                        ))}
-                </CustomTable> */}
-            </div>
+
+                </div>
+                : ""
+            }
         </>
     )
 }

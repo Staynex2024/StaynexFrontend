@@ -373,9 +373,9 @@ const Approvals = () => {
   }
 
   useEffect(() => {
-      const filteredOptions = iterateAndSetArray(totalPage)
-      setSelectOptions(filteredOptions)
-      setcurrentPage(1)
+    const filteredOptions = iterateAndSetArray(totalPage)
+    setSelectOptions(filteredOptions)
+    setcurrentPage(1)
   }, [totalPage, key])
 
   const propertyInfo = async (item: any) => {
@@ -454,7 +454,8 @@ const Approvals = () => {
                     {totalPage && totalPage > 1 ? (
                       <>
                         <CustomSelect
-                          defaultValue={currentPage}
+                          // defaultValue={currentPage}
+                          defaultValue={{ value: 1, label: 1 }}
                           classgroup="select_pagi"
                           label="Page"
                           options={selectOptions}

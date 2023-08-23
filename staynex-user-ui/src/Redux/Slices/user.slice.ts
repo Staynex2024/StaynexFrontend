@@ -11,6 +11,8 @@ export const UserSlice = createSlice({
         userDetails: {},
         network: "matic",
         token: '',
+        conversionRate: 1,
+        currencySymbol: 'USD'
     },
 
     reducers: {
@@ -35,6 +37,14 @@ export const UserSlice = createSlice({
             const { payload } = param;
             state.walletType = payload;
         },
+        conversionRate: (state, param) => {
+            const { payload } = param;
+            state.conversionRate = payload;
+        },
+        currencySymbol: (state, param) => {
+            const { payload } = param;
+            state.currencySymbol = payload;
+        },
 
         logoutUser: (state) => {
             state.walletAddress = "";
@@ -44,5 +54,5 @@ export const UserSlice = createSlice({
 })
 
 /**ACTIONS FOR SLICE*/
-export const { userDetails, walletAddress, logoutUser, token, walletType, walletDetails } = UserSlice.actions
+export const { userDetails, walletAddress, logoutUser, token, walletType, walletDetails, conversionRate, currencySymbol } = UserSlice.actions
 

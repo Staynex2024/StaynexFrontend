@@ -34,7 +34,7 @@ const ConnectWallet = () => {
     setConnectionStatus({});
   }, [show]);
 
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
 
   const connectToWallet = async (wallet) => {
     setConnectionStatus({ wallet, status: "pending" });
@@ -57,7 +57,7 @@ const ConnectWallet = () => {
         title={
           walletAddress
             ? custmizeAddress(walletAddress)
-            : t("header.connect_wallet_text")
+            : 'Connect Wallet'
         }
         onClick={() => {
           setShow(true);

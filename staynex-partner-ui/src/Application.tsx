@@ -29,6 +29,7 @@ import ResetPassword from './Components/Pages/ForgotPassword/resetPassowrdPage'
 import Hotels from './Components/Pages/Hotels/Hotels'
 import UpdateProperty from './Components/Pages/Management/UpdateProperty/UpdateProperty'
 import UpdatePass from './Components/Pages/Management/Passes/UpdatePass/UpdatePass'
+import ReSubmitPass from './Components/Pages/Management/Passes/ReSubmitPass'
 const Application: React.FC = () => {
   const router = createBrowserRouter([
     {
@@ -53,14 +54,14 @@ const Application: React.FC = () => {
             </WithoutAuth>
           ),
         },
-          // {
-          //   path: "/signup-almost",
-          //   element: (
-          //     <WithoutAuth>
-          //       <SignUp />
-          //     </WithoutAuth>
-          //   ),
-          // },
+        // {
+        //   path: "/signup-almost",
+        //   element: (
+        //     <WithoutAuth>
+        //       <SignUp />
+        //     </WithoutAuth>
+        //   ),
+        // },
         {
           path: 'forgot-password',
           element: (
@@ -171,6 +172,7 @@ const Application: React.FC = () => {
             </RequireAuth>
           ),
         },
+
         {
           path: 'create-pass',
           element: (
@@ -179,11 +181,12 @@ const Application: React.FC = () => {
             </RequireAuth>
           ),
         },
+
         {
           path: 'resubmit-pass/:id',
           element: (
             <RequireAuth>
-              <Createpass />
+              <ReSubmitPass />
             </RequireAuth>
           ),
         },
@@ -199,13 +202,13 @@ const Application: React.FC = () => {
           path: 'hotel-details',
           element: (
             <RequireAuth>
-              <Hotels/>
+              <Hotels />
               {/* <Hoteldetails /> */}
             </RequireAuth>
           ),
         },
         {
-          path: "new-property",
+          path: 'new-property',
           element: (
             <RequireAuth>
               <Newproperty />
