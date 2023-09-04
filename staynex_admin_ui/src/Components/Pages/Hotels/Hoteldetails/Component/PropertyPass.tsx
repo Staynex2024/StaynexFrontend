@@ -2,14 +2,95 @@ import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { GreentickIcon } from '../../../../../Assets/Images/svgImgs/svgImgs';
 import Passes1 from '../../../../../Assets/Images/Passes1.png';
+import CommonHeading from '../../../../Common/CommonHeading/CommonHeading';
+import moment from 'moment';
+import { Link } from 'react-router-dom';
+import CommonButton from '../../../../Common/CommonButton/CommonButton';
+// import { useDispatch } from 'react-redux';
 
-const PropertyPass = ({ data }: any) => {
+const PropertyPass = ({ data, handleAction }: any) => {
 
+    // date
+    const getDate = (date: any) => {
+        const givenDate = moment(date);
+        const now = moment();
+        const timeFromNow = givenDate.from(now);
+        return timeFromNow
+    }
 
+    // const handleAction = async (item: any, data: any, type: string) => {
+    //     Swal.fire({
+    //         title: 'Are you sure?',
+    //         text: "You won't be able to revert this!",
+    //         icon: 'warning',
+    //         showCancelButton: true,
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         confirmButtonText: 'Yes, Accepted!',
+    //     }).then(async (result) => {
+    //         if (result.isConfirmed) {
+    //             const result = await dispatch(
+    //                 callApiPostMethod(
+    //                     APIURL.ACTION_ON_PASS,
+    //                     {
+    //                         User_id: data?.user?.id,
+    //                         Pass_id: item?.id,
+    //                         Property_id: item?.id,
+    //                         action: type,
+    //                         message: ''
+    //                     },
+    //                     {},
+    //                     true,
+    //                 ),
+    //             )
+    //             if (result?.statusCode === 200) {
+    //                 // setCheckStatus(true)
+    //             } else if (result?.statusCode === 400) {
+    //                 // setCheckStatus(true)
+    //             }
+    //         }
+    //     })
+    // }
 
     return (
         <>
             <section className='passes'>
+                {data?.passes && data?.passes.length > 0 ?
+                    data?.passes.map((item: any, index: number) => (
+                        item?.approval === 'pending' &&
+                        <div className="property_approval mb-5 p-4 p-md-5 border rounded">
+                            <Row>
+                                <Col xs={12} md={4} xl={5}>
+                                    <CommonHeading heading="Passes pending approval" />
+                                    <span>{item?.approval === 'pending' ? `${data?.name} created a new pass ${getDate(item?.createdAt)}` : ""}</span>
+                                </Col>
+                                <Col xs={12} md={8} xl={7}>
+                                    <div className="tables_btn flex-wrap d-sm-flex align-items-center justify-content-md-end mt-4 mt-md-0">
+                                        <>
+                                            <Link to="/auth/members?tab=passes" className="viewbtn btn-style border-btn">
+                                                View all
+                                            </Link>
+                                            {item?.approval === 'pending' && (
+                                                <>
+                                                    <CommonButton
+                                                        title="Reject"
+                                                        className="dark-greenbtn my-3 my-sm-0 mx-md-4"
+                                                        onClick={() => handleAction(item, data, 'rejected')}
+                                                    />
+                                                    <CommonButton
+                                                        title="Approve"
+                                                        className="btncreate my-3 my-sm-0 mx-md-4"
+                                                        onClick={() => handleAction(item, data, 'accepted')}
+                                                    />
+                                                </>
+                                            )}
+                                        </>
+                                    </div>
+                                </Col>
+                            </Row>
+
+                        </div>
+                    )) : ""}
                 <Row>
                     {data?.passes && data?.passes.length > 0 ?
                         data?.passes.map((item: any, index: number) => (

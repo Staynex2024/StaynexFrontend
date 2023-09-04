@@ -35,6 +35,7 @@ const CustomSelect = ({
   classLabel,
   isSearchable,
   placeholder,
+  value,
 }: propsType) => {
   return (
     <>
@@ -60,6 +61,7 @@ const CustomSelect = ({
           name={name}
           isSearchable={isSearchable}
           placeholder={placeholder}
+          value={value}
         />
       </Form.Group>
     </>

@@ -5,6 +5,7 @@ import { RESPONSES } from "../Utils";
 import { formatUrl } from "./common.service";
 import { API_HOST } from "../Constant";
 import { logoutUser } from "../Redux/Slices/user.slice";
+import { handleJWTExpiry } from "./common.service";
 
 export const storeInstance = store;
 axios.defaults.baseURL = API_HOST;
@@ -25,10 +26,12 @@ const processQueue = (error, token = null) => {
 /**AXIOS INTERCEPTOR */
 axios.interceptors.request.use(
   (config) => {
-    let walletAddress = storeInstance.getState().user.walletAddress;
-    config.headers["Authorization"] = walletAddress
-    config.headers["Content-Type"] = "application/json";
+    // let walletAddress = storeInstance.getState().user.walletAddress;
+    // config.headers["Authorization"] = walletAddress
+    // config.headers["Content-Type"] = "application/json";
     config.headers["Access-Control-Allow-Origin"] = "*";
+    // config.headers['Access-Control-Allow-Credentials'] = true
+    // config.withCredentials= true;
     return config;
   },
   (error) => {
@@ -42,6 +45,12 @@ axios.interceptors.response.use(
     return response
   },
   error => {
+
+    if (error.response.status === 401 && error.response.statusText === 'Unauthorized') {
+      handleJWTExpiry(error.response.status)
+      processQueue(error, null);
+    }
+
     if (!error.response) {
       toaster.error("Server not responding. Please try again later.");
     } else {
@@ -51,9 +60,10 @@ axios.interceptors.response.use(
     const originalRequest = error.config;
     failedQueue.push(originalRequest);
     // CommonService.handleJWTExpiry(error)
-    if (error.response.status === 403) {
-      processQueue(error, null);
-    }
+    // if (error.response.status === 401) {
+    //   processQueue(error, null);
+    // }
+
   }
 )
 /**HANDLE AXIOS ERROR */

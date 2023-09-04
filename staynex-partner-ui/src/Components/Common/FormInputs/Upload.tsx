@@ -21,7 +21,10 @@ type propTypes = {
     imgName?: any,
 }
 
+
+
 const Upload = (props: propTypes) => {
+
     return (
         <>
             <Form.Group className={`customInput ${props.className}`} controlId={props.id}>
@@ -45,7 +48,6 @@ const Upload = (props: propTypes) => {
                     />
                     <span><PlusIcon /></span>
                 </div>
-
                 <p className="error_Msg">{props.error}</p>
                 <p className=''>{props?.imgName}</p>
             </Form.Group>

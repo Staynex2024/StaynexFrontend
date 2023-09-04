@@ -42,7 +42,7 @@ const Hotels = () => {
   const [isUnList, setIsUnlist] = useState(false)
   const [seachedProperty_Debounce] = useDebounce(seachedProperty, 1000)
 
-  let Country = require("country-state-city").Country;
+  let Country = require('country-state-city').Country
 
   // Pagination
   const handlePageChange = (selectedObject: any) => {
@@ -55,7 +55,7 @@ const Hotels = () => {
     const retreivePropertyList = async () => {
       setTimeout(async () => {
         const result = await dispatch(
-          getPropertyList(currentPage, PAGE_LIMIT, seachedProperty_Debounce),
+          getPropertyList(currentPage, PAGE_LIMIT, seachedProperty_Debounce.trim()),
         )
         setPropertyList(result?.data)
         setPropertyCount(result?.count)
@@ -141,15 +141,26 @@ const Hotels = () => {
   // ]
 
   let listOnly = (propertyList: any) => {
-    return propertyList.map(d => d.price)
-  };
+    return propertyList.map((d) => d.price)
+  }
 
   const handlePassInfo = async (item: any, data: any) => {
-    const Pass_id: string = data?.id;
-    const User_id: string = item?.user?.id;
-    const Property_id: string = item?.id;
-    navigate('/auth/pass-details/?passId=' + Pass_id + "&userId=" + User_id + "&propertyId=" + Property_id)
+    const Pass_id: string = data?.id
+    const User_id: string = item?.user?.id
+    const Property_id: string = item?.id
+    navigate(
+      '/auth/pass-details/?passId=' +
+      Pass_id +
+      '&userId=' +
+      User_id +
+      '&propertyId=' +
+      Property_id,
+    )
   }
+
+  useEffect(() => {
+    window.scroll(0, 0)
+  }, [currentPage])
 
   return (
     <>
@@ -191,32 +202,40 @@ const Hotels = () => {
                       <div className="top_headbtn">
                         <button className="active">
                           {/* <GreentickIcon /> */}
-                          {item?.verification === "accepted"
-                            ?
+                          {item?.verification === 'accepted' ? (
                             <>
-                              <span style={{ color: "green" }}><GreentickIcon />{item?.verification.toUpperCase()}</span>
+                              <span style={{ color: 'green' }}>
+                                <GreentickIcon />
+                                {item?.verification.toUpperCase()}
+                              </span>
                             </>
-                            : item?.verification === "pending"
-                              ?
-                              <>
-                                <span className="fa fa-clock-o" style={{ color: 'red' }}>&nbsp;{item?.verification.toUpperCase()}</span>
-                              </>
-                              : <span className="fa fa-times" style={{ color: "red" }}>&nbsp;{item?.verification.toUpperCase()}</span>
-                          }
+                          ) : item?.verification === 'pending' ? (
+                            <>
+                              <span
+                                className="fa fa-clock-o"
+                                style={{ color: 'red' }}
+                              >
+                                &nbsp;{item?.verification.toUpperCase()}
+                              </span>
+                            </>
+                          ) : (
+                            <span
+                              className="fa fa-times"
+                              style={{ color: 'red' }}
+                            >
+                              &nbsp;{item?.verification.toUpperCase()}
+                            </span>
+                          )}
                         </button>
-                        {
-                          item?.verification === "delisted" ||
-                            item?.verification === "pending" ? null : (
 
-                            <CommonButton
-                              title="UNLIST"
-                              className="dark-greenbtn"
-                              onClick={() =>
-                                handleAction(item)
-                              }
-                            />
-                          )
-                        }
+                        {item?.verification === 'delisted' ||
+                          item?.verification === 'pending' ? null : (
+                          <CommonButton
+                            title="UNLIST"
+                            className="dark-greenbtn"
+                            onClick={() => handleAction(item)}
+                          />
+                        )}
                       </div>
                       <div className="main_containt">
                         {item?.images && item?.images.length ? (
@@ -233,17 +252,36 @@ const Hotels = () => {
                         )}
                         <div className="main_containt_right">
                           <div className="right_textsec">
-                            <h3>{item?.passes.length > 0 ? `$ ${Math.min.apply(Math, listOnly(item?.passes))}` : ''}</h3>
+                            <h3>
+                              {item?.passes.length > 0
+                                ? `$ ${Math.min.apply(
+                                  Math,
+                                  listOnly(item?.passes),
+                                )}`
+                                : ''}
+                            </h3>
                             <h4>{item?.name ? item?.name : ''}</h4>
-                            <p>{item?.location?.country ? Country.getCountryByCode(item?.location?.country)['name'] : ''}</p>
-                            <ul className="list_text" >
-                              {item?.passes && item?.passes.length > 0 &&
+                            <p>
+                              {item?.location?.country
+                                ? Country.getCountryByCode(
+                                  item?.location?.country,
+                                )['name']
+                                : ''}
+                            </p>
+                            <ul className="list_text">
+                              {item?.passes &&
+                                item?.passes.length > 0 &&
                                 item?.passes.map((data: any, index: number) => (
                                   <li key={index}>
-                                    <span onClick={() => handlePassInfo(item, data)}>{data?.redeemable_nights ? `SP${data?.redeemable_nights}` : '---'}</span>
+                                    <span
+                                      onClick={() => handlePassInfo(item, data)}
+                                    >
+                                      {data?.redeemable_nights
+                                        ? `SP${data?.redeemable_nights}`
+                                        : '---'}
+                                    </span>
                                   </li>
-                                ))
-                              }
+                                ))}
                             </ul>
                             <div className="resort_contact">
                               <div className="resort_number">

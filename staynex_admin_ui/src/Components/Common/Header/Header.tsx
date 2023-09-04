@@ -70,9 +70,12 @@ const Header = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [walletAddress])
 
+  console.log(walletAddress)
+
   // function to validate admin wallet address
   const validateAdmin = async () => {
     let owner = await dispatch(callContractGetMethod('owner', [], 'factory', true));
+    console.log(owner,walletAddress,'this is owner and walletAddress')
     if (owner.toLowerCase() !== walletAddress) {
       Swal.fire({
         icon: 'warning',
@@ -97,7 +100,7 @@ const Header = () => {
               <Col xs={6} className="text-end">
                 <Link to="/" className="admin_link">
                   Admin
-                </Link>
+                </Link> 
               </Col>
             </Row>
           </Container>
@@ -105,8 +108,8 @@ const Header = () => {
       ) : (
         <header className="admin_header">
           <Container fluid>
-            <Row>
-              <Col md={6}>
+            <Row className='align-items-center'>
+              <Col lg={6}>
                 <div className="d-flex align-items-center justify-content-between">
                   <div className="admin_header_search d-flex align-items-center">
                     <label>ADMIN</label>
@@ -117,8 +120,8 @@ const Header = () => {
                   </span>
                 </div>
               </Col>
-              <Col md={6} className="mt-3 mt-md-0">
-                <div className="d-flex justify-content-md-end align-items-center">
+              <Col lg={6} className="mt-3 mt-lg-0">
+                <div className="d-flex flex-wrap justify-content-between justify-content-lg-end align-items-center">
                   <>
                     <ConnectWallet />
                   </>
@@ -144,7 +147,7 @@ const Header = () => {
                       })}
                     </Dropdown.Menu>
                   </Dropdown>
-                  <Dropdown className="country_Dropdown mx-4">
+                  <Dropdown className="country_Dropdown mx-3">
                     <Dropdown.Toggle variant="" id="dropdown-basic">
                       MYR
                     </Dropdown.Toggle>
@@ -165,20 +168,21 @@ const Header = () => {
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                       {settingdata.map((data, i) => {
-                        return (
-
-                          data?.name === 'Logout' ? (
-                            <Dropdown.Item key={i} onClick={handleLogout}><span >{data.name}</span></Dropdown.Item>
-                          ) : data?.name === 'Reset Password' ? (
-                            <Dropdown.Item key={i} onClick={() => setShowResetModal(true)}><span >
-                              {data.name}{' '}
-                            </span></Dropdown.Item>
-                          ) : (
-                            <Dropdown.Item key={i}>
-                              <span>{data.name}</span>
-                            </Dropdown.Item>
-                          )
-
+                        return data?.name === 'Logout' ? (
+                          <Dropdown.Item key={i} onClick={handleLogout}>
+                            <span>{data.name}</span>
+                          </Dropdown.Item>
+                        ) : data?.name === 'Reset Password' ? (
+                          <Dropdown.Item
+                            key={i}
+                            onClick={() => setShowResetModal(true)}
+                          >
+                            <span>{data.name} </span>
+                          </Dropdown.Item>
+                        ) : (
+                          <Dropdown.Item key={i}>
+                            <span>{data.name}</span>
+                          </Dropdown.Item>
                         )
                       })}
                     </Dropdown.Menu>

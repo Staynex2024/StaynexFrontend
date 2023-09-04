@@ -16,7 +16,6 @@ export const UserSlice = createSlice({
             const { payload } = param;
             state.email = payload;
         },
-
         walletAddress: (state, param) => {
             const { payload } = param;
             state.walletAddress = payload;

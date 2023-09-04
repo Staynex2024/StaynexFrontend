@@ -1,22 +1,63 @@
-import React, { useState } from 'react'
-import { Card, Col, Row } from 'react-bootstrap'
-import './PropertyListCard.scss'
-import ConnectWalletModal from '../../../Common/ConnectWalletModal/ConnectWalletModal'
-import { useSelector } from 'react-redux'
-import { handleConversion } from '../../../../Services/common.service'
+import React, { useEffect, useState } from "react";
+import { Card, Col, Row } from "react-bootstrap";
+import "./PropertyListCard.scss";
+import ConnectWalletModal from "../../../Common/ConnectWalletModal/ConnectWalletModal";
+import { useDispatch, useSelector } from "react-redux";
+import { handleConversion } from "../../../../Services/common.service";
+import { callContractSendMethod } from "../../../../Redux/Actions/contract.action";
+import { ethers } from "ethers";
+import userABI from "../../../../Abi/UserABI.json";
+import { callApiPostMethod } from "../../../../Redux/Actions/api.action";
+import { APIURL } from "../../../../Utils";
+import { CONTRACT_ADDRESS } from "../../../../Constant";
 
-const PropertyListCard = ({ hotelDetailsData }) => {
-  const conversionRate = useSelector((state: any) => state.user.conversionRate)
-  const currencySymbol = useSelector((state: any) => state.user.currencySymbol)
-  const [show, setShow] = useState(false)
 
+const PropertyListCard =  ({ hotelDetailsData }) => {
+  const dispatch: any = useDispatch();
+  const conversionRate = useSelector((state: any) => state.user.conversionRate);
+  const currencySymbol = useSelector((state: any) => state.user.currencySymbol);
+  const walletAddress = useSelector((state: any) => state.user.walletAddress);
+  const [show, setShow] = useState(false);
+  const [txDetails, setTxDetails] = useState<any>();
+  const [passId, setPassId] = useState<any>('');
+
+
+
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const signer = provider.getSigner();
+  const contract = new ethers.Contract(CONTRACT_ADDRESS, userABI, signer);
+
+  const handleBuy = async (passId) => {
+    const result = await contract.publicMint(walletAddress,{value: ethers.utils.parseEther("0.1")});
+    setTxDetails(result?.hash)
+    if(result?.hash){
+      // setPassId(passId)
+      handleContractIntraction(passId,result?.hash);
+    }
+  };
+
+  const handleContractIntraction = async (passId,txHash) => {
+    const dataToSend = {
+      walletAddress : walletAddress,
+      passId : passId,
+      propertyId : hotelDetailsData?.id,
+      txid : txHash,
+    }
+    const buyPassApi = await dispatch(callApiPostMethod(APIURL?.BUY_PASS, dataToSend, {}, true))
+
+  }
+
+  // useEffect(() => {
+  //   handleContractIntraction(passId)
+  // }, [txDetails])
+  
   return (
     <>
       <div className="property_List_card">
         {hotelDetailsData?.passes.map((item: any, key: any): any => (
           <div key={key} className="staynexpass_sec">
-            {item?.approval === 'accepted' &&
-            item?.listing_status === 'listed' ? (
+            {item?.approval === "accepted" &&
+            item?.listing_status === "listed" ? (
               <Row>
                 <Col xs={12} lg={4} className="d-flex pe-lg-0">
                   <div className="destination_pic w-100">
@@ -33,12 +74,12 @@ const PropertyListCard = ({ hotelDetailsData }) => {
                               ? `${
                                   handleConversion(
                                     conversionRate,
-                                    item?.price,
+                                    item?.price
                                   ) +
-                                  ' ' +
+                                  " " +
                                   currencySymbol
                                 }`
-                              : ''}
+                              : ""}
                           </h3>
                           <p>SP{item?.tier_number}</p>
                         </div>
@@ -56,19 +97,21 @@ const PropertyListCard = ({ hotelDetailsData }) => {
                             <Card.Body>
                               <h3>REDEEMABLE NIGHTS</h3>
                               <p>
-                                {item?.['tier_number']
-                                  ? `${item?.['tier_number']}x nights per year`
-                                  : '---'}
+                                {item?.["tier_number"]
+                                  ? `${item?.["tier_number"]}x nights per year`
+                                  : "---"}
                               </p>
                               <h3>PERKS</h3>
-                              {item?.['perks'] &&
-                                item?.['perks'].map((item: any, index: any) => (
+                              {item?.["perks"] &&
+                                item?.["perks"].map((item: any, index: any) => (
                                   <p key={index}>{item}</p>
                                 ))}
                             </Card.Body>
                           </Card>
                           <button
-                            onClick={() => setShow(true)}
+                            onClick={() =>
+                              !walletAddress ? setShow(true) : handleBuy(item?.id)
+                            }
                             type="button"
                             className="btn-style w-100"
                           >
@@ -114,6 +157,6 @@ const PropertyListCard = ({ hotelDetailsData }) => {
       </div>
       <ConnectWalletModal show={show} handleClose={() => setShow(false)} />
     </>
-  )
-}
-export default PropertyListCard
+  );
+};
+export default PropertyListCard;

@@ -1,4 +1,5 @@
 @import "../../../Assets/theme/_var.scss";
+
 .site_footer {
   background-image: url("../../../Assets/Images/footer-bg.jpg");
   background-repeat: no-repeat;
@@ -131,6 +132,40 @@
 
         &:hover {
           background-color: $orangeclr;
+        }
+      }
+    }
+  }
+
+  .customInput {
+    margin-bottom: 0;
+
+    .common_select {
+      background-color: transparent;
+      border: 0;
+
+      .select__control {
+        background-color: transparent;
+
+        .select__value-container {
+          padding-right: 1rem;
+
+          .select__single-value {
+            color: $whiteclr;
+          }
+        }
+
+        .select__indicators {
+          .select__indicator {
+            svg {
+              path {
+                fill: $whiteclr;
+              }
+            }
+            &::after {
+              filter: brightness(1) invert(1);
+            }
+          }
         }
       }
     }

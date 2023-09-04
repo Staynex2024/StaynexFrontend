@@ -274,8 +274,8 @@ const CustomersDetail = () => {
             <Tab.Pane eventKey="passes">
               <div className="">
                 <CustomTable fields={fields}>
-                  {tabledata.map((item) => (
-                    <tr>
+                  {tabledata.map((item:any, index:any) => (
+                    <tr key={index}>
                       <td>
                         <Form onSubmit={formik.handleSubmit}>
                           <Checkbox

@@ -1,18 +1,18 @@
 export const API_HOST = 'https://stage-api.staynex.io/user/'
 // export const API_HOST = 'http://10.1.8.97:3002/user'
+// export const API_HOST = 'http://10.1.5.164:3002/user'
 export const TOM_TOM_API_KEY = 'tiu4xTdPRBK1Y2CpiABKXH57inAhSMIZ'
 
 export const CHAIN_ID = '0x13881'
-export const RPC_URL = 'https://rpc.ankr.com/polygon_mumbai'
+export const RPC_URL = 'wss://polygon-mumbai.gateway.tenderly.com'
 export const NETWORK_NAME = 'Mumbai Testnet'
 export const NETWORK_SYMBOL = 'matic'
 export const NETWORK_DECIMALS = 18
 export const EXPLORAR_LINK = 'https://mumbai.polygonscan.com/'
 export const PAGE_LIMIT = 5
 
-export const TOKEN_ADDRESS = '0x93aa5b199127887BD0099B7E0A97648b20D0d450'
-export const USDT_ADDRESS = '0xac62424c3d7A06ED1065d73102e9805d6B670ad5'
-export const ICO_ADDRESS = '0xdb0Bbdb4692bb7a1d334Da0972C590718A98c07f'
+export const CONTRACT_ADDRESS = '0xfDEe82146D6937D4d1369a2f714e91e1244021f9'
+export const OWNER_ADDRESS = '0x889DFbc9B2a35f98852d2a306338ae4C4d0f3331'
 
 export const WEB3_ONBOARDING_API_KEY = '1730eff0-9d50-4382-a3fe-89f0d34a2070'
 export const BICONOMY_API_KEY = ''

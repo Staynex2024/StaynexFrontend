@@ -9,6 +9,7 @@ export const APIURL: any = {
   VENDOR_ADD_PROPERTY: '/addProperty',
   VENDOR_UPDATE_PROPERTY: '/updateProperty',
   VENDOR_UPLAOD: '/upload',
+  ADD_WALLETADDRESS : 'addWalletAddress',
 
   CREATE_PASS: '/pass/addPass',
   PASSES_LIST: '/pass/passesList',
@@ -17,6 +18,7 @@ export const APIURL: any = {
   RESUBMIT_PASS: './pass/resubmitPass',
   LIST_DELIST_PASS: '/pass/actionListing',
   PASSES_RESUBMIT_PASS: '/pass/resubmitPass',
+  GET_EXCHANGE_RATE: '/getExchangeRateList'
 }
 
 export const RESPONSES: any = {

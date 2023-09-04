@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import CommonModal from '../../../../../Common/CommonModal/CommonModal';
 import './RedeemBookingModal.scss';
 import { CheckcircleIcon, SmallArrowIcon, UsercircleIcon, WalletIcon } from '../../../../../../Assets/Images/svgImgs/svgImgs';
@@ -11,31 +11,98 @@ import * as Yup from 'yup'
 import watingicon from "../../../../../../Assets/Images/Icons/hourglass.svg"
 import bookimage from "../../../../../../Assets/Images/event1.png"
 import bookimage1 from "../../../../../../Assets/Images/event1.png"
+import CustomSelect from '../../../../../Common/Select/Select';
+import { ethers } from "ethers";
+import userABI from "../../../../../../Abi/UserABI.json";
+import { useSelector } from 'react-redux';
+import { CONTRACT_ADDRESS } from '../../../../../../Constant';
 
-const RedeemBookingModal = ({ show, handleClose, }) => {
+
+const RedeemBookingModal = ({ show, handleClose, data }) => {
+    const [activeStep, setActiveStep] = React.useState(1);
+    const [key, setKey]: any = React.useState('customer')
+
+    const walletAddress = useSelector((state: any) => state.user.walletAddress);
+
     const addnewproperty = Yup.object().shape({
         name: Yup.string().required('*This Field is required'),
-        date: Yup.string().required('*This Field is required'),
-        contact: Yup.string().required('*This Field is required'),
-        eamil: Yup.string().required('*This Field is required'),
-        number: Yup.string().required('*This Field is required'),
+        lastname: Yup.string().required('*This Field is required'),
+        gender: Yup.string().required('*This Field is required'),
+        contact: Yup.string().required('*This Field is required')
+            .min(8, "Please enter valid passport number")
+            .max(15, "Please enter valid passport number"),
+        email: Yup.string().email('Please enter valid email')
+            .required('*This field is required')
+            .matches(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i, 'Please enter valid email'),
+        number: Yup.string().required('*This Field is required')
+            .min(8, 'Please enter valid contact number')
+            .max(15, 'Please enter valid contact number'),
+        totalPerson: Yup.number().required('*This Field is required').positive("Total person should be positive"),
+        checkoutdate: Yup.string().required('*This Field is required'),
+        checkIndate: Yup.string().required('*This Field is required'),
     })
 
     const formik = useFormik({
         initialValues: {
             name: '',
-            date: '',
+            lastname: '',
+            gender: '',
             number: '',
             email: '',
             contact: '',
-            password: '',
-            pool: '',
+            totalPerson: '',
+            checkoutdate: '',
+            checkIndate: '',
         },
         validationSchema: addnewproperty,
         onSubmit: async (values) => {
             // await dispatch(loginAdmin(values));
         },
     })
+
+    const options: any = [
+        { value: 'male', label: 'Male' },
+        { value: 'famale', label: 'Female' },
+        { value: 'other', label: 'Other' },
+    ]
+
+    const handleAutofillData = async () => {
+        if (data && Object.keys(data).length > 0) {
+            formik.setFieldValue('name', data['firstName'])
+            formik.setFieldValue('lastname', data['lastName'])
+            formik.setFieldValue('gender', data['gender'])
+            formik.setFieldValue('contact', data['passportNumber'])
+            formik.setFieldValue('email', data['user']['email'])
+            formik.setFieldValue('number', data['user']['mobile_number'].slice(3))
+        }
+    }
+
+    const handleNext = () => {
+        setActiveStep(prevActiveStep => prevActiveStep + 1);
+    };
+
+    useEffect(() => {
+        if (activeStep === 1) {
+            setKey('customer')
+        } else if (activeStep === 2) {
+            setKey('payment')
+        } else if (activeStep === 3) {
+            setKey('booking')
+        }
+    }, [key, activeStep])
+
+
+    const handleRedeem = async () => {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner(walletAddress)
+        const contract = new ethers.Contract(CONTRACT_ADDRESS, userABI, signer);
+        console.log("contract", contract)
+
+        const result = await contract.redeemNights("13", '4');
+        console.log('result :>> ', result);
+
+    }
+
     return (
         <>
             <CommonModal
@@ -45,25 +112,29 @@ const RedeemBookingModal = ({ show, handleClose, }) => {
                 heading=''
             >
                 <div className='main_content'>
-                    <Tab.Container id="left-tabs-example" defaultActiveKey="customer">
+                    <Tab.Container id="left-tabs-example" defaultActiveKey='customer' activeKey={key} onSelect={(e: any) => setKey(e)}>
                         <Nav variant="pills" className="">
                             <Nav.Item><Nav.Link eventKey="customer"><UsercircleIcon /> Customer info</Nav.Link></Nav.Item>
                             <Nav.Item><Nav.Link eventKey="payment"><WalletIcon /> Payment details</Nav.Link></Nav.Item>
                             <Nav.Item><Nav.Link eventKey="booking"><CheckcircleIcon /> Booking Complete</Nav.Link></Nav.Item>
                         </Nav>
                         <hr className='my-4 my-md-5' />
-                        <Tab.Content>
+                        <Tab.Content >
                             <Tab.Pane eventKey="customer">
                                 <div className="customer_info">
                                     <div className='d-md-flex justify-content-between'>
                                         <div className=''>
-                                            <h2>Welcome, Bruno Fernandes!</h2>
+                                            <h2>Welcome, {data && `${data['firstName'] + ' ' + data['lastName']}`}!</h2>
                                             <Checkbox
                                                 label="Please select this option if you’re making this booking for someone else"
                                                 name=""
                                             />
                                         </div>
-                                        <CommonButton title="Auto fill" className="border-btn mt-4 mt-md-0" />
+                                        <CommonButton
+                                            title="Auto fill"
+                                            className="border-btn mt-4 mt-md-0"
+                                            onClick={handleAutofillData}
+                                        />
                                     </div>
                                     <Form onSubmit={formik.handleSubmit} className='mt-5 mt-md-5 pt-5 border-top'>
                                         <Row>
@@ -90,33 +161,41 @@ const RedeemBookingModal = ({ show, handleClose, }) => {
                                                     label="Last name"
                                                     className="mb-44"
                                                     placeholder="Fernandez"
-                                                    id="name"
-                                                    name="name"
+                                                    id="lastname"
+                                                    name="lastname"
                                                     type="text"
                                                     onChange={formik.handleChange}
                                                     autoFocus={true}
-                                                    value={formik.values.name}
+                                                    value={formik.values.lastname}
                                                     error={
-                                                        formik.errors.name && formik.touched.name ? (
-                                                            <span>{formik.errors.name}</span>
+                                                        formik.errors.lastname && formik.touched.lastname ? (
+                                                            <span>{formik.errors.lastname}</span>
                                                         ) : null
                                                     }
                                                 />
                                             </Col>
                                             <Col lg={6} md={6} xl={4}>
-                                                <InputCustom
+                                                <CustomSelect
                                                     label="Gender"
-                                                    className="mb-44"
-                                                    placeholder="Female"
-                                                    id="name"
-                                                    name="name"
-                                                    type="text"
-                                                    onChange={formik.handleChange}
-                                                    autoFocus={true}
-                                                    value={formik.values.name}
+                                                    id="gender"
+                                                    classgroup="mb-44"
+                                                    options={options}
+                                                    onChange={(option: any) =>
+                                                        formik.setFieldValue('gender', option.value)
+                                                    }
+                                                    name={'propertyType'}
+                                                    placeholder="Select"
+                                                    isSearchable={false}
+                                                    // value={data['gender'] && {
+                                                    //     label: data['gender']?.charAt(0).toUpperCase() +
+                                                    //         data['gender']?.slice(1).toLowerCase()
+                                                    // }}
                                                     error={
-                                                        formik.errors.name && formik.touched.name ? (
-                                                            <span>{formik.errors.name}</span>
+                                                        formik.errors.gender &&
+                                                            formik.touched.gender ? (
+                                                            <span className="error_Msg">
+                                                                {formik.errors.gender}
+                                                            </span>
                                                         ) : null
                                                     }
                                                 />
@@ -180,59 +259,62 @@ const RedeemBookingModal = ({ show, handleClose, }) => {
                                                     label="Check in"
                                                     className="mb-44"
                                                     placeholder='10 Feb 2023'
-                                                    id="date"
-                                                    name="date"
+                                                    id="checkIndate"
+                                                    name="checkIndate"
+                                                    min={new Date(new Date().getTime() + (24 * 60 * 60 * 1000)).toISOString().slice(0, 10)}
                                                     type="date"
                                                     onChange={formik.handleChange}
                                                     autoFocus={true}
-                                                    value={formik.values.date}
+                                                    value={formik.values.checkIndate}
                                                     error={
-                                                        formik.errors.date && formik.touched.date ? (
+                                                        formik.errors.checkIndate && formik.touched.checkIndate ? (
                                                             <span
                                                             >
-                                                                {formik.errors.date}
+                                                                {formik.errors.checkIndate}
                                                             </span>
                                                         ) : null
                                                     }
                                                 />
                                             </Col>
                                             <Col lg={6} md={6} xl={4}>
-                                                <InputCustom
-                                                    label="Check out"
-                                                    className="mb-44"
-                                                    placeholder='10 Feb 2023'
-                                                    id="date"
-                                                    name="date"
-                                                    type="date"
-                                                    onChange={formik.handleChange}
-                                                    autoFocus={true}
-                                                    value={formik.values.date}
-                                                    error={
-                                                        formik.errors.date && formik.touched.date ? (
-                                                            <span
-                                                            >
-                                                                {formik.errors.date}
-                                                            </span>
-                                                        ) : null
-                                                    }
-                                                />
+                                                {formik.values.checkIndate !== '' &&
+                                                    <InputCustom
+                                                        label="Check out"
+                                                        className="mb-44"
+                                                        placeholder='10 Feb 2023'
+                                                        id="checkoutdate"
+                                                        name="checkoutdate"
+                                                        type="date"
+                                                        min={new Date(new Date(formik.values.checkIndate).getTime() + (24 * 60 * 60 * 1000)).toISOString().slice(0, 10)}
+                                                        onChange={formik.handleChange}
+                                                        autoFocus={true}
+                                                        value={formik.values.checkoutdate}
+                                                        error={
+                                                            formik.errors.checkoutdate && formik.touched.checkoutdate ? (
+                                                                <span
+                                                                >
+                                                                    {formik.errors.checkoutdate}
+                                                                </span>
+                                                            ) : null
+                                                        }
+                                                    />}
                                             </Col>
                                             <Col lg={6} md={6} xl={4}>
                                                 <InputCustom
                                                     label="Total person(s)"
                                                     className="mb-44"
                                                     placeholder='2'
-                                                    id="name"
-                                                    name="name"
-                                                    type="text"
+                                                    id="totalPerson"
+                                                    name="totalPerson"
+                                                    type="number"
                                                     onChange={formik.handleChange}
                                                     autoFocus={true}
-                                                    value={formik.values.name}
+                                                    value={formik.values.totalPerson}
                                                     error={
-                                                        formik.errors.name && formik.touched.name ? (
+                                                        formik.errors.totalPerson && formik.touched.totalPerson ? (
                                                             <span
                                                             >
-                                                                {formik.errors.name}
+                                                                {formik.errors.totalPerson}
                                                             </span>
                                                         ) : null
                                                     }
@@ -241,10 +323,10 @@ const RedeemBookingModal = ({ show, handleClose, }) => {
                                             <Col xs={12}>
                                                 <div className='d-flex justify-content-between'>
                                                     <span className='btn-style grey-btn'>Cancel</span>
-                                                    <button type='submit' className='btn-style'>Confirm</button>
+                                                    <button type='submit' className='btn-style' onClick={handleNext}>Confirm</button>
                                                 </div>
                                             </Col>
-                                        </Row> 
+                                        </Row>
                                     </Form>
                                 </div>
                             </Tab.Pane>
@@ -253,6 +335,12 @@ const RedeemBookingModal = ({ show, handleClose, }) => {
                                     <img src={watingicon} alt="Waiting" />
                                     <h2 className='my-4'>Connecting to wallet</h2>
                                     <p>Waiting for confirmation</p>
+                                    <Col xs={12}>
+                                        <div className='d-flex justify-content-between'>
+                                            <span className='btn-style grey-btn'>Cancel</span>
+                                            <button type='submit' className='btn-style' onClick={handleNext}>Confirm</button>
+                                        </div>
+                                    </Col>
                                 </div>
                             </Tab.Pane>
                             <Tab.Pane eventKey="booking">
@@ -322,7 +410,7 @@ const RedeemBookingModal = ({ show, handleClose, }) => {
                                     </Row>
                                     <div className='d-flex justify-content-between mt-3'>
                                         <button type='submit' className='btn-style grey-btn'>Cancel</button>
-                                        <button type='submit' className='btn-style'>Confirm</button>
+                                        <button type='submit' className='btn-style' onClick={handleRedeem}>Confirm</button>
                                     </div>
                                 </div>
                             </Tab.Pane>

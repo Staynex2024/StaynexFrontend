@@ -21,7 +21,7 @@ const Hoteldetails = () => {
   const { id } = useParams()
   const [data, setData]: any = useState([])
   const [key, setKey] = useState("propertydetail")
-  // const [isUnList, setIsUnlist] = useState(false)
+  const [checkStatus, setCheckStatus] = useState(false)
   const [isApproveReject, setIsApproveReject] = useState(false)
 
   useEffect(() => {
@@ -46,7 +46,7 @@ const Hoteldetails = () => {
       handleHotelDetails()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, id, key, isApproveReject])
+  }, [dispatch, id, key, isApproveReject, checkStatus])
 
   // const handleAction = async (type: string, item: any) => {
   //   Swal.fire({
@@ -136,6 +136,41 @@ const Hoteldetails = () => {
     })
   }
 
+  const handleAction = async (item: any, data: any, type: string) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Accepted!',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        setCheckStatus(false)
+        const result = await dispatch(
+          callApiPostMethod(
+            APIURL.ACTION_ON_PASS,
+            {
+              User_id: data?.user?.id,
+              Pass_id: item?.id,
+              Property_id: data?.id,
+              action: type,
+              message: ''
+            },
+            {},
+            true,
+          ),
+        )
+        if (result?.statusCode === 200) {
+          setCheckStatus(true)
+        } else if (result?.statusCode === 400) {
+          setCheckStatus(false)
+        }
+      }
+    })
+  }
+
   return (
     <>
       <section className="hotel_details">
@@ -148,10 +183,10 @@ const Hoteldetails = () => {
             onSelect={(e: any) => setKey(e)}
           >
             <Tab eventKey="propertydetail" title="Property Detail">
-              <Propertydetail data={data} handleAction= {handleApproveReject} />
+              <Propertydetail data={data} handleAction={handleApproveReject} />
             </Tab>
             <Tab eventKey="passes" title="Passes">
-              <PropertyPass data={data} />
+              <PropertyPass data={data} handleAction = {handleAction}/>
             </Tab>
             <Tab eventKey="account" title="Account">
               <Account data={data} />

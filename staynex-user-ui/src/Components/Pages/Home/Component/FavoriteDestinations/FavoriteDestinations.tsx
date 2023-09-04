@@ -22,7 +22,7 @@ const FavoriteDestinations = () => {
 
     const settings = {
         dots: false,
-        arrows: false,
+        arrows: true,
         infinite: true,
         centerMode: true,
         centerPadding: '200px',
@@ -69,14 +69,14 @@ const FavoriteDestinations = () => {
         const result: any = await dispatch(
             callApiGetMethod(
                 APIURL.GET_PROPERTY_LIST,
-                { page: 1, limit: 10, country: item?.country, state: item?.state },
+                { page: 1, limit: 10, country: item?.country },
                 false,
                 false,
             ),
         )
         if (result?.statusCode === 200) {
             if (result.count > 0) {
-                navigate('/listing/?country=' + item?.country + "&state=" + item?.state)
+                navigate('/listing/?country=' + item?.country)
             } else {
                 toaster.error("No property found")
             }

@@ -56,7 +56,7 @@ const Footer = () => {
             <Col
               xs={12}
               sm={4}
-              className="d-flex order-sm-last justify-content-center justify-content-sm-end mb-5 mt-sm-0"
+              className="d-flex order-sm-last justify-content-center justify-content-sm-end mb-5 mb-sm-0"
             >
               {/* <Dropdown>
                 <Dropdown.Toggle variant="" id="dropdown-basic">

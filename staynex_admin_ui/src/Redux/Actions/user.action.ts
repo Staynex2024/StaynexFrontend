@@ -105,7 +105,7 @@ export const connectmetamask = () => {
           return toaster.error('Please install Metamask.')
         }
       } catch (error: any) {
-        // reject(error)
+        resolve(error)
         dispatch(loader(false))
         return toaster.error(error.message)
       }

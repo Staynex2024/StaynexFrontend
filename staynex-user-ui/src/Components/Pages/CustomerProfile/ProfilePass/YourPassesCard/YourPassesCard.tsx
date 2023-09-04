@@ -8,8 +8,14 @@ import RedeemModal from '../RedeemHistoryCard/RedeemModal/RedeemModal'
 import CancelBookingModal from '../RedeemHistoryCard/CancelBookingModal/CancelBookingModal'
 import CustomSelect from '../../../../Common/Select/Select'
 import Checkbox from '../../../../Common/FormInputs/Checkbox'
+import { useSelector } from 'react-redux'
+import { handleConversion } from "../../../../../Services/common.service";
 
 const YourPassesCard = ({ customerData }: any) => {
+
+  const conversionRate = useSelector((state: any) => state.user.conversionRate)
+  const currencySymobl = useSelector((state: any) => state.user.currencySymbol)
+
     const [show, setShow] = useState(false);
     const [isActive, setActive] = useState(false);
     const [showcancel, setShowcancel] = useState(false);
@@ -27,15 +33,8 @@ const YourPassesCard = ({ customerData }: any) => {
             passimg: passimg,
             title: 'Nazeki Villa',
         },
-        {
-            passimg: passimg,
-            title: 'Nazeki Villa',
-        },
-        {
-            passimg: passimg,
-            title: 'Nazeki Villa',
-        },
     ];
+
     const options = [
         { value: '1', label: '1' },
         { value: '2', label: '2' },
@@ -45,9 +44,10 @@ const YourPassesCard = ({ customerData }: any) => {
     ]
     useEffect(() => {
         if (customerData && Object.keys(customerData).length > 0) {
-            setPropertyData(customerData['user']['property'])
+            setPropertyData(customerData['user']['userPasses'])
         }
     }, [customerData])
+
     return (
         <>
             <div className='tabs_innerContent'>
@@ -90,30 +90,30 @@ const YourPassesCard = ({ customerData }: any) => {
                 </div>
                 <div className='Profile_passbox'>
                     {propertyData && propertyData.length > 0
-                        ? ticketdata.map((data, i) => {
+                        ? propertyData.map((data, i) => {
                             return (
                                 <Row key={i}>
                                     <Col xs={12} lg={4} className='d-flex pe-lg-0'>
                                         <div className='Profile_passbox_ticket w-100'>
-                                            <img src={data.passimg} alt='' />
+                                            <img src={data['pass']['bg_image']} alt='' />
                                         </div>
                                     </Col>
                                     <Col xs={12} lg={8} className='flex ps-lg-0'>
                                         <div className='Profile_passbox_details w-100'>
-                                            <h2>{data.title}</h2>
+                                            <h2>{data['pass']['property']['name']}</h2>
                                             <h6>Bali</h6>
                                             <ul>
                                                 <li>
                                                     <span>Price</span>
-                                                    <p>$4,999</p>
+                                                    <p>{handleConversion(conversionRate, data['pass']['price']) + ' ' + currencySymobl}</p>
                                                 </li>
                                                 <li>
                                                     <span>Resort Contact</span>
-                                                    <p>+61 120 3874 4949</p>
+                                                    <p>{data ? data['pass']['property']['location']['contact_number'] : ""}</p>
                                                 </li>
                                                 <li>
                                                     <span></span>
-                                                    <p>hello@nazeki.com</p>
+                                                    <p>{data ? data['pass']['property']['location']['contact_email'] : ""}</p>
                                                 </li>
                                             </ul>
                                             <ul className='border-0'>
@@ -170,6 +170,7 @@ const YourPassesCard = ({ customerData }: any) => {
             <RedeemModal
                 show={show}
                 handleClose={() => setShow(false)}
+                data={customerData}
             />
             <CancelBookingModal
                 show={showcancel}

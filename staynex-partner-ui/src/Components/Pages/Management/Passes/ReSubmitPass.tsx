@@ -209,7 +209,7 @@ const ReSubmitPass = () => {
                     value={formik.values.residenceName}
                     error={
                       formik.errors.residenceName &&
-                      formik.touched.residenceName ? (
+                        formik.touched.residenceName ? (
                         <span>{formik.errors.residenceName}</span>
                       ) : null
                     }
@@ -259,7 +259,7 @@ const ReSubmitPass = () => {
                     value={formik.values.totalCopies}
                     error={
                       formik.errors.totalCopies &&
-                      formik.touched.totalCopies ? (
+                        formik.touched.totalCopies ? (
                         <span>{formik.errors.totalCopies}</span>
                       ) : null
                     }
@@ -280,7 +280,7 @@ const ReSubmitPass = () => {
                     value={formik.values.tier_number}
                     error={
                       formik.errors.tier_number &&
-                      formik.touched.tier_number ? (
+                        formik.touched.tier_number ? (
                         <span>{formik.errors.tier_number}</span>
                       ) : null
                     }
@@ -378,8 +378,8 @@ const ReSubmitPass = () => {
                           value={formik.values.perks[index]}
                           error={
                             formik.errors.perks &&
-                            formik.touched.perks &&
-                            formik.errors.perks[index] ? (
+                              formik.touched.perks &&
+                              formik.errors.perks[index] ? (
                               <span>{formik.errors.perks[index]}</span>
                             ) : null
                           }

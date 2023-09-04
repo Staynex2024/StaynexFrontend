@@ -38,9 +38,12 @@ const ConnectWallet = () => {
     setConnectionStatus({ wallet, status: "pending" });
     try {
       if (wallet === "MetaMasK") {
-        setTimeout(() => {
-          dispatch(connectmetamask());
+        setTimeout(async () => {
+          let res: any = await dispatch(connectmetamask());
           setConnectionStatus({ wallet, status: "account" });
+          if (res?.code === 4001) {
+            setShow(false);
+          }
         }, 2000);
       }
     } catch (error) {
@@ -83,9 +86,8 @@ const ConnectWallet = () => {
                   {connectionStatus?.wallet === "MetaMasK" && (
                     <li>
                       <div
-                        className={`connect_options_details ${
-                          connectionStatus?.status === "error" ? "danger" : ""
-                        }`}
+                        className={`connect_options_details ${connectionStatus?.status === "error" ? "danger" : ""
+                          }`}
                       >
                         {connectionStatus?.status === "pending" && (
                           <Spinner animation="border" />
@@ -94,8 +96,8 @@ const ConnectWallet = () => {
                           {connectionStatus?.status === "pending"
                             ? "Initializing..."
                             : connectionStatus?.status === "error"
-                            ? "Error Connecting"
-                            : ""}
+                              ? "Error Connecting"
+                              : ""}
                         </p>
                         {connectionStatus?.status === "error" && (
                           <ButtonCommon

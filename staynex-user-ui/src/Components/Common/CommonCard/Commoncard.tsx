@@ -1,10 +1,10 @@
 import React from 'react'
 import './Commoncard.scss'
-// import {
-//   BedroomIcon,
-//   BathroomIcon,
-//   SquareareaIcon,
-// } from '../../../Assets/Images/svgImgs/svgImgs'
+import {
+  BedroomIcon,
+  BathroomIcon,
+  SquareareaIcon,
+} from '../../../Assets/Images/svgImgs/svgImgs'
 // import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { handleConversion } from "../../../Services/common.service";
@@ -18,6 +18,8 @@ const Commoncard = ({
   bedroom,
   price,
   GetIndividualData,
+  eventaddress,
+  events,
 }: any) => {
   let Country = require('country-state-city').Country
   let State = require('country-state-city').State
@@ -35,33 +37,39 @@ const Commoncard = ({
       <div className={`commoncard ${className} `}>
         <img src={hotelimag} alt="hotelimag" onClick={GetIndividualData} />
         <h5>{hoteltitle}</h5>
-        {State && (
-          <h6>{`${State.getStateByCodeAndCountry(address?.state, address?.country)
+
+      {events === undefined &&
+        <>
+          {State && (
+            <h6>{`${State.getStateByCodeAndCountry(address?.state, address?.country)
               ?.name
-            }, ${Country.getCountryByCode(address?.country)?.name}`}</h6>
-        )}
-        {/* <div className="info_hotel">
-          <p>
-            <>
-              <BedroomIcon />
-              &nbsp;{bedroom} bedrooms
-            </>
-          </p>
-          <p>
-            <>
-              <BathroomIcon />
-              &nbsp;1 Bathroom
-            </>
-          </p>
-          <p>
-            {
+              }, ${Country.getCountryByCode(address?.country)?.name}`}</h6>
+          )}
+          <div className="info_hotel">
+            <p>
               <>
-                <SquareareaIcon />
+                <BedroomIcon />
+                &nbsp;{bedroom} bedrooms
               </>
-            }
-          </p>
-        </div> */}
-        <h6>{price ? `From ${handleConversion(conversionRate, price) +' '+ currencySymobl}` : ""}</h6>
+            </p>
+            <p>
+              <>
+                <BathroomIcon />
+                &nbsp;1 Bathroom
+              </>
+            </p>
+            <p>
+              {
+                <>
+                  <SquareareaIcon />
+                  &nbsp;950sqft
+                </>
+              }
+            </p>
+          </div>
+          <h6>From <strong>{price ? `${handleConversion(conversionRate, price) + ' ' + currencySymobl}` : ""}</strong></h6>
+        </>}
+        {events === 'events' && eventaddress}
       </div>
     </>
   )

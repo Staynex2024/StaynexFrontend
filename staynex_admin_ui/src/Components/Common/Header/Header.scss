@@ -45,7 +45,7 @@
       border-radius: 5rem;
       max-width: 26.7rem;
 
-      @media (max-width:767px) {
+      @media (max-width:991px) {
         margin-left: 1rem;
       }
 
@@ -58,6 +58,10 @@
         border: 1px solid $borderclr;
       }
     }
+  }
+
+  .btn-style {
+    padding: 0 15px;
   }
 
   .Notification_Dropdown {
@@ -122,12 +126,14 @@
     &.dropdown {
       // overflow: hidden;
       @media (max-width:575px) {
-        width: 60%;
+        width: 100%;
+        margin-top: 1rem;
       }
 
       .dropdown-toggle {
         @media (max-width:575px) {
-          width: 90%;
+          width: 100%;
+          justify-content: space-between;
         }
 
         span {

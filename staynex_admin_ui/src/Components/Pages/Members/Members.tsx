@@ -16,7 +16,6 @@ import Checkbox from '../../Common/FormInputs/Checkbox'
 import CustomSelect from '../../Common/Select/Select'
 
 const Members = () => {
-
   const [selectedMemberList, setSelectedMemberList]: any = useState([]);
   const [isCheckAll, setIsCheckAll] = useState(false);
 

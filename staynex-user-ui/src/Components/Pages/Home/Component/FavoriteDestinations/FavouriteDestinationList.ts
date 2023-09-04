@@ -8,11 +8,11 @@ export const Favorite = [
     image:  require("../../../../../Assets/Images/far-slide1.svg").default
   },
   {
-    label: "Japan",
-    country: "JP",
+    label: "Singapore",
+    country: "SG",
     state: "13",
-    latitude: 35.67619190,
-    longitude: 139.65031060,
+    latitude: 1.289436,
+    longitude: 103.84998,
     image: require("../../../../../Assets/Images/far-slide2.svg").default
   },
   {
@@ -24,15 +24,15 @@ export const Favorite = [
     image: require("../../../../../Assets/Images/far-slide3.svg").default
   },
   {
-    label: "Phuket",
-    country: "TH",
+    label: "Malaysia",
+    country: "MY",
     state: "83",
-    latitude: 7.88044790,
-    longitude: 98.39225040,
+    latitude: 3.153398,
+    longitude: 101.697097,
     image: require("../../../../../Assets/Images/far-slide4.svg").default
   },
   {
-    label: "Chandigarh",
+    label: "India",
     country: "IN",
     state: "CH",
     latitude: 30.73331480,

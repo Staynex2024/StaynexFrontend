@@ -1,4 +1,7 @@
 import JSBI from "jsbi";
+import Swal from "sweetalert2";
+import { walletAddress } from "../Redux/Slices/user.slice";
+import { storeInstance } from "./axios.service";
 const BigValue = require('bignumber.js');
 
 /**CUTMIZE ADDRESS FOR SHOW */
@@ -329,5 +332,24 @@ export const handleConversion = (conversionRate: number, price: number) => {
   let convertedPrice = (conversionRate * price).toFixed(2)
   let addComma = addCommas(convertedPrice)
   return addComma
+}
+
+// A function to handle the expiry of a JWT token
+export const handleJWTExpiry = async (error: any) => {
+  // If the error status is 401, clear the local storage and show a session expired alert dialog
+  if (error === 401) {
+    localStorage.clear()
+    Swal.fire({
+      icon: "info",
+      title: "Session Expired",
+      text: "Your session is expired, You have to login again to continue",
+      showCancelButton: false,
+      confirmButtonText: "Ok",
+    }).then(() => {
+      // window.location.replace("/");
+      storeInstance.dispatch(walletAddress(''))
+      // storeInstance.dispatch(token(''))
+    });
+  }
 }
 

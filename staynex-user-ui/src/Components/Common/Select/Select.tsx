@@ -22,6 +22,7 @@ type propsType = {
   error?: any
   isClearable?: any
   value?: valueType
+  menuPlacement?: valueType
 }
 
 const CustomSelect = ({
@@ -42,6 +43,7 @@ const CustomSelect = ({
   error,
   isClearable,
   value,
+  menuPlacement,
 }: propsType) => {
   return (
     <>
@@ -66,6 +68,7 @@ const CustomSelect = ({
           isSearchable={isSearchable}
           isClearable={isClearable}
           value={value}
+          menuPlacement="auto"
         />
         {error ? error : ""}
       </Form.Group>

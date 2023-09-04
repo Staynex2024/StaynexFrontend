@@ -105,6 +105,7 @@ class BiconomyHelper {
             try {
                 const provider = await this.biconomy;
                 let result = await provider.send("eth_sendTransaction", [txParams]);
+                console.log(result,'this is result')
                 return result
             } catch (error) {
                 // console.log("error", error);

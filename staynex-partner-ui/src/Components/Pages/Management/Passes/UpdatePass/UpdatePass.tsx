@@ -117,7 +117,7 @@ const UpdatePass = () => {
       setPerkArray([...perkArray, ""]);
     }
   };
-  console.log('perkArray :>> ', perkArray);
+  // console.log('perkArray :>> ', perkArray);
   const handleRemoveField = (index: number) => {
     setPerkArray(perkArray.filter((field: any, i: number) => i !== index));
     formik.setFieldValue(

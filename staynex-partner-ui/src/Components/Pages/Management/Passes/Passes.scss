@@ -326,7 +326,7 @@
         .createpass_btns {
             display: flex;
             align-items: center;
-            justify-content: center;
+            // justify-content: center;
             margin-top: 3rem;
 
             .confirm_btn {
@@ -350,9 +350,9 @@
 
 .custom_card_pass {
     -webkit-mask: url("../../../../Assets/Images/pass_mask_img.png")center/contain no-repeat;
-    background-image: linear-gradient(180deg, rgb(27, 70, 52) 40%, rgba(255, 255, 255, 0)), url(https://images.pexels.com/photos/338504/pexels-photo-338504.jpeg?cs=srgb&dl=pexels-thorsten-technoman-338504.jpg&fm=jpg);
-    width: 107px;
-    height: 300px;
+    // background-image: linear-gradient(180deg, rgb(27, 70, 52) 40%, rgba(255, 255, 255, 0));
+    width: 107px;   
+    height: 300px; 
     text-align: center;
     background-size: cover;
     background-position: center bottom;

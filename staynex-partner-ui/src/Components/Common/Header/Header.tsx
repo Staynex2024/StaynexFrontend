@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import headerLogo from '../../../Assets/Images/logo.svg'
 import { Col, Container, Dropdown, Form, Offcanvas, Row } from 'react-bootstrap'
@@ -13,6 +13,8 @@ import { logOut } from '../../../Redux/Actions/user.action'
 import ConnectWallet from '../ConnectWallet'
 import CommonButton from '../CommonButton/CommonButton'
 import copy from 'copy-to-clipboard'
+import { APIURL } from '../../../Utils'
+import { callApiPostMethod } from '../../../Redux/Actions/api.action'
 
 const Header = () => {
   const dispatch: any = useDispatch()
@@ -20,6 +22,7 @@ const Header = () => {
   const isLogin = useSelector((state: any) => state.user.token)
   const userData = useSelector((state: any) => state.user?.userDetails)
   const walletAddress = useSelector((state: any) => state?.user?.walletAddress);
+  const isRegistered = useSelector((state: any) => state?.user?.userDetails?.wallet );
   const settingdata = [
     {
       name: userData?.name,
@@ -59,6 +62,26 @@ const Header = () => {
   const handleNavigation = () => {
     navigate('/auth/new-property')
   }
+
+
+  useEffect(() => {
+    const handleAddWalletAddress = async () => {
+      const result = await dispatch(callApiPostMethod(APIURL?.ADD_WALLETADDRESS, { walletAddress: walletAddress }, {}, false))
+
+      if (result?.data === false) {
+        navigate('/auth/profile-login')
+      } else if (result?.data === true) {
+        navigate('/auth/profile-pass')
+      } 
+    }
+
+    if (isRegistered == '') {
+      handleAddWalletAddress()
+       }
+  }, [walletAddress]);
+
+
+
   return (
     <>
       {!isLogin ? (

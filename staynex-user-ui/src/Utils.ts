@@ -9,7 +9,9 @@ export const APIURL: any = {
   ADD_CUSTOMER_NAME: 'addCustomerName',
   CUSTOMER_DETAILS: 'getCustomerDetails',
   UPDATE_CUSTOMER_PROFILE: 'customerUpdateProfile',
-  GET_EXCHANGE_RATE: 'getExchangeRateList'
+  GET_EXCHANGE_RATE: 'getExchangeRateList',
+  BUY_PASS : 'buyPass',
+  USER_PROFILE: 'profile',
 }
 
 export const RESPONSES: any = {

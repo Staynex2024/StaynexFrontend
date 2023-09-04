@@ -1,7 +1,7 @@
-// export const API_HOST = "http://10.1.8.97:3001/vendor";
-export const API_HOST = 'https://stage-api.staynex.io/vendor'
+export const API_HOST = "http://10.1.8.97:3001/vendor";
+// export const API_HOST = 'https://stage-api.staynex.io/vendor'
 export const CHAIN_ID = '0x13881'
-export const RPC_URL = 'https://rpc.ankr.com/polygon_mumbai'
+export const RPC_URL = 'https://polygon-mumbai.g.alchemy.com/v2/4OvhlrXvfBBEit76CaBYrdj0-dsSmoMg'
 export const NETWORK_NAME = 'Mumbai Testnet'
 export const NETWORK_SYMBOL = 'matic'
 export const NETWORK_DECIMALS = 18

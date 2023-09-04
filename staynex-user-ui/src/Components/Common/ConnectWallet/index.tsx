@@ -23,7 +23,7 @@ const ConnectWallet = () => {
 
   /**GET STATES FROM STORE */
   const walletAddress = useSelector((state: any) => state?.user?.walletAddress);
- 
+
   const handleClose = () => setShow(false);
 
   useEffect(() => {
@@ -35,7 +35,7 @@ const ConnectWallet = () => {
   }, [show]);
 
   const { t } = useTranslation();
- 
+
   const connectToWallet = async (wallet) => {
     setConnectionStatus({ wallet, status: "pending" });
     try {
@@ -51,7 +51,7 @@ const ConnectWallet = () => {
   };
 
   return (
-    <div className="me-3">
+    <div className="">
       <ButtonCommon
         className="WltBtn"
         title={
@@ -85,9 +85,8 @@ const ConnectWallet = () => {
                   {connectionStatus?.wallet === "MetaMasK" && (
                     <li>
                       <div
-                        className={`connect_options_details ${
-                          connectionStatus?.status === "error" ? "danger" : ""
-                        }`}
+                        className={`connect_options_details ${connectionStatus?.status === "error" ? "danger" : ""
+                          }`}
                       >
                         {connectionStatus?.status === "pending" && (
                           <Spinner animation="border" />
@@ -96,8 +95,8 @@ const ConnectWallet = () => {
                           {connectionStatus?.status === "pending"
                             ? "Initializing..."
                             : connectionStatus?.status === "error"
-                            ? "Error Connecting"
-                            : ""}
+                              ? "Error Connecting"
+                              : ""}
                         </p>
                         {connectionStatus?.status === "error" && (
                           <ButtonCommon

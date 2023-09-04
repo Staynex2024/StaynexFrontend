@@ -18,13 +18,12 @@ const CurrencyDropdown = () => {
     const [conversion_Rate, setConversionRate] = useState([])
 
     const selectedCurrency = useSelector((state: any) => state?.user?.currencySymbol);
-
     useEffect(() => {
         const handleConversionRate = async () => {
             const result = await dispatch(callApiGetMethod(APIURL.GET_EXCHANGE_RATE, {}, false, false))
-            if (result.statusCode === 200) {
+            if (result?.statusCode === 200) {
                 setConversionRate(result?.data[0])
-            } else if (result.statusCode === 400) {
+            } else if (result?.statusCode === 400) {
                 toaster.error(result?.message)
             }
         }

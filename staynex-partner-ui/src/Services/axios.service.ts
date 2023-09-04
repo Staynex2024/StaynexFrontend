@@ -1,11 +1,12 @@
-import axios from 'axios'
-import toaster from '../Components/Common/Toast'
-import store from '../Redux/Store'
-import { RESPONSES } from '../Utils'
-import { formatUrl } from './common.service'
-import { API_HOST } from '../Constant'
-import { logoutUser } from '../Redux/Slices/user.slice'
-import { loader } from '../Redux/Slices/loader.slice'
+import axios from "axios";
+import toaster from "../Components/Common/Toast";
+import store from "../Redux/Store";
+import { RESPONSES } from "../Utils";
+import { formatUrl } from "./common.service";
+import { API_HOST } from "../Constant";
+import { logoutUser } from "../Redux/Slices/user.slice";
+import { loader } from "../Redux/Slices/loader.slice";
+import { handleJWTExpiry } from "./common.service";
 
 export const storeInstance = store
 axios.defaults.baseURL = API_HOST
@@ -13,15 +14,28 @@ axios.defaults.baseURL = API_HOST
 let failedQueue: any = []
 
 const processQueue = (error, token = null) => {
-  failedQueue.forEach((prom) => {
-    if (error) {
-      prom.reject(error)
+  return new Promise((resolve, reject) => {
+    let rejectedCount = 0;
+
+    failedQueue.forEach(prom => {
+      if (error) {
+        prom.reject(error);
+        rejectedCount++;
+      } else {
+        prom.resolve(token);
+      }
+    });
+
+    // Reset the failed queue after it has been processed
+    failedQueue = [];
+
+    if (rejectedCount === failedQueue.length) {
+      reject(error); // Reject the entire array if all promises were rejected
     } else {
-      prom.resolve(token)
+      resolve(token); // Resolve with the token if there were no errors
     }
-  })
-  failedQueue = []
-}
+  });
+};
 
 /**AXIOS INTERCEPTOR */
 axios.interceptors.request.use(
@@ -34,9 +48,21 @@ axios.interceptors.request.use(
     return config
   },
   (error) => {
-    return error
-  },
-)
+    storeInstance.dispatch(loader(false));
+
+    const originalRequest = error.config;
+    // Add the failed API call to the queue
+    failedQueue.push(originalRequest);
+    if (error.response.status === 401 && error.response.data.message === 'Invalid Credentials') {
+      return error;
+    } else if (error.response.status === 401 && error.response.data.message === 'Unauthorized') {
+      handleJWTExpiry(error.response.status)
+      processQueue(error, null);
+    }
+
+    return error;
+  }
+);
 
 /**HANDLE AXIOS RESPONSE */
 axios.interceptors.response.use(

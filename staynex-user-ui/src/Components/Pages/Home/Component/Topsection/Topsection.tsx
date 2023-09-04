@@ -35,7 +35,6 @@ const Topsection = () => {
       navigate("/listing", { state: { selectedLatLong } });
     }
   };
-  console.log(selectedLatLong, "this is selected Lat Long");
   return (
     <>
       <section className="top_section">

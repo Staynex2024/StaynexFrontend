@@ -103,7 +103,8 @@ const Eventandstuff = () => {
                   <Commoncard
                     hotelimag={data.hotelimag}
                     hoteltitle={data.hoteltitle}
-                    adderss={data.datetime}
+                    eventaddress={data.datetime}
+                    events={"events"}
                   />
                 </li>
               ))}

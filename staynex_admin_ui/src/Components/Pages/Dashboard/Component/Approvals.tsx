@@ -8,7 +8,7 @@ import CommonButton from '../../../Common/CommonButton/CommonButton'
 // import Checkbox from '../../../Common/FormInputs/Checkbox';
 import CustomSelect from '../../../Common/Select/Select'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { PAGE_LIMIT } from '../../../../Constant'
 import useCopyClipboard from '../../../../hooks/useCopyToClipboard'
 import moment from 'moment'
@@ -20,10 +20,15 @@ import {
 } from '../../../../Redux/Actions/api.action'
 import { APIURL } from '../../../../Utils'
 import Swal from 'sweetalert2'
+import { callContractSendMethod } from '../../../../Redux/Actions/contract.action'
+import { CONTRACT_ADDRESS } from '../../../../Constant'
+// import { callContractSendMethod } from '../../../../Redux/Actions/contract.action'
 
 const Approvals = () => {
   /**CREATE DISPATCH OBJECT */
   const dispatch: any = useDispatch()
+  const walletAddress = useSelector((state: any) => state?.user?.walletAddress);
+
 
   function useQuery() {
     const { search } = useLocation()
@@ -64,6 +69,8 @@ const Approvals = () => {
     setSearchParams({ tab: key })
     // eslint-disable-next-line
   }, [query, key])
+
+  const dataToSend = [{CONTRACT_ADDRESS},'300']
 
   const fields = [
     'Sr. No.',
@@ -181,6 +188,10 @@ const Approvals = () => {
     if (message) toaster.success(message)
   }
 
+  const handlePassActionOnChain = async () =>{
+    const result = await dispatch(callContractSendMethod('transferERC20Tokens',dataToSend,walletAddress,'function'));
+    console.log('this is result', result);
+  }
   // handle action function to accept and reject request
   const handleAction = async (type: string, item: any) => {
     if (key === 'vendor_request') {
@@ -302,7 +313,7 @@ const Approvals = () => {
         confirmButtonText: 'Yes, Accepted!',
       }).then(async (result) => {
         if (result.isConfirmed) {
-          const result = await dispatch(
+          const result = await dispatch( 
             callApiPostMethod(
               APIURL.ACTION_ON_PASS,
               {
@@ -312,12 +323,13 @@ const Approvals = () => {
                 action: type,
                 message: ''
               },
-              {},
+              {},  
               true,
             ),
           )
-          if (result?.statusCode === 200) {
-            setCheckStatus(true)
+          if (result?.statusCode === 200 || result?.statusCode === 201) {
+            setCheckStatus(true);
+            handlePassActionOnChain()
           } else if (result?.statusCode === 400) {
             setCheckStatus(true)
           }
@@ -455,13 +467,14 @@ const Approvals = () => {
                       <>
                         <CustomSelect
                           // defaultValue={currentPage}
-                          defaultValue={{ value: 1, label: 1 }}
+                          defaultValue={{ value: currentPage, label: currentPage }}
                           classgroup="select_pagi"
                           label="Page"
                           options={selectOptions}
                           onChange={(selectedValue: any) =>
                             setcurrentPage(selectedValue?.value)
                           }
+                          value={currentPage && { label: currentPage }}
                         />
                         <label>of {totalPage}</label>
                       </>

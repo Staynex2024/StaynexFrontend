@@ -1,9 +1,9 @@
 import * as Yup from "yup";
 
-function NewPropertyValidation(){
+function NewPropertyValidation() {
 
 
- const scheema = Yup.object().shape({
+  const scheema = Yup.object().shape({
     name: Yup.string()
       .required("This field is required")
       .min(2, "Property name should be at least 2 characters long")
@@ -28,7 +28,7 @@ function NewPropertyValidation(){
       .required("This field is required")
       .min(1, "Bedrooms  should be of minimum 1")
       .max(30, "Bedrooms  should not more than 30"),
-    // images: Yup.array().min(5, 'at least 5 images required').max(10, 'maximum 10 images').required('This Field is required'),
+    images: Yup.array().min(5, 'at least 5 images required').max(10, 'maximum 10 images').required('This Field is required'),
     // size: Yup.number().required("This field is required"),
     // .min(2, 'size  should be of minimum 2 digits')
     // .max(5, 'bedrooms  should not more than 5 digits'),
@@ -45,9 +45,9 @@ function NewPropertyValidation(){
     // room_2: Yup.string().required('This field is required'),
     // room_3: Yup.string().required('This field is required'),
     // room_4: Yup.string().required('This field is required'),
- 
+
   })
-return scheema;
+  return scheema;
 };
 
 export default NewPropertyValidation;

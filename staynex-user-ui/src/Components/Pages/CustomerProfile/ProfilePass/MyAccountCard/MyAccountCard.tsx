@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import './MyAccountCard.scss'
 import ProfileImg from '../../../../../Assets/Images/profile_img.svg'
 import uploadIcon from '../../../../../Assets/Images/upload_icon.svg'
@@ -16,7 +16,8 @@ const MyAccountCard = ({ customerData }: any) => {
   const dispatch: any = useDispatch()
   const address = useSelector((state: any) => state?.user?.walletAddress)
 
-  // const [selectedAvatar, setSelectedAvatar] = useState('');
+  const [file, setFile]: any = useState();
+  const [profileImg, setProfileImg] = useState('')
 
   const addnewproperty = Yup.object().shape({
     name: Yup.string()
@@ -64,6 +65,7 @@ const MyAccountCard = ({ customerData }: any) => {
         email: values?.email,
         mobileNumber: '+62' + values?.number,
         passportNumber: values?.passport,
+        profileImage: profileImg !== '' && profileImg,
       }
       const result = await dispatch(
         callApiPostMethod(APIURL.UPDATE_CUSTOMER_PROFILE, dataToSend, {}, true),
@@ -86,17 +88,9 @@ const MyAccountCard = ({ customerData }: any) => {
         'number',
         customerData['user']['mobile_number'].slice(3),
       )
+      setFile(customerData['imageUrl'])
     }
   }, [customerData])
-
-  // const onSelectFile = e => {
-  //     if (!e.target.files || !e.target.files.length) {
-  //         setSelectedAvatar('');
-  //         return;
-  //     }
-
-  //     setSelectedAvatar(e.target.files[0]);
-  // }
 
   const options: any = [
     { value: 'famale', label: 'Female' },
@@ -104,6 +98,25 @@ const MyAccountCard = ({ customerData }: any) => {
     { value: 'other', label: 'Other' },
   ]
   const pattern = /^[A-Za-z]{2}\d{6}$/
+
+  const handleChange = async (e: any) => {
+    let formData = new FormData()
+    let fileData = e.target.files[0]
+    const name = e.target.value.split(`\\`)
+    const fileName = name[name.length - 1]
+    formData.append('file', fileData, fileName)
+
+    const res: any = await dispatch(
+        callApiPostMethod(APIURL.USER_PROFILE, formData, {}, false),
+    )
+
+    if (res?.error === false) {
+        setProfileImg(res?.data)
+    } 
+
+    setFile(URL.createObjectURL(e.target.files[0]));
+
+}
 
   return (
     <>
@@ -119,14 +132,23 @@ const MyAccountCard = ({ customerData }: any) => {
               </h5>
               <p>Save to apply changes</p>
             </div>
-            <div className="account_profile">
+            {/* <div className="account_profile">
               <span className="User_Profile">
                 <img src={ProfileImg} alt="" />
               </span>
               <span className="User_upload_img">
                 <img src={uploadIcon} alt="" />
               </span>
-              {/* <input className='User_upload_img' type='file' onChange={onSelectFile} ></input> */}
+            </div> */}
+            <div className='profile_login_img' >
+              <span className='User_Profile'>
+                <img src={ProfileImg} alt="" />
+                <img className='afteruploadImg' src={file} alt='' />
+              </span>
+              <span className='User_upload_img'>
+                <img className='User_uploadIcon' src={uploadIcon} alt='' />
+                <input type="file" onChange={handleChange} />
+              </span>
             </div>
           </div>
           <Form onSubmit={formik.handleSubmit} className="mt-5 pt-5 border-top">
@@ -191,6 +213,7 @@ const MyAccountCard = ({ customerData }: any) => {
                   name={'propertyType'}
                   placeholder="Select"
                   isSearchable={false}
+                  // value={customerData['gender'] && { label: customerData['gender']?.charAt(0).toUpperCase() + customerData['gender']?.slice(1).toLowerCase()}}
                   error={
                     formik.errors.gender &&
                       formik.touched.gender ? (

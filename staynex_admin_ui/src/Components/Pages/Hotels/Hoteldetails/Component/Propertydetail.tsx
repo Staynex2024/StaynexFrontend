@@ -10,7 +10,7 @@ import KitchenIcon from '../../../../../Assets/Images/Icons/KitchenIcon.svg'
 import TVIcon from '../../../../../Assets/Images/Icons/TVIcon.svg'
 import './Hotelindex.scss'
 import CommonButton from '../../../../Common/CommonButton/CommonButton'
-import { useDispatch } from 'react-redux'
+// import { useDispatch } from 'react-redux'
 
 const Propertydetail = ({ data, handleAction }: any) => {
 
@@ -24,27 +24,7 @@ const Propertydetail = ({ data, handleAction }: any) => {
           <h6>Property information</h6>
           <div className="new_property_section mt-4">
             <Form>
-              {data?.verification === 'pending' && (
-                <div className='d-flex align-items-center mb-4'>
-                  <CommonButton
-                    title="Reject"
-                    type='button'
-                    className="dark-greenbtn"
-                    onClick={() =>
-                      handleAction('rejected', data)
-                    }
-                  />
-                  <CommonButton
-                    title="Approve"
-                    type='button'
-                    className="btncreate ms-3"
-                    onClick={() =>
-                      handleAction('accepted', data)
-                    }
-                  />
-                </div>
-              )}
-              {data?.verification === 'rejected' ? <span style={{color: "red"}}>Property Rejected</span> : data?.verification === 'accepted' ? <span style={{color: "green"}}>Property Accepted</span> : ""}
+              {data?.verification === 'rejected' ? <span style={{ color: "red" }}>Property Rejected</span> : data?.verification === 'accepted' ? <span style={{ color: "green" }}>Property Accepted</span> : ""}
               <Row>
                 <Col lg={4} md={6}>
                   <InputCustom
@@ -92,7 +72,10 @@ const Propertydetail = ({ data, handleAction }: any) => {
                       maxLength={25}
                       autoFocus={true}
                       value={
-                        State.getStateByCodeAndCountry(data?.location?.state, data?.location?.country)['name']
+                        State.getStateByCodeAndCountry(
+                          data?.location?.state,
+                          data?.location?.country,
+                        )['name']
                       }
                       readOnly
                     />
@@ -192,31 +175,33 @@ const Propertydetail = ({ data, handleAction }: any) => {
                 <Col lg={12} md={12} className="mb-5">
                   <Row>
                     {data?.rooms?.total &&
-                      Array.from({ length: Number(data?.rooms?.total) }).map((item: any, index: any) => (
-                        <Col lg={4} md={12}>
-                          <InputCustom
-                            label="Size (sqft)"
-                            className="mb-4"
-                            placeholder="Enter Size (imagessqft)"
-                            id="size"
-                            name="size"
-                            type="text"
-                            maxLength={25}
-                            autoFocus={true}
-                            value={data?.rooms?.sizes[index][`room_` + (index + 1)]}
-                            readOnly
-                          />
-                        </Col>
-                      ))
-                    }
+                      Array.from({ length: Number(data?.rooms?.total) }).map(
+                        (item: any, index: any) => (
+                          <Col lg={4} md={12}>
+                            <InputCustom
+                              label="Size (sqft)"
+                              className="mb-4"
+                              placeholder="Enter Size (imagessqft)"
+                              id="size"
+                              name="size"
+                              type="text"
+                              maxLength={25}
+                              autoFocus={true}
+                              value={
+                                data?.rooms?.sizes[index][`room_` + (index + 1)]
+                              }
+                              readOnly
+                            />
+                          </Col>
+                        ),
+                      )}
                   </Row>
-
                 </Col>
                 <Col lg={12}>
                   <div className="upload_image">
                     {data?.images && data?.images.length ? (
                       <>
-                        <label className='form-label'>Images</label>
+                        <label className="form-label">Images</label>
                         <div className="main_containt_left">
                           <SliderImage img={data?.images} />
                         </div>
@@ -227,145 +212,151 @@ const Propertydetail = ({ data, handleAction }: any) => {
                   </div>
                 </Col>
                 {/* <hr className="spaceline" /> */}
-                <Col lg={12} className='mt-5'>
+                <Col lg={12} className="mt-5">
                   <div className="check_box_fields">
-                    {data?.amenity && Object.values(data?.amenity).includes(true) &&
-                      <>
-                        <h2>Amenities</h2>
-                        <ul className='mt-4'>
-                          {data?.amenity?.outdoor_pool &&
-                            <li>
-                              <Checkbox
-                                className="check_reverse"
-                                label={<>
-                                  <img src={PoolIcon} alt="Icon" /> Shared outdoor
-                                  pool
-                                </>
-                                }
-                                id="pool"
-                                name="pool"
-                                value={data?.amenity?.outdoor_pool}
-                                checked={data?.amenity?.outdoor_pool}
-                              />
-                            </li>
-                          }
-                          {data?.amenity?.pet_allowed &&
-                            <li>
-                              <Checkbox
-                                className="check_reverse"
-                                label={
-                                  <>
-                                    <img src={PoolIcon} alt="Icon" /> Pet allowed
-                                  </>
-                                }
-                                id="pet"
-                                name="pet"
-                                value={data?.amenity?.pet_allowed}
-                                checked={data?.amenity?.pet_allowed}
-                              />
-                            </li>
-                          }
-                          {data?.amenity?.workspace &&
-                            <li>
-                              <Checkbox
-                                className="check_reverse"
-                                label={
-                                  <>
-                                    <img src={WorkspaceIcon} alt="Icon" /> Dedicated
-                                    Workspace
-                                  </>
-                                }
-                                id="workspace"
-                                name="workspace"
-                                value={data?.amenity?.workspace}
-                                checked={data?.amenity?.workspace}
-                              />
-                            </li>
-                          }
-                          {data?.amenity?.wifi &&
-                            <li>
-                              <Checkbox
-                                className="check_reverse"
-                                label={
-                                  <>
-                                    <img src={WorkspaceIcon} alt="Icon" /> Wifi
-                                  </>
-                                }
-                                id="wifi"
-                                name="wifi"
-                                value={data?.amenity?.wifi}
-                                checked={data?.amenity?.wifi}
-                              />
-                            </li>
-                          }
-                          {data?.amenity?.air_conditioner &&
-                            <li>
-                              <Checkbox
-                                className="check_reverse"
-                                label={
-                                  <>
-                                    <img src={ConditioningIcon} alt="Icon" /> Air
-                                    conditioning
-                                  </>
-                                }
-                                id="ac"
-                                name="ac"
-                                value={data?.amenity?.air_conditioner}
-                                checked={data?.amenity?.air_conditioner}
-                              />
-                            </li>
-                          }
-                          {data?.amenity?.free_washer &&
-                            <li>
-                              <Checkbox
-                                className="check_reverse"
-                                label={
-                                  <>
-                                    <img src={ConditioningIcon} alt="Icon" /> Free
-                                    washer
-                                  </>
-                                }
-                                id="washer"
-                                name="washer"
-                                value={data?.amenity?.free_washer}
-                                checked={data?.amenity?.free_washer}
-                              />
-                            </li>
-                          }
-                          {data?.amenity?.kitchen &&
-                            <li>
-                              <Checkbox
-                                className="check_reverse"
-                                label={
-                                  <>
-                                    <img src={KitchenIcon} alt="Icon" /> Kitchen
-                                  </>
-                                }
-                                id="kitchen"
-                                name="kitchen"
-                                value={data?.amenity?.kitchen}
-                                checked={data?.amenity?.kitchen}
-                              />
-                            </li>
-                          }
-                          {data?.amenity?.hd_tv &&
-                            <li>
-                              <Checkbox
-                                className="check_reverse"
-                                label={
-                                  <>
-                                    <img src={TVIcon} alt="Icon" /> 40” HDTV
-                                  </>
-                                }
-                                id="hdtv"
-                                name="hdtv"
-                                value={data?.amenity?.hd_tv}
-                                checked={data?.amenity?.hd_tv}
-                              />
-                            </li>
-                          }
-                        </ul>
-                      </>}
+                    {data?.amenity &&
+                      Object.values(data?.amenity).includes(true) && (
+                        <>
+                          <h2>Amenities</h2>
+                          <ul className="mt-4">
+                            {data?.amenity?.outdoor_pool && (
+                              <li>
+                                <Checkbox
+                                  className="check_reverse"
+                                  label={
+                                    <>
+                                      <img src={PoolIcon} alt="Icon" /> Shared
+                                      outdoor pool
+                                    </>
+                                  }
+                                  id="pool"
+                                  name="pool"
+                                  value={data?.amenity?.outdoor_pool}
+                                  checked={data?.amenity?.outdoor_pool}
+                                />
+                              </li>
+                            )}
+                            {data?.amenity?.pet_allowed && (
+                              <li>
+                                <Checkbox
+                                  className="check_reverse"
+                                  label={
+                                    <>
+                                      <img src={PoolIcon} alt="Icon" /> Pet
+                                      allowed
+                                    </>
+                                  }
+                                  id="pet"
+                                  name="pet"
+                                  value={data?.amenity?.pet_allowed}
+                                  checked={data?.amenity?.pet_allowed}
+                                />
+                              </li>
+                            )}
+                            {data?.amenity?.workspace && (
+                              <li>
+                                <Checkbox
+                                  className="check_reverse"
+                                  label={
+                                    <>
+                                      <img src={WorkspaceIcon} alt="Icon" />{' '}
+                                      Dedicated Workspace
+                                    </>
+                                  }
+                                  id="workspace"
+                                  name="workspace"
+                                  value={data?.amenity?.workspace}
+                                  checked={data?.amenity?.workspace}
+                                />
+                              </li>
+                            )}
+                            {data?.amenity?.wifi && (
+                              <li>
+                                <Checkbox
+                                  className="check_reverse"
+                                  label={
+                                    <>
+                                      <img src={WorkspaceIcon} alt="Icon" />{' '}
+                                      Wifi
+                                    </>
+                                  }
+                                  id="wifi"
+                                  name="wifi"
+                                  value={data?.amenity?.wifi}
+                                  checked={data?.amenity?.wifi}
+                                />
+                              </li>
+                            )}
+                            {data?.amenity?.air_conditioner && (
+                              <li>
+                                <Checkbox
+                                  className="check_reverse"
+                                  label={
+                                    <>
+                                      <img src={ConditioningIcon} alt="Icon" />{' '}
+                                      Air conditioning
+                                    </>
+                                  }
+                                  id="ac"
+                                  name="ac"
+                                  value={data?.amenity?.air_conditioner}
+                                  checked={data?.amenity?.air_conditioner}
+                                />
+                              </li>
+                            )}
+                            {data?.amenity?.free_washer && (
+                              <li>
+                                <Checkbox
+                                  className="check_reverse"
+                                  label={
+                                    <>
+                                      <img src={ConditioningIcon} alt="Icon" />{' '}
+                                      Free washer
+                                    </>
+                                  }
+                                  id="washer"
+                                  name="washer"
+                                  value={data?.amenity?.free_washer}
+                                  checked={data?.amenity?.free_washer}
+                                />
+                              </li>
+                            )}
+                            {data?.amenity?.kitchen && (
+                              <li>
+                                <Checkbox
+                                  className="check_reverse"
+                                  label={
+                                    <>
+                                      <img src={KitchenIcon} alt="Icon" />{' '}
+                                      Kitchen
+                                    </>
+                                  }
+                                  id="kitchen"
+                                  name="kitchen"
+                                  value={data?.amenity?.kitchen}
+                                  checked={data?.amenity?.kitchen}
+                                />
+                              </li>
+                            )}
+                            {data?.amenity?.hd_tv && (
+                              <li>
+                                <Checkbox
+                                  className="check_reverse"
+                                  label={
+                                    <>
+                                      <img src={TVIcon} alt="Icon" /> 40” HDTV
+                                    </>
+                                  }
+                                  id="hdtv"
+                                  name="hdtv"
+                                  value={data?.amenity?.hd_tv}
+                                  checked={data?.amenity?.hd_tv}
+                                />
+                              </li>
+                            )}
+                          </ul>
+                        </>
+                      )}
                   </div>
                 </Col>
                 {/* <hr className="spaceline" /> */}
@@ -419,6 +410,26 @@ const Propertydetail = ({ data, handleAction }: any) => {
                   />
                 </Col>
               </Row>
+              {data?.verification === 'pending' && (
+                <div className='d-flex align-items-center mb-4'>
+                  <CommonButton
+                    title="Reject"
+                    type='button'
+                    className="dark-greenbtn"
+                    onClick={() =>
+                      handleAction('rejected', data)
+                    }
+                  />
+                  <CommonButton
+                    title="Approve"
+                    type='button'
+                    className="btncreate ms-3"
+                    onClick={() =>
+                      handleAction('accepted', data)
+                    }
+                  />
+                </div>
+              )}
             </Form>
           </div>
         </section>

@@ -59,6 +59,7 @@ const ResortDetails = () => {
   const toggleReadMore = () => {
     setIsReadMore(!isReadMore)
   }
+
   return (
     <>
       <div className="resort_detail_page">
@@ -67,7 +68,7 @@ const ResortDetails = () => {
             <h2>
               {hotelDetailsData?.name
                 ? hotelDetailsData?.name?.charAt(0).toUpperCase() +
-                  hotelDetailsData?.name?.slice(1).toLowerCase()
+                hotelDetailsData?.name?.slice(1).toLowerCase()
                 : ''}
             </h2>
             <p>{hotelDetailsData?.location?.address}</p>
@@ -126,7 +127,7 @@ const ResortDetails = () => {
                   <h2>
                     {hotelDetailsData?.name
                       ? hotelDetailsData?.name?.charAt(0).toUpperCase() +
-                        hotelDetailsData?.name?.slice(1).toLowerCase()
+                      hotelDetailsData?.name?.slice(1).toLowerCase()
                       : ''}
                   </h2>
                   {/* <h4>{hotelDetailsData?.description}.</h4> */}
@@ -180,7 +181,7 @@ const ResortDetails = () => {
                     <li>
                       {hotelDetailsData?.type
                         ? hotelDetailsData?.type?.charAt(0).toUpperCase() +
-                          hotelDetailsData?.type?.slice(1).toLowerCase()
+                        hotelDetailsData?.type?.slice(1).toLowerCase()
                         : ''}
                     </li>
                   </ul>
@@ -207,7 +208,7 @@ const ResortDetails = () => {
                     <li>
                       <SizeIcon />
                     </li>
-                    <li>3,500 sqft</li>
+                    <li>950 sqft</li>
                   </ul>
                 </div>
               </Col>
@@ -285,15 +286,17 @@ const ResortDetails = () => {
                       </>
                     </li>
                   )}
-                  <li>
-                    <img
-                      className="resort_pic"
-                      src={airconditioningimg}
-                      alt="airconditioningimg"
-                      title="air conditioning"
-                    />
-                    Air Conditioning
-                  </li>
+                  {hotelDetailsData?.amenity?.air_conditioner && (
+                    <li>
+                      <img
+                        className="resort_pic"
+                        src={airconditioningimg}
+                        alt="airconditioningimg"
+                        title="air conditioning"
+                      />
+                      Air Conditioning
+                    </li>
+                  )}
 
                   {hotelDetailsData?.amenity?.pet_allowed && (
                     <li>
@@ -320,7 +323,7 @@ const ResortDetails = () => {
                 <h2>
                   {hotelDetailsData?.name
                     ? hotelDetailsData?.name?.charAt(0).toUpperCase() +
-                      hotelDetailsData?.name?.slice(1).toLowerCase()
+                    hotelDetailsData?.name?.slice(1).toLowerCase()
                     : ''}
                 </h2>
                 <p>{hotelDetailsData?.location?.address}</p>

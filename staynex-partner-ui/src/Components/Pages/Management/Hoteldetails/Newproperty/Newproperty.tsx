@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
 import "./Newproperty.scss";
 import { useFormik } from "formik";
-import * as Yup from "yup";
 import InputCustom from "../../../../Common/Inputs/InputCustom";
 import CustomSelect from "../../../../Common/Select/Select";
 import TextArea from "../../../../Common/FormInputs/TextArea";
@@ -130,7 +129,7 @@ const Newproperty = () => {
     const fileName = name[name.length - 1]
     formData.append('file', fileData, fileName)
     const res: any = await dispatch(
-      callApiPostMethod(APIURL.VENDOR_UPLAOD, formData, {}, true),
+      callApiPostMethod(APIURL.VENDOR_UPLOAD, formData, {}, true),
     )
     setUplaodData([...uplaodData, res?.data])
 
@@ -191,7 +190,7 @@ const Newproperty = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formik.values]);
 
-  
+
   return (
     <>
       <div className="Usercraete_property_page black_bg_style">
@@ -330,12 +329,12 @@ const Newproperty = () => {
                         onChange={formik.handleChange}
                         autoFocus={true}
                         value={formik.values.longitude}
-                        // error={
-                        //   formik.errors.longitude &&
-                        //   formik.touched.longitude ? (
-                        //     <span>{formik.errors.longitude}</span>
-                        //   ) : null
-                        // }
+                      // error={
+                      //   formik.errors.longitude &&
+                      //   formik.touched.longitude ? (
+                      //     <span>{formik.errors.longitude}</span>
+                      //   ) : null
+                      // }
                       />
                     </Col>
                     <Col lg={6} md={6}>
@@ -349,11 +348,11 @@ const Newproperty = () => {
                         onChange={formik.handleChange}
                         autoFocus={true}
                         value={formik.values.latitude}
-                        // error={
-                        //   formik.errors.latitude && formik.touched.latitude ? (
-                        //     <span>{formik.errors.latitude}</span>
-                        //   ) : null
-                        // }
+                      // error={
+                      //   formik.errors.latitude && formik.touched.latitude ? (
+                      //     <span>{formik.errors.latitude}</span>
+                      //   ) : null
+                      // }
                       />
                     </Col>
                   </Row>
@@ -370,7 +369,7 @@ const Newproperty = () => {
                     value={formik.values.description}
                     error={
                       formik.errors.description &&
-                      formik.touched.description ? (
+                        formik.touched.description ? (
                         <span>{formik.errors.description}</span>
                       ) : null
                     }
@@ -389,7 +388,7 @@ const Newproperty = () => {
                     isSearchable={false}
                     error={
                       formik.errors.propertyType &&
-                      formik.touched.propertyType ? (
+                        formik.touched.propertyType ? (
                         <span className="error-msg">
                           {formik.errors.propertyType}
                         </span>
@@ -468,31 +467,31 @@ const Newproperty = () => {
 
                 {formik.values.bedrooms && sizeInput
                   ? bedroomArray.map((e: any, ind: any) => {
-                      return (
-                        <Col lg={4} md={6} key={ind}>
-                          <InputCustom
-                            label={`Room ${ind + 1} Size (sqft)`}
-                            className="mb-44"
-                            placeholder="Enter Size (sqft)"
-                            id={`room_${ind + 1}`}
-                            name={`room_${ind + 1}`}
-                            type="number"
-                            min={4}
-                            maxLength={6}
-                            onWheel={(e: any) => e.target.blur()}
-                            onChange={(e) => handleSizes(e, ind)}
-                            autoFocus={true}
-                            value={formik.values[`room_${ind + 1}`]}
-                            error={
-                              formik.errors[`room_${ind + 1}`] &&
+                    return (
+                      <Col lg={4} md={6} key={ind}>
+                        <InputCustom
+                          label={`Room ${ind + 1} Size (sqft)`}
+                          className="mb-44"
+                          placeholder="Enter Size (sqft)"
+                          id={`room_${ind + 1}`}
+                          name={`room_${ind + 1}`}
+                          type="number"
+                          min={4}
+                          maxLength={6}
+                          onWheel={(e: any) => e.target.blur()}
+                          onChange={(e) => handleSizes(e, ind)}
+                          autoFocus={true}
+                          value={formik.values[`room_${ind + 1}`]}
+                          error={
+                            formik.errors[`room_${ind + 1}`] &&
                               formik.touched[`room_${ind + 1}`] ? (
-                                <span>{formik.errors[`room_${ind + 1}`]}</span>
-                              ) : null
-                            }
-                          />
-                        </Col>
-                      )
-                    })
+                              <span>{formik.errors[`room_${ind + 1}`]}</span>
+                            ) : null
+                          }
+                        />
+                      </Col>
+                    )
+                  })
                   : null}
 
                 <Col lg={12}>
@@ -519,7 +518,7 @@ const Newproperty = () => {
                       </li>
                     </ul>
                     {formik.errors.images && formik.touched.images ? (
-                      <span className="error-message">
+                      <span className="error-message" style={{color: 'red'}}>
                         {formik.errors.images}
                       </span>
                     ) : null}

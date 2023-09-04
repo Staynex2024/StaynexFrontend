@@ -13,7 +13,6 @@ import './Hotels.scss'
 const Hotels = () => {
   const dispatch: any = useDispatch()
   const navigate: any = useNavigate()
-
   const [vendorProperty, setVendorProperty] = useState<any>({})
 
   const listspno = [
@@ -36,7 +35,6 @@ const Hotels = () => {
       const result = await dispatch(
         callApiGetMethod(APIURL.VENDOR_DETAILS, {}, true, false),
       )
-
       if (result?.statusCode === 200) {
         setVendorProperty(result?.data)
         dispatch(propertyDetails(result?.data))
@@ -55,27 +53,28 @@ const Hotels = () => {
     }
   }
   let listOnly = (propertyList: any) => {
-    return propertyList.map((d) => d.price)
+    return propertyList.map((d: any, i: any) => d.price)
   }
+
   return (
-    <>
+    < >
       <div className="black_bg_style">
         <section className="hotels">
           {vendorProperty?.property?.[0]?.verification === 'pending' ? (
             <p className="yellow_bg_box mb-3">
+
               Approval pending. Until the approval process is complete, you will
               not be able to create any passes. Once your request is approved,
               you will receive further instructions on pass creation.
             </p>
           ) : null}
           {vendorProperty?.property &&
-          Object.keys(vendorProperty?.property).length ? (
-            vendorProperty?.property?.map((details) => {
-              console.log('detailsddddddd', details)
+            Object.keys(vendorProperty?.property).length ? (
+            vendorProperty?.property?.map((details: any, i: any) => {
 
               return (
                 <>
-                  <div className="hotels_section">
+                  <div key={i} className="hotels_section" >
                     <div className="hotels_section_cards">
                       <div className="top_headbtn">
                         <button className="active">
@@ -107,7 +106,7 @@ const Hotels = () => {
                       </div>
                       <div className="main_containt">
                         <div className="main_containt_left">
-                          <SliderImage />
+                          <SliderImage img={details?.images} />
                         </div>
                         <div className="main_containt_right">
                           <div className="right_textsec">
@@ -115,19 +114,19 @@ const Hotels = () => {
                               {' '}
                               {vendorProperty?.property?.[0]?.passes.length > 0
                                 ? `$ ${Math.min.apply(
-                                    Math,
-                                    listOnly(
-                                      vendorProperty?.property?.[0]?.passes,
-                                    ),
-                                  )}`
+                                  Math,
+                                  listOnly(
+                                    vendorProperty?.property?.[0]?.passes,
+                                  ),
+                                )}`
                                 : ''}
                             </h3>
                             <h4>{details?.name}</h4>
-                            <p>Indonesia</p>
+                            <p>{details?.location?.address}</p>
                             <ul className="list_text">
                               {vendorProperty?.property?.[0]?.passes.map(
-                                (item) => (
-                                  <li>
+                                (item: any, i: any) => (
+                                  <li key={i}>
                                     <span>{item.name}</span>
                                   </li>
                                 ),
@@ -156,12 +155,12 @@ const Hotels = () => {
                                     ?.property_status === 'pending'
                                     ? 'Add property'
                                     : vendorProperty?.property[0]
-                                        ?.property_status === 'drafted'
-                                    ? 'Continue'
-                                    : vendorProperty?.property[0]
+                                      ?.property_status === 'drafted'
+                                      ? 'Continue'
+                                      : vendorProperty?.property[0]
                                         ?.property_status === 'saved'
-                                    ? 'View page'
-                                    : ''
+                                        ? 'View page'
+                                        : ''
                                 }
                               />
                             }

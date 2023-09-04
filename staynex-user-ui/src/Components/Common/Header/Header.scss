@@ -51,7 +51,40 @@
       }
     }
 
+  }
 
+  .customInput {
+    margin-bottom: 0;
+    margin-right: 10px;
+
+    @media (max-width:767px) {
+      margin-right: 5px;
+    }
+
+    .common_select {
+      .select__control {
+        height: 43px;
+
+        @media (max-width:767px) {
+          height: 36px;
+        }
+
+        .select__value-container {
+          padding-right: 1rem;
+
+          @media (max-width:767px) {
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+          }
+        }
+
+        .select__single-value {
+          @media (max-width:767px) {
+            font-size: 14px;
+          }
+        }
+      }
+    }
   }
 
   .navbar {

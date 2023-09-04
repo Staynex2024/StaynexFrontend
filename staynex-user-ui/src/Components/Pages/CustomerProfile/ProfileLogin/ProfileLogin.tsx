@@ -20,6 +20,8 @@ const ProfileLogin = () => {
     const [debounce_search, setDeounce_Search] = useState('')
     const [fafaSpin, setfafaSpin] = useState(false);
     const [message, setMessage] = useState('')
+    const [file, setFile]: any = useState();
+    const [profileImg, setProfileImg] = useState('')
     const [show, setShow] = useState(false)
 
     useDebounce(() => handleDebounceSearch(search), 1000, [search])
@@ -35,7 +37,6 @@ const ProfileLogin = () => {
         const checkDuplicateUserName = async () => {
             setfafaSpin(true)
             const result = await dispatch(callApiGetMethod(APIURL.CHECK_DUPLICATE_NAME, { name: debounce_search.trim() }, false, false))
-            console.log('result', result)
             if (result?.statusCode === 200) {
                 setfafaSpin(false)
                 setMessage(result?.message)
@@ -61,21 +62,45 @@ const ProfileLogin = () => {
         const result = await dispatch(callApiPostMethod(APIURL?.ADD_CUSTOMER_NAME, {
             walletAddress: address,
             name: debounce_search.trim(),
-            profileImage: "image"
+            profileImage: profileImg !== '' && profileImg
         }, {}, false))
-        console.log('result :>> ', result);
         if (result?.statusCode === 201) {
             navigate('/auth/profile-pass')
         }
+    }
+
+    const handleChange = async (e: any) => {
+        let formData = new FormData()
+        let fileData = e.target.files[0]
+        const name = e.target.value.split(`\\`)
+        const fileName = name[name.length - 1]
+        formData.append('file', fileData, fileName)
+
+        const res: any = await dispatch(
+            callApiPostMethod(APIURL.USER_PROFILE, formData, {}, false),
+        )
+
+        if (res?.error === false) {
+            setProfileImg(res?.data)
+        } 
+
+        setFile(URL.createObjectURL(e.target.files[0]));
+
     }
 
     return (
         <>
             <div className='profile_login'>
                 <Container>
-                    <div className='profile_login_img'>
-                        <span className='User_Profile'><img src={ProfileImg} alt="" /></span>
-                        <span className='User_upload_img'><img src={uploadIcon} alt="" /></span>
+                    <div className='profile_login_img' >
+                        <span className='User_Profile'>
+                            <img src={ProfileImg} alt="" />
+                            <img className='afteruploadImg' src={file} alt='' />  
+                        </span>
+                        <span className='User_upload_img'>
+                            <img className='User_uploadIcon' src={uploadIcon} alt='' />
+                            <input type="file" onChange={handleChange} />                             
+                        </span>
                     </div>
                     <div className='profile_login_Input'>
                         <label>Hello,</label>
@@ -93,12 +118,12 @@ const ProfileLogin = () => {
                     {show &&
                         <div className='text-center mt-4'>
                             <CommonButton
-                            title={"Create Profile"}
-                            // disabled={connecting}
-                            onClick={() => handleCustomerProfile()}
-                            className="mx-auto"
-                        />
-                            </div>}
+                                title={"Create Profile"}
+                                // disabled={connecting}
+                                onClick={() => handleCustomerProfile()}
+                                className="mx-auto"
+                            />
+                        </div>}
                 </Container>
             </div>
         </>

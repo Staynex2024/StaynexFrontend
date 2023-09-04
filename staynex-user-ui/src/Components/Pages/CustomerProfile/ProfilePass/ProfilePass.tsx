@@ -2,7 +2,7 @@ import "./ProfilePass.scss";
 import { Col, Container, Nav, ProgressBar, Row, Tab } from "react-bootstrap";
 import userimg from "../../../../Assets/Images/image1.jpg";
 import walletIcon from "../../../../Assets/Images/Icons/wallet.svg";
-import CommonButton from "../../../Common/CommonButton/CommonButton";
+// import CommonButton from "../../../Common/CommonButton/CommonButton";
 import YourPassesCard from "./YourPassesCard/YourPassesCard";
 import RedeemHistoryCard from "./RedeemHistoryCard/RedeemHistoryCard";
 import MyAccountCard from "./MyAccountCard/MyAccountCard";
@@ -22,6 +22,7 @@ const ProfilePass = () => {
   useEffect(() => {
     const handleCustomerDetails = async () => {
       const result = await dispatch(callApiGetMethod(APIURL.CUSTOMER_DETAILS, { walletAddress: address }, true, false))
+      // console.log('result>>>>', result)
       setCustomerData(result?.data)
     }
 
@@ -30,7 +31,6 @@ const ProfilePass = () => {
     }
 
   }, [address, key])
-
   return (
     <>
       <div className="Profile_Pass">
@@ -40,13 +40,13 @@ const ProfilePass = () => {
               <Row className="align-items-center">
                 <Col xs={12} lg={6}>
                   <div className="Booking_Detail_Explorer_user d-flex align-items-center">
-                    <img className="expuser_img" src={userimg} alt="img" />
+                    <img className="expuser_img" src={customerData['imageUrl']} alt="img" />
                     <div className="ms-3">
                       <h4>{customerData?.['user']['name'] ? customerData?.['user']['name'] : ""}</h4>
                       {customerData['walletAddress'] ?
-                      <p>
-                        <img src={walletIcon} alt="icon" /> {custmizeAddress(customerData['walletAddress'])}
-                      </p>: ""}
+                        <p>
+                          <img src={walletIcon} alt="icon" /> {custmizeAddress(customerData['walletAddress'])}
+                        </p> : ""}
                     </div>
                   </div>
                 </Col>
@@ -66,7 +66,7 @@ const ProfilePass = () => {
               </Row>}
           </Container>
         </div>
-        <Tab.Container id="left-tabs-example" defaultActiveKey="passes"  onSelect={(e: any) => setKey(e)}>
+        <Tab.Container id="left-tabs-example" defaultActiveKey="passes" onSelect={(e: any) => setKey(e)}>
           <div className="Profile_Pass_tabs">
             <Container>
               <Nav variant="pills" className="Border_Tabs">
@@ -85,13 +85,13 @@ const ProfilePass = () => {
           <Container>
             <Tab.Content className="Profile_Pass_tabsContent">
               <Tab.Pane eventKey="passes">
-                <YourPassesCard customerData = {customerData}/>
+                <YourPassesCard customerData={customerData} />
               </Tab.Pane>
               <Tab.Pane eventKey="history">
                 <RedeemHistoryCard />
               </Tab.Pane>
               <Tab.Pane eventKey="account">
-                <MyAccountCard customerData = {customerData} />
+                <MyAccountCard customerData={customerData} />
               </Tab.Pane>
             </Tab.Content>
           </Container>

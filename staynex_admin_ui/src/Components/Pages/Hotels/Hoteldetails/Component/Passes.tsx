@@ -6,6 +6,7 @@ import { useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { callApiGetMethod } from '../../../../../Redux/Actions/api.action';
 import { APIURL } from '../../../../../Utils';
+import passicon from '../../../../../Assets/Images/Icons/home.svg'
 // import Swal from 'sweetalert2';
 // import toaster from '../../../../Common/Toast';
 
@@ -19,7 +20,7 @@ const Passes = () => {
 
     let query = useQuery()
 
-    const [passList, setPassList] = useState({})
+    const [passList, setPassList] = useState<any>({})
     // const [isUnList, setIsUnlist] = useState(false)
 
 
@@ -39,7 +40,10 @@ const Passes = () => {
                 ),
             )
             setPassList(result?.data)
+
         }
+
+
 
         retreivePassesList()
         // eslint-disable-next-line
@@ -76,17 +80,34 @@ const Passes = () => {
     //             }
     //         }
     //     })
-    // }
+    // }    
     return (
         <>
             <section className='passes'>
                 <Row>
                     {
                         passList && Object.keys(passList).length > 0 &&
-                        <Col xl={3} lg={6} md={6}>
+                        < Col xl={3} lg={6} md={6}>
                             <div className='passes_card'>
                                 <div className='passes_card_imageinfo'>
-                                    <img src={Passes1} alt='card_image' />
+
+
+                                    <div className="custom_card_pass"
+                                        style={{
+                                            backgroundImage: `linear-gradient(180deg, rgb(27, 70, 52)  40%, rgba(255, 255, 255, 0)), url(${passList?.bg_image})`
+                                        }}
+                                    >
+                                        {/* <img src={imageData} alt="" /> */}
+                                        <div className="pass_number">
+                                            <h5>Staynex</h5>
+                                            <p>SP {passList?.redeemable_nights}</p>
+                                        </div>
+                                        <div className="pass_content_icon">
+                                            <img src={passicon} alt="" />
+                                            <p>{passList?.name}</p>
+                                        </div>
+                                    </div>
+
                                     <h6>{(passList['total_copies'] - passList['total_sold']) + `/` + passList['total_copies']}</h6>
                                 </div>
                                 <div className='passes_card_textinfo'>

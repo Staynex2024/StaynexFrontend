@@ -73,8 +73,8 @@ export function callContractSendMethod(
             contractType,
             value,
             dynamicAddress
-          );
-          dispatch(loader(false));
+            );
+            dispatch(loader(false));
           return result;
         } else {
           /**IF ANY ERROR IN CREATING INSTANCE */

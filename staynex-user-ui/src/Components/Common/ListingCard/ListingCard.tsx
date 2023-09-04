@@ -111,7 +111,7 @@ const ListingCard = ({ data }: any) => {
                           </>
                         </li>
                         <li>
-                          <SquareareaIcon /> <span>2300 sqft</span>
+                          <SquareareaIcon /> <span>950 sqft</span>
                         </li>
                       </ul>
                       <h4>Description</h4>

@@ -99,8 +99,8 @@ const Stats = () => {
                     <CustomTable
                         fields={fields}
                     >
-                        {tabledata.map((item) => (
-                            <tr>
+                        {tabledata.map((item:any,i:any) => (
+                            <tr key={i}>
                                 <td>
                                     <Form onSubmit={formik.handleSubmit}>
                                         <Checkbox

@@ -17,13 +17,33 @@
             width: 77px;
             height: 77px;
             border-radius: 10rem;
+            position: relative;
+
+            .afteruploadImg {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 77px;
+                height: 77px;
+                border-radius: 10rem;
+            }
         }
 
         .User_upload_img {
             position: absolute;
-            bottom: 0rem;
+            bottom: -0.9rem;
             left: 0.5rem;
             cursor: pointer;
+
+            input {
+                width: 23px;
+                height: 23px;
+                opacity: 0;
+            }
+
+            .User_uploadIcon {
+                position: absolute;
+            }
         }
     }
 

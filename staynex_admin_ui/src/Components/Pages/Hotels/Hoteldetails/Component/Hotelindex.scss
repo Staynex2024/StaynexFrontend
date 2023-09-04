@@ -30,11 +30,7 @@
 
 .passes {
     &_card {
-<<<<<<< HEAD
-        display: flex;
-=======
         // display: flex;
->>>>>>> d74fcdbb762e3db4e1db949e41e10b3552648789
         // align-items: center;
         justify-content: center;
         flex-direction: column;
@@ -453,6 +449,50 @@
                 margin-left: 1rem;
             }
 
+        }
+    }
+}
+
+.custom_card_pass {
+    -webkit-mask: url("../../../../../Assets/Images/pass_mask_img.png")center/contain no-repeat;
+    // background-image: linear-gradient(180deg, rgb(27, 70, 52) 40%, rgba(255, 255, 255, 0));
+    width: 107px;   
+    height: 300px; 
+    text-align: center;
+    background-size: cover;
+    background-position: center bottom;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin: 0 auto;
+
+    .pass_number {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        text-align: right;
+        color: $whiteclr;
+
+        h5 {
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+
+        p {
+            font-size: 1.2rem;
+        }
+    }
+
+    .pass_content_icon {
+        margin-top: -1.5rem;
+        position: absolute;
+
+        p {
+            font-weight: 600;
+            color: $whiteclr;
+            margin-top: 0.4rem;
+            font-size: 1.3rem;
         }
     }
 }

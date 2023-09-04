@@ -107,7 +107,7 @@ const Support = () => {
                         <CustomTable
                             fields={fields}
                         >
-                            {tabledata.map((item,i) => (
+                            {tabledata.map((item, i) => (
                                 <tr key={i}>
                                     <td>
                                         <Form onSubmit={formik.handleSubmit}>

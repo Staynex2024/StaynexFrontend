@@ -27,6 +27,8 @@ const UpdateProperty = () => {
   const propertyDetails: any = useSelector(
     (state: any) => state.user?.propertyDetails.property[0]
   );
+
+
   const userDetails: any = useSelector(
     (state: any) => state.user?.propertyDetails
   );
@@ -34,6 +36,7 @@ const UpdateProperty = () => {
   const [fileArray, setFileArray] = useState([]);
   const [uploadFile, setUploadFile] = useState([]);
   const [bedroomSize, setBedroomSize] = useState<any>(propertyDetails.rooms?.sizes);
+  const [uplaodData, setUplaodData] = useState<any>([])
 
   let Country = require("country-state-city").Country;
   let State = require("country-state-city").State;
@@ -49,8 +52,8 @@ const UpdateProperty = () => {
     formik.setFieldValue("email", userDetails.email);
     formik.setFieldValue("contact", userDetails?.property?.[0]?.location?.contact_number);
     formik.setFieldValue("website", propertyDetails?.location?.website);
+    formik.setFieldValue("imgaes", propertyDetails?.images)
   }, []);
-
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -61,7 +64,7 @@ const UpdateProperty = () => {
       description: "",
       propertyType: "",
       bedrooms: propertyDetails.rooms.total,
-      images: [],
+      images: "",
       size: propertyDetails.rooms?.sizes,
       pool: propertyDetails.amenity?.outdoor_pool,
       workspace: propertyDetails.amenity?.workspace,
@@ -79,7 +82,7 @@ const UpdateProperty = () => {
     onSubmit: async (values) => {
       let dataToSend = {
         description: values?.description,
-        mobile_number:   values?.contact,
+        mobile_number: values?.contact,
         outdoor_pool: values?.pool,
         workspace: values?.workspace,
         pet_allowed: values?.pet,
@@ -92,14 +95,12 @@ const UpdateProperty = () => {
         rooms: {
           total: values?.bedrooms,
           sizes: [
-                {room_1: 120},
-                {room_2: 200},
+            { room_1: 120 },
+            { room_2: 200 },
           ]
-        ,
+          ,
         },
-        images: [
-          "https://media.istockphoto.com/id/1083982928/photo/jaipur-metro.jpg?s=2048x2048&w=is&k=20&c=h9FYPJHd-TfFQNjbRCELPG93tcNj8Zb1Qgcr_lM5Zog=",
-        ],
+        images: fileArray,
 
         // draft: draftKey,
         // name: values?.name,
@@ -115,11 +116,12 @@ const UpdateProperty = () => {
       const res: any = await dispatch(
         callApiPostMethod(APIURL.VENDOR_UPDATE_PROPERTY, dataToSend, {}, true)
       );
-      if(res?.statusCode === 201 ){
+      if (res?.statusCode === 201) {
         navigate('/auth/hotel-details')
       }
     },
   });
+
 
   const options = [
     { value: "resort", label: "Resort" },
@@ -128,9 +130,26 @@ const UpdateProperty = () => {
     { value: "boutique", label: "Boutique Hotel" },
   ];
 
-  const uploadMultipleFiles = (e: any) => {
+  useEffect(() => {
+    setFileArray(propertyDetails?.images)
+  }, [])
+
+
+
+  const uploadMultipleFiles = async (e: any) => {
+    let formData = new FormData()
+    let fileData = e.target.files[0]
+    const name = e.target.value.split(`\\`)
+    const fileName = name[name.length - 1]
+    formData.append('file', fileData, fileName)
+    const res: any = await dispatch(
+      callApiPostMethod(APIURL.VENDOR_UPLOAD, formData, {}, true),
+    )
+
+    setUplaodData([...uplaodData, res?.data])
     const uploadedFiles = Array.from(e.target.files);
     const filteredFiles = uploadedFiles.filter((file: any) => {
+
       // Check if the file already exists in the uploadFile array based on its name
       const existingFile = uploadFile.find(
         (existing: any) => existing.name === file.name
@@ -159,7 +178,6 @@ const UpdateProperty = () => {
 
   const numberOfBedrooms = parseInt(propertyDetails?.rooms?.total);
   const bedroomArray: any = Array.from({ length: numberOfBedrooms });
-
   const handleSizes = (e: any, ind: any) => {
     formik.setFieldValue(`room_${ind + 1}`, e.target.value);
     setBedroomSize({ ...bedroomSize, [e.target.name]: e.target.value });
@@ -192,7 +210,6 @@ const UpdateProperty = () => {
     formik.setFieldValue('size', inputdata)
     setBedroomSize(inputdata)
   }
-
 
   return (
     <>
@@ -349,7 +366,6 @@ const UpdateProperty = () => {
                     </Col>
                   </Row>
                 </Col>
-
                 <Col lg={12}>
                   <TextArea
                     label="Description"
@@ -364,46 +380,46 @@ const UpdateProperty = () => {
                   //     <span>{formik.errors.description}</span>
                   //   ) : null
                   // }
-                />
-              </Col>
-              <Col lg={4} md={6}>
-                <InputCustom
-                  label="Type"
-                  classgroup="mb-44"
-                  // options={options}
-                  // onChange={(option: any) =>
-                  //   formik.setFieldValue("propertyType", option.value)
-                  // }
-                  name={"propertyType"}
-                  id={'propertyType'}
-                  disabled
-                  value={propertyDetails.type}
+                  />
+                </Col>
+                <Col lg={4} md={6}>
+                  <InputCustom
+                    label="Type"
+                    classgroup="mb-44"
+                    // options={options}
+                    // onChange={(option: any) =>
+                    //   formik.setFieldValue("propertyType", option.value)
+                    // }
+                    name={"propertyType"}
+                    id={'propertyType'}
+                    disabled
+                    value={propertyDetails.type}
                   // isSearchable={false}
-                />
-                {/* {formik.errors.propertyType && formik.touched.propertyType ? (
+                  />
+                  {/* {formik.errors.propertyType && formik.touched.propertyType ? (
                   <span className="error-message">
                     {formik.errors.propertyType}
                   </span>
                 ) : null} */}
-              </Col>
-              <Col lg={4} md={6}>
-                <InputCustom
-                  label="Bedroom (s)"
-                  className="mb-44"
-                  placeholder="Enter Bedroom (s)"
-                  id="bedrooms"
-                  name="bedrooms"
-                  onChange={(event) => {
-                    // if (/^\d*(\.\d{0,8})?$/.test(event.target.value)) {
-                    formik.handleChange(event);
-                    // }
-                  }}
-                  type="number"
-                  onWheel={(e: any) => e.target.blur()}
-                  min={1}
-                  maxLength={3}
-                  autoFocus={true}
-                  value={formik.values.bedrooms}
+                </Col>
+                <Col lg={4} md={6}>
+                  <InputCustom
+                    label="Bedroom (s)"
+                    className="mb-44"
+                    placeholder="Enter Bedroom (s)"
+                    id="bedrooms"
+                    name="bedrooms"
+                    onChange={(event) => {
+                      // if (/^\d*(\.\d{0,8})?$/.test(event.target.value)) {
+                      formik.handleChange(event);
+                      // }
+                    }}
+                    type="number"
+                    onWheel={(e: any) => e.target.blur()}
+                    min={1}
+                    maxLength={3}
+                    autoFocus={true}
+                    value={formik.values.bedrooms}
                   // error={
                   //   formik.errors.bedrooms && formik.touched.bedrooms ? (
                   //     <span>{formik.errors.bedrooms}</span>
@@ -451,45 +467,46 @@ const UpdateProperty = () => {
                     );
                   })
                 : null}  ((()))*/}
-              {propertyDetails?.rooms?.total &&
-                propertyDetails.rooms.sizes.map((item: any, index: any) => (
-                  <InputCustom
-                    label="Size (sqft)"
-                    className="mb-44"
-                    placeholder="Enter Size (imagessqft)"
-                    id="size"
-                    name="size"
-                    type="text"
-                    maxLength={25}
-                    autoFocus={true}
-                    onChange={(e) => handleBedrooms(e, index)}
-                    value={formik.values.size[index][`room_${index + 1}`]}
-                  />
-                ))}
+                {propertyDetails?.rooms?.total &&
+                  propertyDetails.rooms.sizes.map((item: any, index: any) => (
+                    <InputCustom
+                      label="Size (sqft)"
+                      className="mb-44"
+                      placeholder="Enter Size (imagessqft)"
+                      id="size"
+                      name="size"
+                      type="text"
+                      maxLength={25}
+                      autoFocus={true}
+                      onChange={(e) => handleBedrooms(e, index)}
+                      value={formik.values.size[index][`room_${index + 1}`]}
+                    />
+                  ))}
 
-              {/* propertyDetails?.rooms?.sizes[0][`room_` + (index + 1)] */}
-              <Col lg={12}>
-                <div className="upload_image">
-                  <ul className="upload_image_listed">
-                    <li>
-                      <div className="form-group multi-preview">
-                        {fileArray.map((url, data: any) => (
-                          <img src={url} alt="..." key={url} />
-                        ))}
+                {/* propertyDetails?.rooms?.sizes[0][`room_` + (index + 1)] */}
+                <Col lg={12}>
+                  <div className="upload_image">
+                    <ul className="upload_image_listed">
+                      <li>
+                        <div className="form-group multi-preview">
+                          {fileArray.map((url, data: any) => (
+                            <img src={url} alt="..." key={url} />
+                          ))}
 
-                        <div className="image_up">
-                          <Form.Control
-                            type="file"
-                            id="images"
-                            name="images"
-                            multiple
-                            onChange={uploadMultipleFiles}
-                            className="file_up"
-                          />
-                          <span onClick={uploadFiles}>
-                            <PlusIcon />
-                          </span>
-                        </div>
+                          <div className="image_up">
+                            <Form.Control
+                              type="file"
+                              id="formik.uplaodData?.images"
+                              name="images"
+                              multiple
+                              onChange={uploadMultipleFiles}
+                              className="file_up"
+                            />
+                            <span onClick={uploadFiles}>
+                              <PlusIcon />
+                            </span>
+                          </div>
+
                         </div>
                       </li>
                     </ul>
@@ -665,7 +682,7 @@ const UpdateProperty = () => {
                     onWheel={(e: any) => e.target.blur()}
                     onChange={(event) => {
                       if (/^\d*(\.\d{0,8})?$/.test(event.target.value)) {
-                      formik.handleChange(event);
+                        formik.handleChange(event);
                       }
                     }}
                     autoFocus={true}
@@ -699,12 +716,12 @@ const UpdateProperty = () => {
                 </Col>
               </Row>
               <Row>
-                  <Row className="mb-5 align-items-center">
-                    <Col xs={12} className="d-flex justify-content-start">
-                      <CommonButton type="submit" title="Update" />
-                      {/* <CommonButton type="submit" title="Create" className="ms-3" /> */}
-                    </Col>
-                  </Row>
+                <Row className="mb-5 align-items-center">
+                  <Col xs={12} className="d-flex justify-content-start">
+                    <CommonButton type="submit" title="Update" />
+                    {/* <CommonButton type="submit" title="Create" className="ms-3" /> */}
+                  </Col>
+                </Row>
                 {/* <Col lg={6} md={6}>
                 <CommonButton type="submit" title="Update" />
               </Col> */}
