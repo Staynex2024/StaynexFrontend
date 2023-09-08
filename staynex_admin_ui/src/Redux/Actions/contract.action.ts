@@ -52,7 +52,6 @@ export function callContractSendMethod(
     try {
       let wallet = getState().user.wallet;
       let verifyAccount: any = false;
-
       /**VALIDATE WALLET */
       if (wallet === "MetaMask") {
         verifyAccount = await dispatch(connectmetamask());

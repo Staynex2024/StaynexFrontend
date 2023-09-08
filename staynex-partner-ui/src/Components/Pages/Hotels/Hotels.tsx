@@ -39,6 +39,7 @@ const Hotels = () => {
         setVendorProperty(result?.data)
         dispatch(propertyDetails(result?.data))
       }
+      
     }
 
     retreiveVendorProperty()

@@ -6,7 +6,7 @@ import Dashboardmodal from './Component/Dashboardmodal'
 import './Dashboard.scss'
 import { Link, useNavigate } from 'react-router-dom'
 import CustomTable from '../../Common/Table/Index'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import useCopyClipboard from '../../../hooks/useCopyToClipboard'
 import moment from 'moment'
 import toaster from '../../Common/Toast'
@@ -118,8 +118,19 @@ const Dashboard = () => {
     if (message) toaster.success(message)
   }
 
+  // const handlePassActionOnChain = async () => {
+  //   await dispatch(
+  //     callContractSendMethod(
+  //       "transferERC20Tokens",
+  //       dataToSend,
+  //       walletAddress,
+  //       "function"
+  //     )
+  //   );
+  // };
+
   const handleAction = async (type: string, item: any, reqType: string) => {
-    
+
     if (reqType === 'vendorRequest') {
       Swal.fire({
         title: 'Are you sure?',
@@ -199,70 +210,71 @@ const Dashboard = () => {
         }
       })
     } else if (reqType === "passRequest") {
-      Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, Accepted!',
-      }).then(async (result) => {
-        if (result.isConfirmed) {
-          const result = await dispatch(
-            callApiPostMethod(
-              APIURL.ACTION_ON_PASS,
-              {
-                User_id: item?.property?.user?.id,
-                Pass_id: item?.id,
-                Property_id: item?.property?.id,
-                action: type,
-                message: ''
-              },
-              {},
-              true,
-            ),
-          )
-          if (result?.statusCode === 200) {
-            setCheckStatus(true)
-          } else if (result?.statusCode === 400) {
-            setCheckStatus(true)
+     
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, Accepted!',
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            const result = await dispatch(
+              callApiPostMethod(
+                APIURL.ACTION_ON_PASS,
+                {
+                  User_id: item?.property?.user?.id,
+                  Pass_id: item?.id,
+                  Property_id: item?.property?.id,
+                  action: type,
+                  message: ''
+                },
+                {},
+                true,
+              ),
+            )
+            if (result?.statusCode === 200) {
+              setCheckStatus(true)
+            } else if (result?.statusCode === 400) {
+              setCheckStatus(true)
+            }
           }
-        } 
-        // else if (result.isConfirmed && type === 'rejected') {
-        //   Swal.fire({
-        //     title: "Rejecting Request Of Pass!",
-        //     text: "Reason for Rejecting",
-        //     icon: 'warning',
-        //     input: 'text',
-        //     showCancelButton: true
-        //   }).then(async (result) => {
-        //     if (result.value) {
-        //       const res = await dispatch(
-        //         callApiPostMethod(
-        //           APIURL.ACTION_ON_PASS,
-        //           {
-        //             User_id: item?.property?.user?.id,
-        //             Pass_id: item?.id,
-        //             Property_id: item?.property?.id,
-        //             action: type,
-        //             message: result.value,
-        //           },
-        //           {},
-        //           true,
-        //         ),
-        //       )
-        //       if (res?.statusCode === 200) {
-        //         setCheckStatus(true)
-        //       } else if (res?.statusCode === 400) {
-        //         setCheckStatus(true)
-        //       }
-        //     } else {
-        //       toaster.error("Please mention reason before rejecting")
-        //     }
-        //   });
-        // }
-      })
+          // else if (result.isConfirmed && type === 'rejected') {
+          //   Swal.fire({
+          //     title: "Rejecting Request Of Pass!",
+          //     text: "Reason for Rejecting",
+          //     icon: 'warning',
+          //     input: 'text',
+          //     showCancelButton: true
+          //   }).then(async (result) => {
+          //     if (result.value) {
+          //       const res = await dispatch(
+          //         callApiPostMethod(
+          //           APIURL.ACTION_ON_PASS,
+          //           {
+          //             User_id: item?.property?.user?.id,
+          //             Pass_id: item?.id,
+          //             Property_id: item?.property?.id,
+          //             action: type,
+          //             message: result.value,
+          //           },
+          //           {},
+          //           true,
+          //         ),
+          //       )
+          //       if (res?.statusCode === 200) {
+          //         setCheckStatus(true)
+          //       } else if (res?.statusCode === 400) {
+          //         setCheckStatus(true)
+          //       }
+          //     } else {
+          //       toaster.error("Please mention reason before rejecting")
+          //     }
+          //   });
+          // }
+        })
     }
   }
 
@@ -294,6 +306,7 @@ const Dashboard = () => {
               ))}
             </ul>
           </div>
+          {/*
           <div className="statistics_card">
             <p>Pass Details</p>
             <div className="statistics_card_typepass">
@@ -330,14 +343,15 @@ const Dashboard = () => {
                 </p>
               </li>
             </ul>
-            {/* <div className="create_btn">
-              <CommonButton
-                title="Create new"
-                className="btncreate"
-                onClick={() => setShow(true)}
-              />
-            </div> */}
+            // <div className="create_btn">
+            //   <CommonButton
+            //     title="Create new"
+            //     className="btncreate"
+            //     onClick={() => setShow(true)}
+            //   />
+            // </div> 
           </div>
+            */}
 
           <div className="approval">
             <div className="approval_tophead">
@@ -453,7 +467,7 @@ const Dashboard = () => {
                     <tr key={key}>
                       <td>{key + 1}</td>
                       <td>{item?.name ? item?.name?.charAt(0).toUpperCase() +
-                          item?.name?.slice(1).toLowerCase() : '---'}</td>
+                        item?.name?.slice(1).toLowerCase() : '---'}</td>
                       <td>
                         {item?.user?.name ? item?.user?.name?.charAt(0).toUpperCase() +
                           item?.user?.name?.slice(1).toLowerCase() : '---'}
@@ -540,9 +554,9 @@ const Dashboard = () => {
                     <tr key={key}>
                       <td>{key + 1}</td>
                       <td>{item?.property?.name ? item?.property?.name?.charAt(0).toUpperCase() +
-                          item?.property?.name?.slice(1).toLowerCase() : "---"}</td>
+                        item?.property?.name?.slice(1).toLowerCase() : "---"}</td>
                       <td>{item?.property?.user?.name ? item?.property?.user?.name?.charAt(0).toUpperCase() +
-                          item?.property?.user?.name?.slice(1).toLowerCase() : "---"}</td>
+                        item?.property?.user?.name?.slice(1).toLowerCase() : "---"}</td>
                       <td>{item?.redeemable_nights ? `SP${item?.redeemable_nights}` : "---"}</td>
                       <td>
                         {item?.createdAt

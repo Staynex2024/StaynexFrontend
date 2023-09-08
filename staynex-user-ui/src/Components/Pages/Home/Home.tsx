@@ -17,7 +17,7 @@ const Home = () => {
         <Destinations />
         <FavoriteDestinations />
         <Arsenalnft />
-        <Eventandstuff />
+        {/* <Eventandstuff /> */}
       </div>
     </>
   )

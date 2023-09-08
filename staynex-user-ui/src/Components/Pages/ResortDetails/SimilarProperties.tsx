@@ -131,6 +131,7 @@ const SimilarProperties = ({ hotelDetailsData }: any) => {
                         GetIndividualData={() => GetIndividualData(data)}
                         address={data?.location ? data?.location : ''}
                         bedroom={data?.rooms ? data?.rooms?.total : ''}
+                        bathroom= {data?.rooms ? data?.rooms?.bathroom : ''}
                         price={
                           data?.passes.length > 0
                             ? `${Math.min.apply(

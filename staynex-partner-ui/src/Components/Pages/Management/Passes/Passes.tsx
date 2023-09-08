@@ -141,8 +141,8 @@ const Passes = () => {
                     <hr className="linespace" />
                     <div className="offierinfo">
                       <h4>Perks</h4>
-                      {item?.perks?.map((index: any, i: any) => (
-                        <p key={i}>{index}</p>
+                      {item?.perks?.map((perks: string, i: number) => (
+                        <p key={i}>{perks}</p>
                       ))}
                     </div>
                     <h3>${item?.price}</h3>

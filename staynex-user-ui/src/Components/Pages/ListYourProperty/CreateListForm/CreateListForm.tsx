@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Form } from "react-bootstrap";
 import { useDispatch } from 'react-redux';
-import { Dispatch,  } from "react";
+import { Dispatch, } from "react";
 import { BlackTickIcon } from "../../../../Assets/Images/svgImgs/svgImgs";
 import CommonButton from "../../../Common/CommonButton/CommonButton";
 import InputCustom from "../../../Common/Inputs/InputCustom";
@@ -10,40 +10,42 @@ import * as Yup from "yup";
 import { callApiPostMethod } from "../../../../Redux/Actions/api.action";
 import { useFormik } from "formik";
 import { APIURL } from "../../../../Utils";
-
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
+import '../../../Common/Inputs/InputCustom.scss'
 const CreateListForm = () => {
   const dispatch: Dispatch<any> = useDispatch()
-    // return (
-    //     <div className='create_form'>
-    //         <div className='form_text'>
-    //             <h6>Create new listing</h6>
-    //             <p>Discover Switzerland’s best ski resorts and plan the perfect holiday</p>
-    //             <ul className='listing'>
-    //                 <li><BlackTickIcon /> <span>Official partner of Arsenal FC  </span></li>
-    //                 <li><BlackTickIcon /> <span>Access more than 100k travelers</span></li>
-    //             </ul>
-    //         </div>
-    //         <InputCustom
-    //             type="text"
-    //             placeholder="Bruno Fernandes"
-    //             name=""
-    //         />
-    //         <InputCustom
-    //             type="text"
-    //             placeholder="bruno@kunangkunang.com"
-    //             name=""
-    //         />
-    //         <InputCustom
-    //             type="tel"
-    //             name="phone"
-    //             // pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
-    //             placeholder="+65 122456849"
-    //         />
-    //         <p>By continuing, you agree to let Staynex email you regarding your property registration.</p>
-    //         <CommonButton title="Get started" className="blurclr-bg btn_size" />
-    //     </div>
-    // )
-// }
+  // return (
+  //     <div className='create_form'>
+  //         <div className='form_text'>
+  //             <h6>Create new listing</h6>
+  //             <p>Discover Switzerland’s best ski resorts and plan the perfect holiday</p>
+  //             <ul className='listing'>
+  //                 <li><BlackTickIcon /> <span>Official partner of Arsenal FC  </span></li>
+  //                 <li><BlackTickIcon /> <span>Access more than 100k travelers</span></li>
+  //             </ul>
+  //         </div>
+  //         <InputCustom
+  //             type="text"
+  //             placeholder="Bruno Fernandes"
+  //             name=""
+  //         />
+  //         <InputCustom
+  //             type="text"
+  //             placeholder="bruno@kunangkunang.com"
+  //             name=""
+  //         />
+  //         <InputCustom
+  //             type="tel"
+  //             name="phone"
+  //             // pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
+  //             placeholder="+65 122456849"
+  //         />
+  //         <p>By continuing, you agree to let Staynex email you regarding your property registration.</p>
+  //         <CommonButton title="Get started" className="blurclr-bg btn_size" />
+  //     </div>
+  // )
+  // }
 
   const loginSchema = Yup.object().shape({
     invite_name: Yup.string()
@@ -56,7 +58,8 @@ const CreateListForm = () => {
       .email("Please enter valid email")
       .required("This field is required")
       .matches(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i, "Please enter valid email"),
-      mobile_number: Yup.string().required("This field is required").min(8, 'Please enter valid contact number').max(15, 'Please enter valid contact number'),
+    mobile_number: Yup.string().required("This field is required")
+
   });
   const formik = useFormik({
     initialValues: {
@@ -66,15 +69,16 @@ const CreateListForm = () => {
     },
     validationSchema: loginSchema,
     onSubmit: async (values) => {
-        const dataToSend = {
-            invite_name: values?.invite_name,
-            email: values?.email,
-            mobile_number: "+62" + values?.mobile_number,
-        }
-        const result:any = await dispatch(callApiPostMethod(APIURL.PROPERTY_ADD_REQUEST, dataToSend, {}, true))
-        if(result && result?.statusCode === 201){
-            formik.resetForm();
-        }
+      const dataToSend = {
+        invite_name: values?.invite_name,
+        email: values?.email,
+        mobile_number:
+          values?.mobile_number,
+      }
+      const result: any = await dispatch(callApiPostMethod(APIURL.PROPERTY_ADD_REQUEST, dataToSend, {}, true))
+      if (result && result?.statusCode === 201) {
+        formik.resetForm();
+      }
     },
   });
   return (
@@ -93,7 +97,7 @@ const CreateListForm = () => {
           </li>
         </ul>
       </div>
-      <Form onSubmit={formik.handleSubmit}>
+      <Form onSubmit={formik.handleSubmit} className='list_form'>
         <InputCustom
           id="invite_name"
           name="invite_name"
@@ -128,21 +132,21 @@ const CreateListForm = () => {
             ) : null
           }
         />
-        <InputCustom
-          id="mobile_number"
-          name="mobile_number"
-          type="number"
-          placeholder="+62-876-87-8798"
-          onWheel={(e: any) => e.target.blur()}
-          onChange={formik.handleChange}
-          autoFocus={true}
+
+        <label className="form-label">
+          Mobile Number
+        </label>
+        <PhoneInput
+          country="us"
           value={formik.values.mobile_number}
-          error={
-            formik.errors.mobile_number && formik.touched.mobile_number ? (
-              <span>{formik.errors.mobile_number}</span>
-            ) : null
-          }
+          onChange={(mobile_number) => {
+            formik.setFieldValue('mobile_number', `+${mobile_number}`)
+          }}
+          enableSearch={true}
         />
+        <p className="error-msg" style={{ color: 'red' }}>
+          {formik.errors.mobile_number && formik.touched.mobile_number && formik.errors.mobile_number}
+        </p>
         <p>
           By continuing, you agree to let Staynex email you regarding your
           property registration.

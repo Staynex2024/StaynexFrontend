@@ -70,12 +70,10 @@ const Header = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [walletAddress])
 
-  console.log(walletAddress)
 
   // function to validate admin wallet address
   const validateAdmin = async () => {
     let owner = await dispatch(callContractGetMethod('owner', [], 'factory', true));
-    console.log(owner,walletAddress,'this is owner and walletAddress')
     if (owner.toLowerCase() !== walletAddress) {
       Swal.fire({
         icon: 'warning',
@@ -113,7 +111,7 @@ const Header = () => {
                 <div className="d-flex align-items-center justify-content-between">
                   <div className="admin_header_search d-flex align-items-center">
                     <label>ADMIN</label>
-                    <Form.Control type="text" placeholder="Search" />
+                    {/* <Form.Control type="text" placeholder="Search" /> */}
                   </div>
                   <span className="Mobile_toggleBtn" onClick={handleShow}>
                     <img src={menuToggle} alt="Menu" />
@@ -127,7 +125,7 @@ const Header = () => {
                   </>
                   <Dropdown align="end" className="Notification_Dropdown">
                     <Dropdown.Toggle variant="" id="dropdown-basic">
-                      <NotificationIcon />
+                      {/* <NotificationIcon /> */}
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                       {countrylist.map((data, i) => {

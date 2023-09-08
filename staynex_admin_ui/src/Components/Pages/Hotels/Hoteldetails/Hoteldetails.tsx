@@ -186,14 +186,14 @@ const Hoteldetails = () => {
               <Propertydetail data={data} handleAction={handleApproveReject} />
             </Tab>
             <Tab eventKey="passes" title="Passes">
-              <PropertyPass data={data} handleAction = {handleAction}/>
+              <PropertyPass data={data} handleAction={handleAction} />
             </Tab>
             <Tab eventKey="account" title="Account">
               <Account data={data} />
             </Tab>
-            <Tab eventKey="stats" title="Stats">
+            {/* <Tab eventKey="stats" title="Stats">
               <Stats />
-            </Tab>
+            </Tab> */}
           </Tabs>
         </div>
       </section>

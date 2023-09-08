@@ -12,6 +12,9 @@ export const APIURL: any = {
   GET_EXCHANGE_RATE: 'getExchangeRateList',
   BUY_PASS : 'buyPass',
   USER_PROFILE: 'profile',
+  USER_LOGOUT: 'logout',
+  CREATE_BOOKING: "booking/createBooking",
+  REDEEM_HISTORY: "getRedeemPassDetails",
 }
 
 export const RESPONSES: any = {

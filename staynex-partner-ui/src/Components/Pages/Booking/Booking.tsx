@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   CancelScheduleIcon,
   CheckcircleIcon,
@@ -21,10 +21,20 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import ConfirmbookingModal from './ConfirmbookingModal/ConfirmbookingModal'
 import DeclineBookingModal from './DeclineBookingModal/DeclineBookingModal'
+import { callApiGetMethod, callApiPostMethod } from '../../../Redux/Actions/api.action'
+import { APIURL } from '../../../Utils'
+import { useDispatch, useSelector } from 'react-redux'
+import CommonButton from '../../Common/CommonButton/CommonButton'
+import Swal from 'sweetalert2'
+import toaster from '../../Common/Toast'
 
 const Booking = () => {
   const [show, setShow] = useState(false)
   const [showdecline, setShowdecline] = useState(false)
+  const [bookingList, setBookingList] = useState<any[]>([])
+  const [checkStatus, setCheckStatus] = useState(false);
+  const dispatch = useDispatch<any>()
+  const walletAddress = useSelector((state: any) => state?.user?.walletAddress);
 
   const options = [
     { value: '1', label: '1' },
@@ -46,7 +56,6 @@ const Booking = () => {
     },
   })
   const fields = [
-    '',
     'Booking ID',
     'Customer Name',
     'Address',
@@ -55,109 +64,7 @@ const Booking = () => {
     'Check-in',
     'Check-out',
     'Booking Status',
-    '',
-  ]
-  const tabledata = [
-    {
-      customerid: 'DB24220',
-      customername: 'Kylee Arroyo',
-      address: '0x71c...985f',
-      sptype: 'SP7',
-      roomtype: 'Triple room',
-      checkin: '12 Feb 2023',
-      checkout: '13 Feb 2023',
-      bookingstatus: 'Confirmed',
-    },
-    {
-      customerid: 'DB24220',
-      customername: 'Kylee Arroyo',
-      address: '0x71c...985f',
-      sptype: 'SP7',
-      roomtype: 'Triple room',
-      checkin: '12 Feb 2023',
-      checkout: '13 Feb 2023',
-      bookingstatus: 'Action needed',
-    },
-    {
-      customerid: 'DB24220',
-      customername: 'Kylee Arroyo',
-      address: '0x71c...985f',
-      sptype: 'SP7',
-      roomtype: 'Triple room',
-      checkin: '12 Feb 2023',
-      checkout: '13 Feb 2023',
-      bookingstatus: 'Under review',
-    },
-    {
-      customerid: 'DB24220',
-      customername: 'Kylee Arroyo',
-      address: '0x71c...985f',
-      sptype: 'SP7',
-      roomtype: 'Triple room',
-      checkin: '12 Feb 2023',
-      checkout: '13 Feb 2023',
-      bookingstatus: 'Confirmed',
-    },
-    {
-      customerid: 'DB24220',
-      customername: 'Kylee Arroyo',
-      address: '0x71c...985f',
-      sptype: 'SP7',
-      roomtype: 'Triple room',
-      checkin: '12 Feb 2023',
-      checkout: '13 Feb 2023',
-      bookingstatus: 'Action needed',
-    },
-    {
-      customerid: 'DB24220',
-      customername: 'Kylee Arroyo',
-      address: '0x71c...985f',
-      sptype: 'SP7',
-      roomtype: 'Triple room',
-      checkin: '12 Feb 2023',
-      checkout: '13 Feb 2023',
-      bookingstatus: 'Confirmed',
-    },
-    {
-      customerid: 'DB24220',
-      customername: 'Kylee Arroyo',
-      address: '0x71c...985f',
-      sptype: 'SP7',
-      roomtype: 'Triple room',
-      checkin: '12 Feb 2023',
-      checkout: '13 Feb 2023',
-      bookingstatus: 'Confirmed',
-    },
-    {
-      customerid: 'DB24220',
-      customername: 'Kylee Arroyo',
-      address: '0x71c...985f',
-      sptype: 'SP7',
-      roomtype: 'Triple room',
-      checkin: '12 Feb 2023',
-      checkout: '13 Feb 2023',
-      bookingstatus: 'Action needed',
-    },
-    {
-      customerid: 'DB24220',
-      customername: 'Kylee Arroyo',
-      address: '0x71c...985f',
-      sptype: 'SP7',
-      roomtype: 'Triple room',
-      checkin: '12 Feb 2023',
-      checkout: '13 Feb 2023',
-      bookingstatus: 'Action needed',
-    },
-    {
-      customerid: 'DB24220',
-      customername: 'Kylee Arroyo',
-      address: '0x71c...985f',
-      sptype: 'SP7',
-      roomtype: 'Triple room',
-      checkin: '12 Feb 2023',
-      checkout: '13 Feb 2023',
-      bookingstatus: 'Confirmed',
-    },
+    'Action',
   ]
   const tabledroplist = [
     {
@@ -179,6 +86,43 @@ const Booking = () => {
     },
     { icondrop: <DeleteIcon />, name: 'Cancel Booking' },
   ]
+
+  useEffect( () => {
+    const retreiveVendorProperty = async () => {
+      const result = await dispatch(callApiGetMethod(APIURL.GET_BOOKING_LIST, {}, true, false))
+      if (result?.statusCode === 200) {
+        setBookingList(result?.data)
+        // dispatch(propertyDetails(result?.data))
+      } 
+    }
+    retreiveVendorProperty()
+  }, [checkStatus]); 
+
+
+  const handleAction = (item) => {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Accept!",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          setCheckStatus(true)
+          const dataToSend = {
+            "bookingId": item?.bookingId ,
+            "status": 'confirmed'
+          }
+          const result = dispatch(callApiPostMethod(APIURL.UPDATE_BOOKING_STATUS, dataToSend, {}, true));
+          if(result){
+            setCheckStatus(false)
+          }
+        }
+      });
+    }
+  
   return (
     <>
       <section className="Booking_Pages">
@@ -231,20 +175,10 @@ const Booking = () => {
                   <label>of 102</label>
                 </div>
                 <CustomTable fields={fields}>
-                  {tabledata.map((item, i) => (
+                  {bookingList.map((item, i) => (
                     <tr key={i}>
-                      <td>
-                        <Form onSubmit={formik.handleSubmit}>
-                          <Checkbox
-                            id="pool"
-                            name="pool"
-                            onChange={formik.handleChange}
-                            value={formik.values.pool}
-                          />
-                        </Form>
-                      </td>
-                      <td>{item.customerid}</td>
-                      <td>{item.customername}</td>
+                      <td>{item.bookingId}</td>
+                      <td>{item.firstName + item?.lastName}</td>
                       <td>
                         <div className="copy_icon">
                           {item.address}{' '}
@@ -253,17 +187,15 @@ const Booking = () => {
                           </button>
                         </div>
                       </td>
-                      <td>{item.sptype}</td>
-                      <td>{item.roomtype}</td>
-                      <td>{item.checkin}</td>
-                      <td>{item.checkout}</td>
-                      <td>{item.bookingstatus}</td>
+                      <td>{item?.userPass?.pass?.name}</td>
+                      <td>{item.roomType ? item.roomType : '--'}</td>
+                      <td>{item.checkIn}</td>
+                      <td>{item.checkOut}</td>
+                      <td>{item.bookingStatus}</td>
                       <td>
                         <div className="d-flex align-items-center">
-                          <span className="checkIcon">
-                            <CheckcircleIcon />
-                          </span>
-                          <Dropdown className="table_Dropdown mx-4">
+
+                          {/* <Dropdown className="table_Dropdown mx-4">
                             <Dropdown.Toggle variant="" id="dropdown-basic">
                               <MoreIcon />
                             </Dropdown.Toggle>
@@ -282,77 +214,28 @@ const Booking = () => {
                                 )
                               })}
                             </Dropdown.Menu>
-                          </Dropdown>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </CustomTable>
-              </div>
-            </Tab.Pane>
-            <Tab.Pane eventKey="comfirmed">
-              <div className="booking_table">
-                <div className="pagination_select mb-4">
-                  <CustomSelect
-                    classgroup="select_pagi"
-                    label="Page"
-                    options={options}
-                  />
-                  <label>of 102</label>
-                </div>
-                <CustomTable fields={fields}>
-                  {tabledata.map((item, key) => (
-                    <tr key={key}>
-                      <td>
-                        <Form onSubmit={formik.handleSubmit}>
-                          <Checkbox
-                            id="pool"
-                            name="pool"
-                            onChange={formik.handleChange}
-                            value={formik.values.pool}
-                          />
-                        </Form>
-                      </td>
-                      <td>{item.customerid}</td>
-                      <td>{item.customername}</td>
-                      <td>
-                        <div className="copy_icon">
-                          {item.address}{' '}
-                          <button>
-                            <CopyIcon />
-                          </button>
-                        </div>
-                      </td>
-                      <td>{item.sptype}</td>
-                      <td>{item.roomtype}</td>
-                      <td>{item.checkin}</td>
-                      <td>{item.checkout}</td>
-                      <td>{item.bookingstatus}</td>
-                      <td>
-                        <div className="d-flex align-items-center">
-                          <span className="checkIcon">
-                            <CheckcircleIcon />
+                          </Dropdown> */}
+                             <div className="tables_btn">
+                        {item?.bookingStatus === "pending" ? (
+                          <>
+                            <CommonButton
+                              title="Set Nights"
+                              className="btncreate"
+                              onClick={() => handleAction(item)}
+                            />
+                          </>
+                        ) : (
+                          <span
+                            className="fa fa-check"
+                            style={{
+                              marginLeft: "8px",
+                              color: "green",
+                            }}
+                          >
+                            Accepted
                           </span>
-                          <Dropdown className="table_Dropdown mx-4">
-                            <Dropdown.Toggle variant="" id="dropdown-basic">
-                              <MoreIcon />
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu>
-                              {tabledroplist.map((data, i) => {
-                                return (
-                                  <Dropdown.Item key={i} href={data.to}>
-                                    <div
-                                      className="table_drop d-flex"
-                                      onClick={data.onclick}
-                                    >
-                                      {data.icondrop}
-                                      <span>{data.name}</span>
-                                    </div>
-                                  </Dropdown.Item>
-                                )
-                              })}
-                            </Dropdown.Menu>
-                          </Dropdown>
+                        )}
+                      </div>
                         </div>
                       </td>
                     </tr>
@@ -360,146 +243,7 @@ const Booking = () => {
                 </CustomTable>
               </div>
             </Tab.Pane>
-            <Tab.Pane eventKey="under">
-              <div className="booking_table">
-                <div className="pagination_select mb-4">
-                  <CustomSelect
-                    classgroup="select_pagi"
-                    label="Page"
-                    options={options}
-                  />
-                  <label>of 102</label>
-                </div>
-                <CustomTable fields={fields}>
-                  {tabledata.map((item, index) => (
-                    <tr key={index}>
-                      <td>
-                        <Form onSubmit={formik.handleSubmit}>
-                          <Checkbox
-                            id="pool"
-                            name="pool"
-                            onChange={formik.handleChange}
-                            value={formik.values.pool}
-                          />
-                        </Form>
-                      </td>
-                      <td>{item.customerid}</td>
-                      <td>{item.customername}</td>
-                      <td>
-                        <div className="copy_icon">
-                          {item.address}{' '}
-                          <button>
-                            <CopyIcon />
-                          </button>
-                        </div>
-                      </td>
-                      <td>{item.sptype}</td>
-                      <td>{item.roomtype}</td>
-                      <td>{item.checkin}</td>
-                      <td>{item.checkout}</td>
-                      <td>{item.bookingstatus}</td>
-                      <td>
-                        <div className="d-flex align-items-center">
-                          <span className="checkIcon">
-                            <CheckcircleIcon />
-                          </span>
-                          <Dropdown className="table_Dropdown mx-4">
-                            <Dropdown.Toggle variant="" id="dropdown-basic">
-                              <MoreIcon />
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu>
-                              {tabledroplist.map((data, i) => {
-                                return (
-                                  <Dropdown.Item key={i} href={data.to}>
-                                    <div
-                                      className="table_drop d-flex"
-                                      onClick={data.onclick}
-                                    >
-                                      {data.icondrop}
-                                      <span>{data.name}</span>
-                                    </div>
-                                  </Dropdown.Item>
-                                )
-                              })}
-                            </Dropdown.Menu>
-                          </Dropdown>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </CustomTable>
-              </div>
-            </Tab.Pane>
-            <Tab.Pane eventKey="canceled">
-              <div className="booking_table">
-                <div className="pagination_select mb-4">
-                  <CustomSelect
-                    classgroup="select_pagi"
-                    label="Page"
-                    options={options}
-                  />
-                  <label>of 102</label>
-                </div>
-                <CustomTable fields={fields}>
-                  {tabledata.map((item, index) => (
-                    <tr key={index}>
-                      <td>
-                        <Form onSubmit={formik.handleSubmit}>
-                          <Checkbox
-                            id="pool"
-                            name="pool"
-                            onChange={formik.handleChange}
-                            value={formik.values.pool}
-                          />
-                        </Form>
-                      </td>
-                      <td>{item.customerid}</td>
-                      <td>{item.customername}</td>
-                      <td>
-                        <div className="copy_icon">
-                          {item.address}{' '}
-                          <button>
-                            <CopyIcon />
-                          </button>
-                        </div>
-                      </td>
-                      <td>{item.sptype}</td>
-                      <td>{item.roomtype}</td>
-                      <td>{item.checkin}</td>
-                      <td>{item.checkout}</td>
-                      <td>{item.bookingstatus}</td>
-                      <td>
-                        <div className="d-flex align-items-center">
-                          <span className="checkIcon">
-                            <CheckcircleIcon />
-                          </span>
-                          <Dropdown className="table_Dropdown mx-4">
-                            <Dropdown.Toggle variant="" id="dropdown-basic">
-                              <MoreIcon />
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu>
-                              {tabledroplist.map((data, i) => {
-                                return (
-                                  <Dropdown.Item key={i} href={data.to}>
-                                    <div
-                                      className="table_drop d-flex"
-                                      onClick={data.onclick}
-                                    >
-                                      {data.icondrop}
-                                      <span>{data.name}</span>
-                                    </div>
-                                  </Dropdown.Item>
-                                )
-                              })}
-                            </Dropdown.Menu>
-                          </Dropdown>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </CustomTable>
-              </div>
-            </Tab.Pane>
+            
           </Tab.Content>
         </Tab.Container>
       </section>

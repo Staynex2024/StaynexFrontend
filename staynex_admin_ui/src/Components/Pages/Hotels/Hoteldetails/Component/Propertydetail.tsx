@@ -197,7 +197,7 @@ const Propertydetail = ({ data, handleAction }: any) => {
                       )}
                   </Row>
                 </Col>
-                <Col lg={12}>
+                <Col md={8} lg={6} xl={5}>
                   <div className="upload_image">
                     {data?.images && data?.images.length ? (
                       <>

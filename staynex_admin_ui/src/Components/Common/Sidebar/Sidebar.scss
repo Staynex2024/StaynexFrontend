@@ -99,6 +99,21 @@
                         }
                     }
                 }
+
+                small {
+                    display: flex;
+                    font-size: 1.2rem;
+                    justify-content: right;
+                    width: 100%;
+                    position: absolute;
+                    top: 3px;
+                    right: 10px;
+
+                    &::before {
+                        content: '';
+                        animation: animate infinite 8s;
+                    }
+                }
             }
         }
     }
@@ -134,5 +149,51 @@ body {
                 z-index: 9991;
             }
         }
+    }
+}
+
+@keyframes animate {
+    0% {
+        content: 'C'
+    }
+
+    10% {
+        content: 'Co'
+    }
+
+    20% {
+        content: 'Com'
+    }
+
+    30% {
+        content: 'Comi'
+    }
+
+    40% {
+        content: 'Comin'
+    }
+
+    50% {
+        content: 'Coming'
+    }
+
+    60% {
+        content: 'Coming S'
+    }
+
+    70% {
+        content: 'Coming So'
+    }
+
+    80% {
+        content: 'Coming Soo'
+    }
+
+    90% {
+        content: 'Coming Soon'
+    }
+
+    100% {
+        content: 'Coming Soon!'
     }
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Accordion, Col, Form, Row } from 'react-bootstrap';
 import CommonHeading from '../../Common/CommonHeading/CommonHeading';
 import { useFormik } from 'formik';
@@ -8,6 +8,7 @@ import InputCustom from '../../Common/Inputs/InputCustom';
 import { SecureIcon } from '../../../Assets/Images/svgImgs/svgImgs';
 import Switch from '../../Common/FormInputs/Switch';
 import CommonButton from '../../Common/CommonButton/CommonButton';
+import ResetModal from '../../Common/Reset/ResetModal';
 
 const Settings = () => {
 
@@ -28,6 +29,12 @@ const Settings = () => {
             // await dispatch(loginAdmin(values));
         },
     });
+
+
+    const [show, setShow] = useState(false)
+    const [showResetModal, setShowResetModal] = useState(false)
+    const handleClose = () => setShow(false)
+    const handleShow = () => setShow(true)
     return (
         <>
             <section className='settings'>
@@ -37,7 +44,7 @@ const Settings = () => {
                 <div className='settings_section'>
                     <Form onSubmit={formik.handleSubmit}>
                         <Accordion defaultActiveKey="0">
-                            <Accordion.Item eventKey="0">
+                            {/* <Accordion.Item eventKey="0">
                                 <Accordion.Header>General</Accordion.Header>
                                 <Accordion.Body>
                                     <div className='fieldscontent'>
@@ -105,8 +112,8 @@ const Settings = () => {
                                         </Row>
                                     </div>
                                 </Accordion.Body>
-                            </Accordion.Item>
-                            <Accordion.Item eventKey="1">
+                            </Accordion.Item> */}
+                            {/* <Accordion.Item eventKey="1">
                                 <Accordion.Header>Email</Accordion.Header>
                                 <Accordion.Body>
                                     <div className='fieldscontent'>
@@ -142,14 +149,14 @@ const Settings = () => {
                                         </Row>
                                     </div>
                                 </Accordion.Body>
-                            </Accordion.Item>
+                            </Accordion.Item> */}
                             <Accordion.Item eventKey="2">
                                 <Accordion.Header>Security</Accordion.Header>
                                 <Accordion.Body>
                                     <div className='security'>
-                                        <h5>These settings are helps you keep your account secure. <span><SecureIcon /></span></h5>
+                                        {/* <h5>These settings are helps you keep your account secure. <span><SecureIcon /></span></h5> */}
                                         <ul className='security_listing'>
-                                            <li>
+                                            {/* <li>
                                                 <div className='text_sec'>
                                                     <h6>Save my Activity Logs</h6>
                                                     <p>You can save your all activity logs including unusual activity detected.</p>
@@ -161,8 +168,8 @@ const Settings = () => {
                                                         name=''
                                                     />
                                                 </div>
-                                            </li>
-                                            <li>
+                                            </li> */}
+                                            {/* <li>
                                                 <div className='text_sec'>
                                                     <h6>Turn on login alerts <span className='enable'>Enabled</span></h6>
                                                     <p>Be notified if anyone logs in account from unknown or new device</p>
@@ -170,26 +177,32 @@ const Settings = () => {
                                                 <div className='btn_section'>
                                                     <CommonButton title="Disable" disabled />
                                                 </div>
-                                            </li>
+                                            </li> */}
                                             <li>
                                                 <div className='text_sec'>
                                                     <h6>Change Password</h6>
                                                     <p>Set a unique password to protect your account</p>
                                                 </div>
                                                 <div className='btn_section'>
-                                                    <CommonButton title="Change Password" className='dark-greenbtn' />
+                                                    <CommonButton title="Change Password" className='dark-greenbtn' onClick={() => setShowResetModal(true)} />
                                                 </div>
+
+                                                <ResetModal
+                                                    showResetModal={showResetModal}
+                                                    handleClose={() => setShowResetModal(false)}
+                                                />
+
                                             </li>
                                         </ul>
                                     </div>
                                 </Accordion.Body>
                             </Accordion.Item>
-                            <Accordion.Item eventKey="3">
+                            {/* <Accordion.Item eventKey="3">
                                 <Accordion.Header>Account Activity</Accordion.Header>
                                 <Accordion.Body>
-                                    
+
                                 </Accordion.Body>
-                            </Accordion.Item>
+                            </Accordion.Item> */}
                         </Accordion>
                     </Form>
                 </div>

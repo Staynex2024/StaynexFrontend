@@ -97,7 +97,7 @@ const ListingCard = ({ data }: any) => {
                           <span>{data?.rooms?.total} bedrooms</span>
                         </li>
                         <li>
-                          <BathroomIcon /> <span>2 bathrooms</span>
+                          <BathroomIcon /> <span>{data?.rooms?.bathroom} bathrooms</span>
                         </li>
                         <li>
                           <>

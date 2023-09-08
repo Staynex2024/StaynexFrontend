@@ -19,6 +19,7 @@ const Commoncard = ({
   price,
   GetIndividualData,
   eventaddress,
+  bathroom,
   events,
 }: any) => {
   let Country = require('country-state-city').Country
@@ -55,7 +56,7 @@ const Commoncard = ({
             <p>
               <>
                 <BathroomIcon />
-                &nbsp;1 Bathroom
+                &nbsp;{bathroom} Bathroom
               </>
             </p>
             <p>

@@ -88,7 +88,7 @@ const ProfilePass = () => {
                 <YourPassesCard customerData={customerData} />
               </Tab.Pane>
               <Tab.Pane eventKey="history">
-                <RedeemHistoryCard />
+                <RedeemHistoryCard customerData={customerData}/>
               </Tab.Pane>
               <Tab.Pane eventKey="account">
                 <MyAccountCard customerData={customerData} />

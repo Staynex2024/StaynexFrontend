@@ -21,8 +21,8 @@ const FavoriteDestinations = () => {
     // const favDestination: any = FavouriteDestination
 
     const settings = {
-        dots: false,
-        arrows: true,
+        dots: true,
+        arrows: false,
         infinite: true,
         centerMode: true,
         centerPadding: '200px',

@@ -27,17 +27,19 @@ const UpdateProperty = () => {
   const propertyDetails: any = useSelector(
     (state: any) => state.user?.propertyDetails.property[0]
   );
+  // console.log("propertyDetails", propertyDetails);
 
 
   const userDetails: any = useSelector(
     (state: any) => state.user?.propertyDetails
   );
+  // console.log("userDetails", userDetails);
+  console.log("propertyDetails?.images", propertyDetails?.images);
 
   const [fileArray, setFileArray] = useState([]);
   const [uploadFile, setUploadFile] = useState([]);
   const [bedroomSize, setBedroomSize] = useState<any>(propertyDetails.rooms?.sizes);
   const [uplaodData, setUplaodData] = useState<any>([])
-
   let Country = require("country-state-city").Country;
   let State = require("country-state-city").State;
 
@@ -116,6 +118,8 @@ const UpdateProperty = () => {
       const res: any = await dispatch(
         callApiPostMethod(APIURL.VENDOR_UPDATE_PROPERTY, dataToSend, {}, true)
       );
+      // console.log("resssssssssssssss", res);
+
       if (res?.statusCode === 201) {
         navigate('/auth/hotel-details')
       }
@@ -133,8 +137,7 @@ const UpdateProperty = () => {
   useEffect(() => {
     setFileArray(propertyDetails?.images)
   }, [])
-
-
+  console.log("FileArray", fileArray);
 
   const uploadMultipleFiles = async (e: any) => {
     let formData = new FormData()
@@ -146,10 +149,13 @@ const UpdateProperty = () => {
       callApiPostMethod(APIURL.VENDOR_UPLOAD, formData, {}, true),
     )
 
+    // console.log("res", res);
     setUplaodData([...uplaodData, res?.data])
+    console.log("uplaodDatasssssss", uplaodData);
     const uploadedFiles = Array.from(e.target.files);
-    const filteredFiles = uploadedFiles.filter((file: any) => {
+    console.log("uploadedFiles", uploadedFiles);
 
+    const filteredFiles = uploadedFiles.filter((file: any) => {
       // Check if the file already exists in the uploadFile array based on its name
       const existingFile = uploadFile.find(
         (existing: any) => existing.name === file.name

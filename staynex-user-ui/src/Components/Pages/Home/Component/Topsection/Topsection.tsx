@@ -61,7 +61,7 @@ const Topsection = () => {
                 setSelectedLatLong={setSelectedLatLong}
                 placeholder={"Search anywhere"}
               />
-              <ul className="listinghotel">
+              {/* <ul className="listinghotel">
                 <li>
                   <NightshelterIcon /> Villas
                 </li>
@@ -74,7 +74,7 @@ const Topsection = () => {
                 <li>
                   <SellIcon /> {">$3,500"}
                 </li>
-              </ul>
+              </ul> */}
             </div>
             <button onClick={handleGetAllPropertyList}>
               <SearchwhiteIcon />

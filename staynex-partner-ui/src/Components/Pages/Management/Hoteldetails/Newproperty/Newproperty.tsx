@@ -22,21 +22,21 @@ import { APIURL } from "../../../../../Utils";
 import NewPropertyValidation from "./NewPropertyValidation";
 import CommonHeading from "../../../../Common/CommonHeading/CommonHeading";
 import LocationPicker from "../../../../Common/LocationPicker/LocationPicker";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 const Newproperty = () => {
-  const dispatch: any = useDispatch()
+  const dispatch: any = useDispatch();
   const userDetails: any = useSelector<any>(
-    (state: any) => state.user.userDetails,
-  )
+    (state: any) => state.user.userDetails
+  );
 
-  const [fileArray, setFileArray] = useState([])
-  const [uploadFile, setUploadFile] = useState([])
-  const [draftKey, setDraftKey] = useState(false)
-  const [sizeInput, setSizeInput] = useState(false)
-  const [bedroomSize, setBedroomSize] = useState<any>([])
-  const [selectedLatLong, setSelectedLatLong] = useState<any>({})
-  const [uplaodData, setUplaodData] = useState<any>([])
+  const [fileArray, setFileArray] = useState([]);
+  const [uploadFile, setUploadFile] = useState([]);
+  const [draftKey, setDraftKey] = useState(false);
+  const [sizeInput, setSizeInput] = useState(false);
+  const [bedroomSize, setBedroomSize] = useState<any>([]);
+  const [selectedLatLong, setSelectedLatLong] = useState<any>({});
+  const [uplaodData, setUplaodData] = useState<any>([]);
 
   let Country = require("country-state-city").Country;
   let State = require("country-state-city").State;
@@ -45,17 +45,19 @@ const Newproperty = () => {
 
   const formik = useFormik({
     initialValues: {
-      name: '',
-      address: '',
-      country: '',
-      state: '',
-      latitude: '',
-      longitude: '',
-      description: '',
-      propertyType: '',
-      bedrooms: '',
-      images: '',
+      name: "",
+      address: "",
+      country: "",
+      state: "",
+      latitude: "",
+      longitude: "",
+      description: "",
+      propertyType: "",
+      bathroom: "",
+      bedrooms: "",
+      images: "",
       size: bedroomSize,
+      // roomType: bedroomSize,
       pool: false,
       workspace: false,
       ac: false,
@@ -64,9 +66,9 @@ const Newproperty = () => {
       pet: false,
       wifi: false,
       washer: false,
-      email: '',
-      contact: '',
-      website: '',
+      email: "",
+      contact: "",
+      website: "",
     },
     validationSchema: NewPropertyValidation,
     onSubmit: async (values) => {
@@ -83,9 +85,10 @@ const Newproperty = () => {
         rooms: {
           total: values?.bedrooms,
           sizes: bedroomSize,
+          bathroom: values?.bathroom,
         },
         email: values?.email,
-        mobile_number: '+62' + values?.contact,
+        mobile_number: "+62" + values?.contact,
         outdoor_pool: values?.pool,
         workspace: values?.workspace,
         pet_allowed: values?.pet,
@@ -98,14 +101,15 @@ const Newproperty = () => {
         images: uplaodData,
 
         website: values?.website,
-        uu_id: uniqueId.replace(/-/g, "")
+        uu_id: uniqueId.replace(/-/g, ""),
       };
       const res: any = await dispatch(
-        callApiPostMethod(APIURL.VENDOR_ADD_PROPERTY, dataToSend, {}, true),
-      )
+        callApiPostMethod(APIURL.VENDOR_ADD_PROPERTY, dataToSend, {}, true)
+      );
       if (res.statusCode === 201) {
-        navigate('/auth/hotel-details')
+        navigate("/auth/hotel-details");
       }
+
       // const result = await dispatch(addProperty(dataToSend))
       // if (result?.statusCode === 201) {
       //   toaster.success(result?.message)
@@ -114,79 +118,110 @@ const Newproperty = () => {
       //   toaster.error(result?.message)
       // }
     },
-  })
+  });
 
   const options = [
-    { value: 'resort', label: 'Resort' },
-    { value: 'villa', label: 'Villa and Mansion' },
-    { value: 'hotel', label: 'Hotel' },
-    { value: 'boutique', label: 'Boutique Hotel' },
-  ]
-  const uploadMultipleFiles = async (e: any) => {
-    let formData = new FormData()
-    let fileData = e.target.files[0]
-    const name = e.target.value.split(`\\`)
-    const fileName = name[name.length - 1]
-    formData.append('file', fileData, fileName)
-    const res: any = await dispatch(
-      callApiPostMethod(APIURL.VENDOR_UPLOAD, formData, {}, true),
-    )
-    setUplaodData([...uplaodData, res?.data])
+    { value: "resort", label: "Resort" },
+    { value: "villa", label: "Villa and Mansion" },
+    { value: "hotel", label: "Hotel" },
+    { value: "boutique", label: "Boutique Hotel" },
+  ];
 
-    const uploadedFiles: any = Array.from(e.target.files)
+  const room_type_options = [
+    { value: "Deluxe", label: "Deluxe" },
+    { value: "King Size", label: "King Size" },
+    { value: "Queen Size", label: "Queen Size" },
+    { value: "Double Bed", label: "Double Bed" },
+  ];
+
+  const uploadMultipleFiles = async (e: any) => {
+    let formData = new FormData();
+    let fileData = e.target.files[0];
+    const name = e.target.value.split(`\\`);
+    const fileName = name[name.length - 1];
+    formData.append("file", fileData, fileName);
+    const res: any = await dispatch(
+      callApiPostMethod(APIURL.VENDOR_UPLOAD, formData, {}, true)
+    );
+    setUplaodData([...uplaodData, res?.data]);
+
+    const uploadedFiles: any = Array.from(e.target.files);
     const filteredFiles = uploadedFiles.filter((file: any) => {
       // Check if the file already exists in the uploadFile array based on its name
       const existingFile = uploadFile.find(
-        (existing: any) => existing.name === file.name,
-      )
-      return !existingFile && file.size < 2000000 // Only add if it's not a duplicate and size is less than 2 MB
-    })
+        (existing: any) => existing.name === file.name
+      );
+      return !existingFile && file.size < 2000000; // Only add if it's not a duplicate and size is less than 2 MB
+    });
     if (filteredFiles.length > 0) {
-      setUploadFile((prevFile): any => [...prevFile, ...filteredFiles])
+      setUploadFile((prevFile): any => [...prevFile, ...filteredFiles]);
       const fileURLs: any = filteredFiles.map((file: any) =>
-        URL.createObjectURL(file),
-      )
-      setFileArray((prevFileArray): any => [...prevFileArray, ...fileURLs])
+        URL.createObjectURL(file)
+      );
+      setFileArray((prevFileArray): any => [...prevFileArray, ...fileURLs]);
     } else {
-      toaster.error('Files must be less than 2 MB and not duplicates.')
+      toaster.error("Files must be less than 2 MB and not duplicates.");
     }
-  }
+  };
 
   useEffect(() => {
-    formik.setFieldValue('images', uploadFile)
+    formik.setFieldValue("images", uploadFile);
     // eslint-disable-next-line
-  }, [formik.values.images, uploadFile])
+  }, [formik.values.images, uploadFile]);
 
   const uploadFiles = (e: any) => {
-    e.preventDefault()
-  }
+    e.preventDefault();
+  };
 
-  const numberOfBedrooms = parseInt(formik.values.bedrooms)
-  const bedroomArray: any = Array.from({ length: numberOfBedrooms })
+  const numberOfBedrooms = parseInt(formik.values.bedrooms);
+  const bedroomArray: undefined[] = Array.from({ length: numberOfBedrooms });
 
-  const handleSizes = (e: any, ind: any) => {
-    const newBedroomSize = [...bedroomSize]
-    newBedroomSize[ind] = { [e.target.name]: e.target.value }
-    setBedroomSize(newBedroomSize)
+  const handleSizes = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    ind: number
+  ) => {
+    const newBedroomSize = [...bedroomSize];
+  
+    if (!newBedroomSize[ind]) {
+      newBedroomSize[ind] = {}; // Create an empty object if it doesn't exist
+    }
+  
+    newBedroomSize[ind][e.target.name] = e.target.value; // Modify the existing object
+  
+    setBedroomSize(newBedroomSize);
+    formik.setFieldValue(`room_size_${ind + 1}`, e.target.value);
+  };
+  
 
-    // Assuming `formik` is a reference to your Formik instance
-    formik.setFieldValue(`room_${ind + 1}`, e.target.value)
-  }
+  const handleType = (e: any, ind: number) => {
+    const newBedroomSize = [...bedroomSize];
+  
+    if (!newBedroomSize[ind]) {
+      newBedroomSize[ind] = {}; // Create an empty object if it doesn't exist
+    }
+  
+    newBedroomSize[ind][`room_type_${ind + 1}`] = e.value;
+  
+    setBedroomSize(newBedroomSize);
+    formik.setFieldValue(`room_type_${ind + 1}`, e.value);
+  };
+  
+
 
   useEffect(() => {
     if (selectedLatLong.lat && selectedLatLong?.lon) {
-      formik.setFieldValue('longitude', selectedLatLong?.lon)
-      formik.setFieldValue('latitude', selectedLatLong?.lat)
+      formik.setFieldValue("longitude", selectedLatLong?.lon);
+      formik.setFieldValue("latitude", selectedLatLong?.lat);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedLatLong])
+  }, [selectedLatLong]);
 
   //  For formik validation , will do later do not remove useEffect
   useEffect(() => {
-    let len = Array.from({ length: parseInt(formik.values.bedrooms) })
+    let len = Array.from({ length: parseInt(formik.values.bedrooms) });
     len.map((element, index) => {
-      formik.setFieldError(`room_${index + 1}`, 'Required')
-    })
+      formik.setFieldError(`room_size_${index + 1}`, "Required");
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formik.values]);
 
@@ -218,7 +253,7 @@ const Newproperty = () => {
                     type="text"
                     onChange={(event: any) => {
                       if (/^([A-Za-z ]|)+$/.test(event.target.value)) {
-                        formik.handleChange(event)
+                        formik.handleChange(event);
                       }
                     }}
                     maxLength={25}
@@ -243,13 +278,13 @@ const Newproperty = () => {
                           onChange={(e) => formik.handleChange(e)}
                           value={formik.values.country}
                         >
-                          <option value={''}>{'Select country'}</option>
+                          <option value={""}>{"Select country"}</option>
                           {Country.getAllCountries().map(
                             (data: any, index: any) => (
                               <option value={data.isoCode} key={index}>
                                 {data.name}
                               </option>
-                            ),
+                            )
                           )}
                         </Form.Control>
                         {formik.errors.country && formik.touched.country ? (
@@ -273,13 +308,13 @@ const Newproperty = () => {
                           onChange={(e) => formik.handleChange(e)}
                           value={formik.values.state}
                         >
-                          <option value={''}>{'Select State'}</option>
+                          <option value={""}>{"Select State"}</option>
                           {State.getStatesOfCountry(formik.values.country).map(
                             (data: any, index: any) => (
                               <option value={data.isoCode} key={index}>
                                 {data.name}
                               </option>
-                            ),
+                            )
                           )}
                         </Form.Control>
                         {formik.errors.state && formik.touched.state ? (
@@ -329,12 +364,12 @@ const Newproperty = () => {
                         onChange={formik.handleChange}
                         autoFocus={true}
                         value={formik.values.longitude}
-                      // error={
-                      //   formik.errors.longitude &&
-                      //   formik.touched.longitude ? (
-                      //     <span>{formik.errors.longitude}</span>
-                      //   ) : null
-                      // }
+                        // error={
+                        //   formik.errors.longitude &&
+                        //   formik.touched.longitude ? (
+                        //     <span>{formik.errors.longitude}</span>
+                        //   ) : null
+                        // }
                       />
                     </Col>
                     <Col lg={6} md={6}>
@@ -348,11 +383,11 @@ const Newproperty = () => {
                         onChange={formik.handleChange}
                         autoFocus={true}
                         value={formik.values.latitude}
-                      // error={
-                      //   formik.errors.latitude && formik.touched.latitude ? (
-                      //     <span>{formik.errors.latitude}</span>
-                      //   ) : null
-                      // }
+                        // error={
+                        //   formik.errors.latitude && formik.touched.latitude ? (
+                        //     <span>{formik.errors.latitude}</span>
+                        //   ) : null
+                        // }
                       />
                     </Col>
                   </Row>
@@ -369,7 +404,7 @@ const Newproperty = () => {
                     value={formik.values.description}
                     error={
                       formik.errors.description &&
-                        formik.touched.description ? (
+                      formik.touched.description ? (
                         <span>{formik.errors.description}</span>
                       ) : null
                     }
@@ -381,17 +416,35 @@ const Newproperty = () => {
                     classgroup="mb-44"
                     options={options}
                     onChange={(option: any) =>
-                      formik.setFieldValue('propertyType', option.value)
+                      formik.setFieldValue("propertyType", option.value)
                     }
-                    name={'propertyType'}
+                    name={"propertyType"}
                     placeholder="Select"
                     isSearchable={false}
                     error={
                       formik.errors.propertyType &&
-                        formik.touched.propertyType ? (
+                      formik.touched.propertyType ? (
                         <span className="error-msg">
                           {formik.errors.propertyType}
                         </span>
+                      ) : null
+                    }
+                  />
+                </Col>
+                <Col lg={4} md={6}>
+                  <InputCustom
+                    label="Bathroom"
+                    className="mb-44"
+                    placeholder="Bathroom"
+                    id="bathroom"
+                    name="bathroom"
+                    type="number"
+                    onChange={formik.handleChange}
+                    // autoFocus={true}
+                    value={formik.values.bathroom}
+                    error={
+                      formik.errors.bathroom && formik.touched.bathroom ? (
+                        <span>{formik.errors.bathroom}</span>
                       ) : null
                     }
                   />
@@ -405,8 +458,8 @@ const Newproperty = () => {
                     name="bedrooms"
                     onChange={(event) => {
                       if (/^\d*(\.\d{0,8})?$/.test(event.target.value)) {
-                        formik.handleChange(event)
-                        setSizeInput(!sizeInput)
+                        formik.handleChange(event);
+                        setSizeInput(!sizeInput);
                       }
                     }}
                     type="number"
@@ -424,76 +477,67 @@ const Newproperty = () => {
                   />
                 </Col>
 
-                {/* {formik.values.bedrooms ? (
-                <Col lg={4} md={6}>
-                  <InputCustom
-                    label="bedrooms (s)"
-                    className="mb-44"
-                    placeholder="Enter bedrooms (s)"
-                    id="bedrooms"
-                    name="bedrooms"
-                    onChange={(event) => {
-                      if (/^\d*(\.\d{0,8})?$/.test(event.target.value)) {
-                        formik.handleChange(event);
-                      }
-                    }}
-                    type="number"
-                    onWheel={(e: any) => e.target.blur()}
-                    min={1}
-                    maxLength={3}
-                    autoFocus={true}
-                    value={formik.values.bedrooms}
-                    error={
-                      formik.errors.bedrooms && formik.touched.bedrooms ? (
-                        <span>{formik.errors.bedrooms}</span>
-                      ) : null
-                    }
-                  />
-                </Col>
-              ) : null} */}
-
-                {/* {formik.values.bedrooms ? (
-                  <Col lg={4} md={6}>
-                    {" "}
-                    <CommonButton
-                      title="Add sizes"
-                      type="button"
-                      onClick={() => {
-                        setSizeInput(!sizeInput);
-                      }}
-                    />
-                  </Col>
-                ) : null} */}
-
                 {formik.values.bedrooms && sizeInput
                   ? bedroomArray.map((e: any, ind: any) => {
-                    return (
-                      <Col lg={4} md={6} key={ind}>
-                        <InputCustom
-                          label={`Room ${ind + 1} Size (sqft)`}
-                          className="mb-44"
-                          placeholder="Enter Size (sqft)"
-                          id={`room_${ind + 1}`}
-                          name={`room_${ind + 1}`}
-                          type="number"
-                          min={4}
-                          maxLength={6}
-                          onWheel={(e: any) => e.target.blur()}
-                          onChange={(e) => handleSizes(e, ind)}
-                          autoFocus={true}
-                          value={formik.values[`room_${ind + 1}`]}
-                          error={
-                            formik.errors[`room_${ind + 1}`] &&
-                              formik.touched[`room_${ind + 1}`] ? (
-                              <span>{formik.errors[`room_${ind + 1}`]}</span>
-                            ) : null
-                          }
-                        />
-                      </Col>
-                    )
-                  })
-                  : null}
+                      return (
+                        <>
+                          <Row>
+                            <Col lg={4} md={6}>
+                              <CustomSelect
+                                label={`Room Type ${ind + 1}`}
+                                classgroup="mb-44"
+                                options={room_type_options}
+                                // onChange={(option: any) =>
+                                //   formik.setFieldValue(
+                                //     "roomType",
+                                //     option.value
+                                //   )
+                                // }
+                                onChange={(e) => handleType(e, ind)}
+                                // id={`room_type_${ind + 1}`}
+                                name={`room_type_${ind + 1}`}
+                                placeholder="Select"
+                                isSearchable={false}
+                                error={
+                                  formik.errors[`room_type_${ind + 1}`] &&
+                                  formik.touched[`room_type_${ind + 1}`] ? (
+                                    <span>
+                                      {formik.errors[`room_type_${ind + 1}`]}
+                                    </span>
+                                  ) : null
+                                }
+                              />
+                            </Col>
 
+                            <Col lg={4} md={6} key={ind}>
+                              <InputCustom
+                                label={`Room ${ind + 1} Size (sqft)`}
+                                className="mb-44"
+                                placeholder="Enter Size (sqft)"
+                                id={`room_size_${ind + 1}`}
+                                name={`room_size_${ind + 1}`}
+                                type="number"
+                                min={4}
+                                maxLength={6}
+                                onWheel={(e: any) => e.target.blur()}
+                                onChange={(e) => handleSizes(e, ind)}
+                                autoFocus={true}
+                                value={formik.values[`room_size_${ind + 1}`]}
+                                error={
+                                  formik.errors[`room_size_${ind + 1}`] &&
+                                  formik.touched[`room_size_${ind + 1}`] ? (
+                                    <span>
+                                      {formik.errors[`room_size_${ind + 1}`]}
+                                    </span>
+                                  ) : null
+                                }
+                              />
+                            </Col>
+                          </Row>
+                        </>
+                      );
+                    })
+                  : null}
                 <Col lg={12}>
                   <div className="upload_image">
                     <label className="form-label">Upload Images</label>
@@ -518,7 +562,7 @@ const Newproperty = () => {
                       </li>
                     </ul>
                     {formik.errors.images && formik.touched.images ? (
-                      <span className="error-message" style={{color: 'red'}}>
+                      <span className="error-message" style={{ color: "red" }}>
                         {formik.errors.images}
                       </span>
                     ) : null}
@@ -681,7 +725,7 @@ const Newproperty = () => {
                     onWheel={(e: any) => e.target.blur()}
                     onChange={(event) => {
                       if (/^\d*(\.\d{0,8})?$/.test(event.target.value)) {
-                        formik.handleChange(event)
+                        formik.handleChange(event);
                       }
                     }}
                     autoFocus={true}
@@ -702,7 +746,7 @@ const Newproperty = () => {
                     name="website"
                     type="text"
                     onChange={(event) => {
-                      formik.handleChange(event)
+                      formik.handleChange(event);
                     }}
                     autoFocus={true}
                     value={formik.values.website}
@@ -738,7 +782,7 @@ const Newproperty = () => {
         </section>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Newproperty
+export default Newproperty;

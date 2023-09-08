@@ -1,104 +1,102 @@
-import React, { useEffect, useState } from 'react'
-import { Col, Form, Nav, Row, Tab } from 'react-bootstrap'
-import CommonHeading from '../../../Common/CommonHeading/CommonHeading'
-import './Approvals.scss'
-import { SearchIcon } from '../../../../Assets/Images/svgImgs/svgImgs'
-import CustomTable from '../../../Common/Table/Index'
-import CommonButton from '../../../Common/CommonButton/CommonButton'
+import React, { useEffect, useState } from "react";
+import { Col, Form, Nav, Row, Tab } from "react-bootstrap";
+import CommonHeading from "../../../Common/CommonHeading/CommonHeading";
+import "./Approvals.scss";
+import { SearchIcon } from "../../../../Assets/Images/svgImgs/svgImgs";
+import CustomTable from "../../../Common/Table/Index";
+import CommonButton from "../../../Common/CommonButton/CommonButton";
 // import Checkbox from '../../../Common/FormInputs/Checkbox';
-import CustomSelect from '../../../Common/Select/Select'
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { PAGE_LIMIT } from '../../../../Constant'
-import useCopyClipboard from '../../../../hooks/useCopyToClipboard'
-import moment from 'moment'
-import toaster from '../../../Common/Toast'
-import useDebounce from '../../../../hooks/useDebounce'
+import CustomSelect from "../../../Common/Select/Select";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { PAGE_LIMIT } from "../../../../Constant";
+import useCopyClipboard from "../../../../hooks/useCopyToClipboard";
+import moment from "moment";
+import toaster from "../../../Common/Toast";
+import useDebounce from "../../../../hooks/useDebounce";
 import {
   callApiGetMethod,
   callApiPostMethod,
-} from '../../../../Redux/Actions/api.action'
-import { APIURL } from '../../../../Utils'
-import Swal from 'sweetalert2'
-import { callContractSendMethod } from '../../../../Redux/Actions/contract.action'
-import { CONTRACT_ADDRESS } from '../../../../Constant'
-// import { callContractSendMethod } from '../../../../Redux/Actions/contract.action'
+} from "../../../../Redux/Actions/api.action";
+import { APIURL } from "../../../../Utils";
+import Swal from "sweetalert2";
+import { callContractSendMethod } from "../../../../Redux/Actions/contract.action";
+import { CONTRACT_ADDRESS } from "../../../../Constant";
 
 const Approvals = () => {
   /**CREATE DISPATCH OBJECT */
-  const dispatch: any = useDispatch()
+  const dispatch: any = useDispatch();
   const walletAddress = useSelector((state: any) => state?.user?.walletAddress);
 
-
   function useQuery() {
-    const { search } = useLocation()
-    return React.useMemo(() => new URLSearchParams(search), [search])
+    const { search } = useLocation();
+    return React.useMemo(() => new URLSearchParams(search), [search]);
   }
 
-  let query = useQuery()
+  let query = useQuery();
 
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams();
   const [key, setKey]: any = useState(
-    query.get('tab') ? query.get('tab') : 'vendor_request',
-  )
+    query.get("tab") ? query.get("tab") : "vendor_request"
+  );
 
   //States
-  const [currentPage, setcurrentPage]: any = useState(1)
-  const [partnerList, setPartnerList] = useState([])
-  const [partnerPropertyList, setPartnerPropertyList] = useState([])
-  const [partnerCount, setPartnerCount] = useState(0)
-  const [partnerPropertyListCount, setPartnerPropertyListCount] = useState(0)
-  const [totalPage, setTotalPage] = useState(0)
-  const [search, setSearch] = useState('')
-  const [checkStatus, setCheckStatus] = useState(false)
-  const [search_Debounce, setSearch_Debounce] = useState('')
-  const [selectOptions, setSelectOptions]: any = useState([])
-  const [passRequestList, setPassRequestList] = useState([])
-  const [passRequestListCount, setPassRequestListCount] = useState(0)
+  const [currentPage, setcurrentPage]: any = useState(1);
+  const [partnerList, setPartnerList] = useState([]);
+  const [partnerPropertyList, setPartnerPropertyList] = useState([]);
+  const [partnerCount, setPartnerCount] = useState(0);
+  const [partnerPropertyListCount, setPartnerPropertyListCount] = useState(0);
+  const [totalPage, setTotalPage] = useState(0);
+  const [search, setSearch] = useState("");
+  const [checkStatus, setCheckStatus] = useState(false);
+  const [search_Debounce, setSearch_Debounce] = useState("");
+  const [selectOptions, setSelectOptions]: any = useState([]);
+  const [passRequestList, setPassRequestList] = useState([]);
+  const [passRequestListCount, setPassRequestListCount] = useState(0);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  useDebounce(() => handleSearchDebounce(search), 1000, [search])
+  useDebounce(() => handleSearchDebounce(search), 1000, [search]);
 
   const handleSearchDebounce = (search: any) => {
-    setSearch_Debounce(search)
-    setcurrentPage(1)
-  }
+    setSearch_Debounce(search);
+    setcurrentPage(1);
+  };
 
   useEffect(() => {
-    setSearchParams({ tab: key })
+    setSearchParams({ tab: key });
     // eslint-disable-next-line
-  }, [query, key])
+  }, [query, key]);
 
-  const dataToSend = [{CONTRACT_ADDRESS},'300']
+  const dataToSend = [{ CONTRACT_ADDRESS }, "300"];
 
   const fields = [
-    'Sr. No.',
-    'Account Name',
-    'Email Id',
-    'Created At (UTC)',
-    'Invite Code',
-    'Actions',
-  ]
+    "Sr. No.",
+    "Account Name",
+    "Email Id",
+    "Created At (UTC)",
+    "Invite Code",
+    "Actions",
+  ];
   const propertyFields = [
-    'Sr. No.',
-    'Property Name',
-    'Account Name',
-    'Created At (UTC)',
-    'Actions',
-  ]
+    "Sr. No.",
+    "Property Name",
+    "Account Name",
+    "Created At (UTC)",
+    "Actions",
+  ];
 
   const passfield = [
-    'Sr. No.',
-    'Property Name',
-    'Account Name',
-    'Pass type',
-    'Created At (UTC)',
-    'Actions',
-  ]
+    "Sr. No.",
+    "Property Name",
+    "Account Name",
+    "Pass type",
+    "Created At (UTC)",
+    "Actions",
+  ];
 
   useEffect(() => {
-    setCheckStatus(false)
+    setCheckStatus(false);
     //Get partnerReqestList function
     const retreivePartnerRequestList = async () => {
       if (search_Debounce.length >= 2 || search_Debounce.length === 0) {
@@ -111,14 +109,14 @@ const Approvals = () => {
               search: search_Debounce.trim(),
             },
             true,
-            false,
-          ),
-        )
-        setPartnerList(result?.data?.data)
-        setPartnerCount(result?.data?.count)
-        setTotalPage(result?.data?.totalPages)
+            false
+          )
+        );
+        setPartnerList(result?.data?.data);
+        setPartnerCount(result?.data?.count);
+        setTotalPage(result?.data?.totalPages);
       }
-    }
+    };
 
     // get partnerPropertyList function
     const retreivePartnerPropertyList = async () => {
@@ -132,14 +130,14 @@ const Approvals = () => {
               search: search_Debounce.trim(),
             },
             true,
-            false,
-          ),
-        )
-        setPartnerPropertyList(result?.data)
-        setPartnerPropertyListCount(result?.count)
-        setTotalPage(result?.totalPages)
+            false
+          )
+        );
+        setPartnerPropertyList(result?.data);
+        setPartnerPropertyListCount(result?.count);
+        setTotalPage(result?.totalPages);
       }
-    }
+    };
 
     // get passesRequestList function
     const retreivePassesRequestList = async () => {
@@ -153,56 +151,65 @@ const Approvals = () => {
               search: search_Debounce.trim(),
             },
             true,
-            false,
-          ),
-        )
-        setPassRequestList(result?.data?.data)
-        setPassRequestListCount(result?.data?.count)
-        setTotalPage(result?.data?.totalPages)
+            false
+          )
+        );
+        setPassRequestList(result?.data?.data);
+        setPassRequestListCount(result?.data?.count);
+        setTotalPage(result?.data?.totalPages);
       }
-    }
+    };
 
     if (
       (search_Debounce.length >= 2 || search_Debounce.length === 0) &&
-      key === 'vendor_request'
+      key === "vendor_request"
     ) {
-      setPartnerList([])
-      retreivePartnerRequestList()
+      setPartnerList([]);
+      retreivePartnerRequestList();
     } else if (
       (search_Debounce.length >= 2 || search_Debounce.length === 0) &&
-      key === 'properties'
+      key === "properties"
     ) {
-      setPartnerPropertyList([])
-      retreivePartnerPropertyList()
-    } else if ((search_Debounce.length >= 2 || search_Debounce.length === 0) && key === 'passes') {
-      setPassRequestList([])
-      retreivePassesRequestList()
+      setPartnerPropertyList([]);
+      retreivePartnerPropertyList();
+    } else if (
+      (search_Debounce.length >= 2 || search_Debounce.length === 0) &&
+      key === "passes"
+    ) {
+      setPassRequestList([]);
+      retreivePassesRequestList();
     }
     // eslint-disable-next-line
-  }, [currentPage, search_Debounce, key, checkStatus])
+  }, [currentPage, search_Debounce, key, checkStatus]);
 
   //copy string to clipboard with below code
-  const [setCopied] = useCopyClipboard()
+  const [setCopied] = useCopyClipboard();
   const copy = (data: any, message?: string) => {
-    setCopied(data)
-    if (message) toaster.success(message)
-  }
+    setCopied(data);
+    if (message) toaster.success(message);
+  };
 
-  const handlePassActionOnChain = async () =>{
-    const result = await dispatch(callContractSendMethod('transferERC20Tokens',dataToSend,walletAddress,'function'));
-    console.log('this is result', result);
-  }
+  // const handlePassActionOnChain = async () => {
+  //   await dispatch(
+  //     callContractSendMethod(
+  //       "transferERC20Tokens",
+  //       dataToSend,
+  //       walletAddress,
+  //       "function"
+  //     )
+  //   );
+  // };
   // handle action function to accept and reject request
   const handleAction = async (type: string, item: any) => {
-    if (key === 'vendor_request') {
+    if (key === "vendor_request") {
       Swal.fire({
-        title: 'Are you sure?',
+        title: "Are you sure?",
         text: "You won't be able to revert this!",
-        icon: 'warning',
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, Accepted!',
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Accepted!",
       }).then(async (result) => {
         if (result.isConfirmed) {
           const result = await dispatch(
@@ -210,13 +217,13 @@ const Approvals = () => {
               APIURL.ACTION_PARTNER_REQUEST,
               { email: item?.email_id, action: type },
               {},
-              true,
-            ),
-          )
+              true
+            )
+          );
           if (result?.statusCode === 200) {
-            setCheckStatus(true)
+            setCheckStatus(true);
           } else if (result?.statusCode === 400) {
-            setCheckStatus(true)
+            setCheckStatus(true);
           }
         }
         // else if (result.isConfirmed && type === 'rejected') {
@@ -245,37 +252,37 @@ const Approvals = () => {
         //         }
         //     });
         // }
-      })
-    } else if (key === 'properties') {
+      });
+    } else if (key === "properties") {
       Swal.fire({
-        title: 'Are you sure?',
+        title: "Are you sure?",
         text: "You won't be able to revert this!",
-        icon: 'warning',
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, Accepted!',
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Accepted!",
       }).then(async (result) => {
-        if (result.isConfirmed && type === 'accepted') {
+        if (result.isConfirmed && type === "accepted") {
           const result = await dispatch(
             callApiPostMethod(
               APIURL.ACTION_PARTNER_PROPERTY,
-              { email: item?.user?.email, action: type, message: '' },
+              { email: item?.user?.email, action: type, message: "" },
               {},
-              true,
-            ),
-          )
+              true
+            )
+          );
           if (result?.statusCode === 200) {
-            setCheckStatus(true)
+            setCheckStatus(true);
           } else if (result?.statusCode === 400) {
-            setCheckStatus(true)
+            setCheckStatus(true);
           }
-        } else if (result.isConfirmed && type === 'rejected') {
+        } else if (result.isConfirmed && type === "rejected") {
           Swal.fire({
-            title: 'Rejecting Request Of Property!',
-            text: 'Reason for Rejecting',
-            icon: 'warning',
-            input: 'text',
+            title: "Rejecting Request Of Property!",
+            text: "Reason for Rejecting",
+            icon: "warning",
+            input: "text",
             showCancelButton: true,
           }).then(async (result) => {
             if (result.value) {
@@ -288,119 +295,125 @@ const Approvals = () => {
                     message: result.value,
                   },
                   {},
-                  true,
-                ),
-              )
+                  true
+                )
+              );
               if (res?.statusCode === 200) {
-                setCheckStatus(true)
+                setCheckStatus(true);
               } else if (res?.statusCode === 400) {
-                setCheckStatus(true)
+                setCheckStatus(true);
               }
             } else {
-              toaster.error('Please mention reason before rejecting')
+              toaster.error("Please mention reason before rejecting");
             }
-          })
+          });
         }
-      })
-    } else if (key === 'passes') {
-      Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, Accepted!',
-      }).then(async (result) => {
-        if (result.isConfirmed) {
-          const result = await dispatch( 
-            callApiPostMethod(
-              APIURL.ACTION_ON_PASS,
-              {
-                User_id: item?.property?.user?.id,
-                Pass_id: item?.id,
-                Property_id: item?.property?.id,
-                action: type,
-                message: ''
-              },
-              {},  
-              true,
-            ),
-          )
-          if (result?.statusCode === 200 || result?.statusCode === 201) {
-            setCheckStatus(true);
-            handlePassActionOnChain()
-          } else if (result?.statusCode === 400) {
-            setCheckStatus(true)
+      });
+    } else if (key === "passes") {
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, Accepted!",
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            const result = await dispatch(
+              callApiPostMethod(
+                APIURL.ACTION_ON_PASS,
+                {
+                  User_id: item?.property?.user?.id,
+                  Pass_id: item?.id,
+                  Property_id: item?.property?.id,
+                  action: type,
+                  message: "",
+                },
+                {},
+                true
+              )
+            );
+            if (result?.statusCode === 200 || result?.statusCode === 201) {
+              setCheckStatus(true);
+            } else if (result?.statusCode === 400) {
+              setCheckStatus(true);
+            }
           }
-        }
-        // else if (result.isConfirmed && type === 'rejected') {
-        //   Swal.fire({
-        //     title: 'Rejecting Request Of Pass!',
-        //     text: 'Reason for Rejecting',
-        //     icon: 'warning',
-        //     input: 'text',
-        //     showCancelButton: true,
-        //   }).then(async (result) => {
-        //     if (result.value) {
-        //       const res = await dispatch(
-        //         callApiPostMethod(
-        //           APIURL.ACTION_ON_PASS,
-        //           {
-        //             User_id: item?.property?.user?.id,
-        //             Pass_id: item?.id,
-        //             Property_id: item?.property?.id,
-        //             action: type,
-        //             message: result.value,
-        //           },
-        //           {},
-        //           true,
-        //         ),
-        //       )
-        //       if (res?.statusCode === 200) {
-        //         setCheckStatus(true)
-        //       } else if (res?.statusCode === 400) {
-        //         setCheckStatus(true)
-        //       }
-        //     } else {
-        //       toaster.error('Please mention reason before rejecting')
-        //     }
-        //   })
-        // }
-      })
+          // else if (result.isConfirmed && type === 'rejected') {
+          //   Swal.fire({
+          //     title: 'Rejecting Request Of Pass!',
+          //     text: 'Reason for Rejecting',
+          //     icon: 'warning',
+          //     input: 'text',
+          //     showCancelButton: true,
+          //   }).then(async (result) => {
+          //     if (result.value) {
+          //       const res = await dispatch(
+          //         callApiPostMethod(
+          //           APIURL.ACTION_ON_PASS,
+          //           {
+          //             User_id: item?.property?.user?.id,
+          //             Pass_id: item?.id,
+          //             Property_id: item?.property?.id,
+          //             action: type,
+          //             message: result.value,
+          //           },
+          //           {},
+          //           true,
+          //         ),
+          //       )
+          //       if (res?.statusCode === 200) {
+          //         setCheckStatus(true)
+          //       } else if (res?.statusCode === 400) {
+          //         setCheckStatus(true)
+          //       }
+          //     } else {
+          //       toaster.error('Please mention reason before rejecting')
+          //     }
+          //   })
+          // }
+        });
     }
-  }
+  };
 
   // pagination flow
   const iterateAndSetArray = (value: any) => {
-    const array: any = []
+    const array: any = [];
     for (let i = 1; i <= value; i++) {
       const object: any = {
         label: `${i}`,
         value: i,
-      }
-      array.push(object)
+      };
+      array.push(object);
     }
-    return array
-  }
+    return array;
+  };
 
   useEffect(() => {
-    const filteredOptions = iterateAndSetArray(totalPage)
-    setSelectOptions(filteredOptions)
-    setcurrentPage(1)
-  }, [totalPage, key])
+    const filteredOptions = iterateAndSetArray(totalPage);
+    setSelectOptions(filteredOptions);
+    setcurrentPage(1);
+  }, [totalPage, key]);
 
   const propertyInfo = async (item: any) => {
-    const vendorEmail: string = item?.user?.email
-    navigate('/auth/hotel-details/' + vendorEmail)
-  }
+    const vendorEmail: string = item?.user?.email;
+    navigate("/auth/hotel-details/" + vendorEmail);
+  };
 
   const handlePassInfo = async (item: any) => {
     const Pass_id: string = item?.id;
     const User_id: string = item?.property?.user?.id;
     const Property_id: string = item?.property?.id;
-    navigate('/auth/pass-details/?passId=' + Pass_id + "&userId=" + User_id + "&propertyId=" + Property_id)
-  }
+    navigate(
+      "/auth/pass-details/?passId=" +
+        Pass_id +
+        "&userId=" +
+        User_id +
+        "&propertyId=" +
+        Property_id
+    );
+  };
 
   return (
     <>
@@ -410,8 +423,17 @@ const Approvals = () => {
             heading="Approvals"
             paragraph={
               <>
-                There are a total of <span>{key === 'vendor_request' ? `${partnerCount} vendor request` : key === "properties" ? `${partnerPropertyListCount} properties request` : key === "passes" ? `${passRequestListCount} passes request` : ''}</span> that need your
-                approval
+                There are a total of{" "}
+                <span>
+                  {key === "vendor_request"
+                    ? `${partnerCount} vendor request`
+                    : key === "properties"
+                    ? `${partnerPropertyListCount} properties request`
+                    : key === "passes"
+                    ? `${passRequestListCount} passes request`
+                    : ""}
+                </span>{" "}
+                that need your approval
               </>
             }
           />
@@ -421,7 +443,13 @@ const Approvals = () => {
             <SearchIcon />
             <Form.Control
               type="text"
-              placeholder={key === 'vendor_request' ? "Search by Name, Email Id" : key === 'properties' ? "Search by Name" : "Search by Name"}
+              placeholder={
+                key === "vendor_request"
+                  ? "Search by Name, Email Id"
+                  : key === "properties"
+                  ? "Search by Name"
+                  : "Search by Name"
+              }
               onChange={(e: any) => setSearch(e.target.value)}
             />
           </div>
@@ -430,13 +458,13 @@ const Approvals = () => {
           <Tab.Container
             id="left-tabs-example"
             defaultActiveKey={
-              searchParams.get('tab') === 'vendor_request'
-                ? 'vendor_request'
-                : searchParams.get('tab') === 'properties'
-                  ? 'properties'
-                  : searchParams.get('tab') === 'passes'
-                    ? 'passes'
-                    : 'vendor_request'
+              searchParams.get("tab") === "vendor_request"
+                ? "vendor_request"
+                : searchParams.get("tab") === "properties"
+                ? "properties"
+                : searchParams.get("tab") === "passes"
+                ? "passes"
+                : "vendor_request"
             }
             onSelect={(e: any) => setKey(e)}
           >
@@ -446,20 +474,25 @@ const Approvals = () => {
                   <Nav variant="pills" className="Border_Tabs">
                     <Nav.Item>
                       <Nav.Link eventKey="vendor_request">
-                        Vendor Request{' '}
-                        {partnerCount ? `( ${partnerCount} )` : ''}
+                        Vendor Request{" "}
+                        {partnerCount ? `( ${partnerCount} )` : ""}
                       </Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
                       <Nav.Link eventKey="properties">
-                        Properties{' '}
+                        Properties{" "}
                         {partnerPropertyListCount
                           ? `( ${partnerPropertyListCount} )`
-                          : ''}
+                          : ""}
                       </Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                      <Nav.Link eventKey="passes">Passes {passRequestListCount ? `( ${passRequestListCount} )` : ''}</Nav.Link>
+                      <Nav.Link eventKey="passes">
+                        Passes{" "}
+                        {passRequestListCount
+                          ? `( ${passRequestListCount} )`
+                          : ""}
+                      </Nav.Link>
                     </Nav.Item>
                   </Nav>
                   <div className="pagination_select">
@@ -467,7 +500,10 @@ const Approvals = () => {
                       <>
                         <CustomSelect
                           // defaultValue={currentPage}
-                          defaultValue={{ value: currentPage, label: currentPage }}
+                          defaultValue={{
+                            value: currentPage,
+                            label: currentPage,
+                          }}
                           classgroup="select_pagi"
                           label="Page"
                           options={selectOptions}
@@ -479,7 +515,7 @@ const Approvals = () => {
                         <label>of {totalPage}</label>
                       </>
                     ) : (
-                      ''
+                      ""
                     )}
                   </div>
                 </div>
@@ -505,61 +541,61 @@ const Approvals = () => {
                           <td>
                             {item?.invited_name
                               ? item?.invited_name?.charAt(0).toUpperCase() +
-                              item?.invited_name?.slice(1).toLowerCase()
-                              : '---'}{' '}
+                                item?.invited_name?.slice(1).toLowerCase()
+                              : "---"}{" "}
                           </td>
-                          <td>{item?.email_id ? item?.email_id : '---'}</td>
+                          <td>{item?.email_id ? item?.email_id : "---"}</td>
                           <td>
                             {item?.createdAt
                               ? moment(item?.createdAt)
-                                .utc()
-                                .format('dddd, MMMM D, YYYY, hh:mm:ss A')
-                              : '---'}
+                                  .utc()
+                                  .format("dddd, MMMM D, YYYY, hh:mm:ss A")
+                              : "---"}
                           </td>
                           <td>
-                            {item?.invite_code ? item?.invite_code : '---'}
+                            {item?.invite_code ? item?.invite_code : "---"}
                             {item?.invite_code ? (
                               <i
                                 style={{
-                                  cursor: 'pointer',
-                                  marginLeft: '8px',
-                                  color: 'black',
+                                  cursor: "pointer",
+                                  marginLeft: "8px",
+                                  color: "black",
                                 }}
                                 title="copy"
                                 className="fa fa-clone"
                                 onClick={() =>
-                                  copy(item?.invite_code, 'Invite code copied')
+                                  copy(item?.invite_code, "Invite code copied")
                                 }
                               ></i>
                             ) : (
-                              ''
+                              ""
                             )}
                           </td>
                           <td>
                             <div className="tables_btn">
-                              {item?.invitation_status === 'pending' ? (
+                              {item?.invitation_status === "pending" ? (
                                 <>
                                   <CommonButton
                                     title="Reject"
                                     className="dark-greenbtn"
                                     onClick={() =>
-                                      handleAction('rejected', item)
+                                      handleAction("rejected", item)
                                     }
                                   />
                                   <CommonButton
                                     title="Approve"
                                     className="btncreate"
                                     onClick={() =>
-                                      handleAction('accepted', item)
+                                      handleAction("accepted", item)
                                     }
                                   />
                                 </>
-                              ) : item?.invitation_status === 'rejected' ? (
+                              ) : item?.invitation_status === "rejected" ? (
                                 <span
                                   className="fa fa-close"
                                   style={{
-                                    marginLeft: '8px',
-                                    color: 'red',
+                                    marginLeft: "8px",
+                                    color: "red",
                                   }}
                                 >
                                   Rejected
@@ -568,8 +604,8 @@ const Approvals = () => {
                                 <span
                                   className="fa fa-check"
                                   style={{
-                                    marginLeft: '8px',
-                                    color: 'green',
+                                    marginLeft: "8px",
+                                    color: "green",
                                   }}
                                 >
                                   Accepted
@@ -599,18 +635,24 @@ const Approvals = () => {
                                                     />
                                                     </td> */}
                           <td>{PAGE_LIMIT * (currentPage - 1) + (key + 1)}</td>
-                          <td>{item?.name ? item?.name?.charAt(0).toUpperCase() +
-                            item?.name?.slice(1).toLowerCase() : '---'}</td>
                           <td>
-                            {item?.user?.name ? item?.user?.name?.charAt(0).toUpperCase() +
-                              item?.user?.name?.slice(1).toLowerCase() : '---'}
+                            {item?.name
+                              ? item?.name?.charAt(0).toUpperCase() +
+                                item?.name?.slice(1).toLowerCase()
+                              : "---"}
+                          </td>
+                          <td>
+                            {item?.user?.name
+                              ? item?.user?.name?.charAt(0).toUpperCase() +
+                                item?.user?.name?.slice(1).toLowerCase()
+                              : "---"}
                           </td>
                           <td>
                             {item?.createdAt
                               ? moment(item?.createdAt)
-                                .utc()
-                                .format('dddd, MMMM D, YYYY, hh:mm:ss A')
-                              : '---'}
+                                  .utc()
+                                  .format("dddd, MMMM D, YYYY, hh:mm:ss A")
+                              : "---"}
                           </td>
                           <td>
                             <div className="tables_btn">
@@ -620,29 +662,29 @@ const Approvals = () => {
                                 onClick={() => propertyInfo(item)}
                               />
 
-                              {item?.verification === 'pending' ? (
+                              {item?.verification === "pending" ? (
                                 <>
                                   <CommonButton
                                     title="Reject"
                                     className="dark-greenbtn"
                                     onClick={() =>
-                                      handleAction('rejected', item)
+                                      handleAction("rejected", item)
                                     }
                                   />
                                   <CommonButton
                                     title="Approve"
                                     className="btncreate"
                                     onClick={() =>
-                                      handleAction('accepted', item)
+                                      handleAction("accepted", item)
                                     }
                                   />
                                 </>
-                              ) : item?.verification === 'rejected' ? (
+                              ) : item?.verification === "rejected" ? (
                                 <span
                                   className="fa fa-close"
                                   style={{
-                                    marginLeft: '8px',
-                                    color: 'red',
+                                    marginLeft: "8px",
+                                    color: "red",
                                   }}
                                 >
                                   Rejected
@@ -651,8 +693,8 @@ const Approvals = () => {
                                 <span
                                   className="fa fa-check"
                                   style={{
-                                    marginLeft: '8px',
-                                    color: 'green',
+                                    marginLeft: "8px",
+                                    color: "green",
                                   }}
                                 >
                                   Accepted
@@ -668,21 +710,38 @@ const Approvals = () => {
               <Tab.Pane eventKey="passes">
                 <div className="approval_table">
                   <CustomTable fields={passfield}>
-                    {passRequestList && passRequestList.length &&
+                    {passRequestList &&
+                      passRequestList.length &&
                       passRequestList.map((item: any, key: number) => (
                         <tr key={key}>
                           <td>{PAGE_LIMIT * (currentPage - 1) + (key + 1)}</td>
-                          <td>{item?.property?.name ? item?.property?.name?.charAt(0).toUpperCase() +
-                            item?.property?.name?.slice(1).toLowerCase() : "---"}</td>
-                          <td>{item?.property?.user?.name ? item?.property?.user?.name?.charAt(0).toUpperCase() +
-                            item?.property?.user?.name?.slice(1).toLowerCase() : "---"}</td>
-                          <td>{item?.redeemable_nights ? `SP${item?.redeemable_nights}` : "---"}</td>
+                          <td>
+                            {item?.property?.name
+                              ? item?.property?.name?.charAt(0).toUpperCase() +
+                                item?.property?.name?.slice(1).toLowerCase()
+                              : "---"}
+                          </td>
+                          <td>
+                            {item?.property?.user?.name
+                              ? item?.property?.user?.name
+                                  ?.charAt(0)
+                                  .toUpperCase() +
+                                item?.property?.user?.name
+                                  ?.slice(1)
+                                  .toLowerCase()
+                              : "---"}
+                          </td>
+                          <td>
+                            {item?.redeemable_nights
+                              ? `SP${item?.redeemable_nights}`
+                              : "---"}
+                          </td>
                           <td>
                             {item?.createdAt
                               ? moment(item?.createdAt)
-                                .utc()
-                                .format('dddd, MMMM D, YYYY, hh:mm:ss A')
-                              : '---'}
+                                  .utc()
+                                  .format("dddd, MMMM D, YYYY, hh:mm:ss A")
+                              : "---"}
                           </td>
                           <td>
                             <div className="tables_btn">
@@ -692,29 +751,29 @@ const Approvals = () => {
                                 onClick={() => handlePassInfo(item)}
                               />
 
-                              {item?.approval === 'pending' ? (
+                              {item?.approval === "pending" ? (
                                 <>
                                   <CommonButton
                                     title="Reject"
                                     className="dark-greenbtn"
                                     onClick={() =>
-                                      handleAction('rejected', item)
+                                      handleAction("rejected", item)
                                     }
                                   />
                                   <CommonButton
                                     title="Approve"
                                     className="btncreate"
                                     onClick={() =>
-                                      handleAction('accepted', item)
+                                      handleAction("accepted", item)
                                     }
                                   />
                                 </>
-                              ) : item?.approval === 'rejected' ? (
+                              ) : item?.approval === "rejected" ? (
                                 <span
                                   className="fa fa-close"
                                   style={{
-                                    marginLeft: '8px',
-                                    color: 'red',
+                                    marginLeft: "8px",
+                                    color: "red",
                                   }}
                                 >
                                   Rejected
@@ -723,8 +782,8 @@ const Approvals = () => {
                                 <span
                                   className="fa fa-check"
                                   style={{
-                                    marginLeft: '8px',
-                                    color: 'green',
+                                    marginLeft: "8px",
+                                    color: "green",
                                   }}
                                 >
                                   Accepted
@@ -742,7 +801,7 @@ const Approvals = () => {
         </div>
       </section>
     </>
-  )
-}
+  );
+};
 
-export default Approvals
+export default Approvals;

@@ -22,6 +22,7 @@ import Settings from './Components/Pages/Settings/Settings'
 import Createpass from './Components/Pages/Hotels/Hoteldetails/Component/Createpass'
 import Approvals from './Components/Pages/Dashboard/Component/Approvals'
 import Passes from './Components/Pages/Hotels/Hoteldetails/Component/Passes'
+import BuyRequest from './Components/Pages/BuyRequest/BuyRequest'
 
 const Application: React.FC = () => {
   const router = createBrowserRouter([
@@ -120,14 +121,14 @@ const Application: React.FC = () => {
             </RequireAuth>
           ),
         },
-        {
-          path: 'management',
-          element: (
-            <RequireAuth>
-              <Management /> 
-            </RequireAuth>
-          ),
-        },
+        // {
+        //   path: 'management',
+        //   element: (
+        //     <RequireAuth>
+        //       <Management />
+        //     </RequireAuth>
+        //   ),
+        // },
         {
           path: 'settings',
           element: (
@@ -149,6 +150,14 @@ const Application: React.FC = () => {
           element: (
             <RequireAuth>
               <Passes />
+            </RequireAuth>
+          ),
+        },
+        {
+          path: 'buy-request',
+          element: (
+            <RequireAuth>
+              <BuyRequest />
             </RequireAuth>
           ),
         },

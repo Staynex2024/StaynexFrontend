@@ -54,14 +54,7 @@ const Application: React.FC = () => {
             </WithoutAuth>
           ),
         },
-        // {
-        //   path: "/signup-almost",
-        //   element: (
-        //     <WithoutAuth>
-        //       <SignUp />
-        //     </WithoutAuth>
-        //   ),
-        // },
+
         {
           path: 'forgot-password',
           element: (
@@ -108,14 +101,14 @@ const Application: React.FC = () => {
         //     </RequireAuth>
         //   ),
         // },
-        {
-          path: 'dashboard',
-          element: (
-            <RequireAuth>
-              <Dashboard />
-            </RequireAuth>
-          ),
-        },
+        // {
+        //   path: 'dashboard',
+        //   element: (
+        //     <RequireAuth>
+        //       <Dashboard />
+        //     </RequireAuth>
+        //   ),
+        // },
         {
           path: 'booking',
           element: (
@@ -223,14 +216,14 @@ const Application: React.FC = () => {
             </RequireAuth>
           ),
         },
-        {
-          path: 'support',
-          element: (
-            <RequireAuth>
-              <Support />
-            </RequireAuth>
-          ),
-        },
+        // {
+        //   path: 'support',
+        //   element: (
+        //     <RequireAuth>
+        //       <Support />
+        //     </RequireAuth>
+        //   ),
+        // },
       ],
     },
   ])

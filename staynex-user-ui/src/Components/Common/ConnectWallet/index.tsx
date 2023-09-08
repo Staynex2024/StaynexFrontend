@@ -11,6 +11,8 @@ import {
 import { custmizeAddress } from "../../../Services/common.service";
 import { useTranslation } from "react-i18next";
 import Spinner from "react-bootstrap/Spinner";
+import { callApiGetMethod } from "../../../Redux/Actions/api.action";
+import { APIURL } from "../../../Utils";
 
 /**CONNECT WALLET MODAL */
 const ConnectWallet = () => {
@@ -75,7 +77,7 @@ const ConnectWallet = () => {
             {walletAddress ? "Disconnect wallet" : "Connect to a wallet"}
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="p-5 ">
           <Row>
             <Col className="connect_options">
               {walletAddress ? (
@@ -108,7 +110,7 @@ const ConnectWallet = () => {
                     </li>
                   )}
                   <li>
-                    <Button onClick={() => connectToWallet("MetaMasK")}>
+                    <Button onClick={() => connectToWallet("MetaMasK")} variant='light' >
                       <span>
                         <img
                           src={
@@ -117,6 +119,7 @@ const ConnectWallet = () => {
                           alt=""
                         />
                       </span>{" "}
+                      
                       MetaMask{" "}
                       {/* {connectionStatus?.wallet === 'MetaMasK' && connectionStatus?.status === 'pending' ? <Spinner animation="border" variant="light" /> : ""} */}
                     </Button>
@@ -127,7 +130,10 @@ const ConnectWallet = () => {
                 {walletAddress ? (
                   <ButtonCommon
                     className="btn-danger"
-                    onClick={() => dispatch(disconnectWallet())}
+                    onClick={() => 
+                      {dispatch(disconnectWallet());
+                      dispatch(callApiGetMethod(APIURL.USER_LOGOUT, {}, false, false))}
+                    }
                     title="Disconnect"
                   />
                 ) : (

@@ -14,15 +14,31 @@ import bookimage1 from "../../../../../../Assets/Images/event1.png"
 import CustomSelect from '../../../../../Common/Select/Select';
 import { ethers } from "ethers";
 import userABI from "../../../../../../Abi/UserABI.json";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { CONTRACT_ADDRESS } from '../../../../../../Constant';
+import moment from 'moment';
+import { handleConversion } from "../../../../../../Services/common.service";
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
+import { v4 as uuidv4 } from "uuid";
+import { callApiPostMethod } from '../../../../../../Redux/Actions/api.action';
+import { APIURL } from '../../../../../../Utils';
+import toaster from '../../../../../Common/Toast';
 
 
-const RedeemBookingModal = ({ show, handleClose, data }) => {
+const RedeemBookingModal = ({ show, handleClose, data, propertyData, userPassId }) => {
+    const dispatch: any = useDispatch()
+
     const [activeStep, setActiveStep] = React.useState(1);
     const [key, setKey]: any = React.useState('customer')
+    const [dateDifferenceInDays, setDateDifferenceInDays] = React.useState(0)
+
+    const uniqueId = uuidv4();
 
     const walletAddress = useSelector((state: any) => state.user.walletAddress);
+
+    const conversionRate = useSelector((state: any) => state.user.conversionRate)
+    const currencySymobl = useSelector((state: any) => state.user.currencySymbol)
 
     const addnewproperty = Yup.object().shape({
         name: Yup.string().required('*This Field is required'),
@@ -57,6 +73,25 @@ const RedeemBookingModal = ({ show, handleClose, data }) => {
         validationSchema: addnewproperty,
         onSubmit: async (values) => {
             // await dispatch(loginAdmin(values));
+            setActiveStep(prevActiveStep => prevActiveStep + 1);
+
+            let datatoSend = {
+                firstName: values.name,
+                lastName: values.lastname,
+                gender: values.gender,
+                email: values.email,
+                mobileNumber: values.number,
+                passportNumber: values.contact,
+                checkIn: values.checkIndate,
+                checkOut: values.checkoutdate,
+                totalPerson: values.totalPerson,
+                bookingId: uniqueId.replace(/-/g, ""),
+                passId: userPassId,
+            }
+            const res: any = await dispatch(
+                callApiPostMethod(APIURL.CREATE_BOOKING, datatoSend, {}, false),
+            )
+            // console.log('res :>> ', res);
         },
     })
 
@@ -73,13 +108,17 @@ const RedeemBookingModal = ({ show, handleClose, data }) => {
             formik.setFieldValue('gender', data['gender'])
             formik.setFieldValue('contact', data['passportNumber'])
             formik.setFieldValue('email', data['user']['email'])
-            formik.setFieldValue('number', data['user']['mobile_number'].slice(3))
+            formik.setFieldValue('number', data['user']['mobile_number'])
         }
     }
 
     const handleNext = () => {
         setActiveStep(prevActiveStep => prevActiveStep + 1);
     };
+
+    const handlePrev = () => {
+        setActiveStep(prevActiveStep => prevActiveStep - 1);
+    }
 
     useEffect(() => {
         if (activeStep === 1) {
@@ -93,16 +132,35 @@ const RedeemBookingModal = ({ show, handleClose, data }) => {
 
 
     const handleRedeem = async () => {
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        const signer = provider.getSigner(walletAddress)
-        const contract = new ethers.Contract(CONTRACT_ADDRESS, userABI, signer);
-        console.log("contract", contract)
+        if (walletAddress) {
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            const signer = provider.getSigner(walletAddress)
+            const contract = new ethers.Contract(CONTRACT_ADDRESS, userABI, signer);
 
-        const result = await contract.redeemNights("13", '4');
-        console.log('result :>> ', result);
+            let tokenId = propertyData[0]?.tokenId
+
+            // const res = await contract.getNightsRedeemed(walletAddress, tokenId)
+            const result = await contract.redeemNights(Number(tokenId), Number(dateDifferenceInDays));
+        } else {
+            toaster.error('Please Connect Wallet')
+        }
 
     }
 
+    useEffect(() => {
+        // Convert the date strings to Date objects
+        let checkInDate: any = new Date(formik.values.checkIndate);
+        let checkOutDate: any = new Date(formik.values.checkoutdate);
+
+        // Calculate the difference in milliseconds
+        const dateDifferenceInMilliseconds = checkOutDate - checkInDate;
+
+        // Calculate the difference in days
+        const dateDiffInDays = dateDifferenceInMilliseconds / (1000 * 60 * 60 * 24);
+
+        setDateDifferenceInDays(dateDiffInDays)
+
+    }, [formik.values.checkIndate, formik.values.checkoutdate])
     return (
         <>
             <CommonModal
@@ -124,7 +182,10 @@ const RedeemBookingModal = ({ show, handleClose, data }) => {
                                 <div className="customer_info">
                                     <div className='d-md-flex justify-content-between'>
                                         <div className=''>
-                                            <h2>Welcome, {data && `${data['firstName'] + ' ' + data['lastName']}`}!</h2>
+                                            <h2>Welcome, {data &&
+                                                `${data['firstName']?.charAt(0).toUpperCase() + data['firstName']?.slice(1).toLowerCase()
+                                                + ' ' +
+                                                data['lastName']?.charAt(0).toUpperCase() + data['lastName']?.slice(1).toLowerCase()}`}!</h2>
                                             <Checkbox
                                                 label="Please select this option if you’re making this booking for someone else"
                                                 name=""
@@ -175,30 +236,53 @@ const RedeemBookingModal = ({ show, handleClose, data }) => {
                                                 />
                                             </Col>
                                             <Col lg={6} md={6} xl={4}>
-                                                <CustomSelect
-                                                    label="Gender"
-                                                    id="gender"
-                                                    classgroup="mb-44"
-                                                    options={options}
-                                                    onChange={(option: any) =>
-                                                        formik.setFieldValue('gender', option.value)
-                                                    }
-                                                    name={'propertyType'}
-                                                    placeholder="Select"
-                                                    isSearchable={false}
-                                                    // value={data['gender'] && {
-                                                    //     label: data['gender']?.charAt(0).toUpperCase() +
-                                                    //         data['gender']?.slice(1).toLowerCase()
-                                                    // }}
-                                                    error={
-                                                        formik.errors.gender &&
-                                                            formik.touched.gender ? (
-                                                            <span className="error_Msg">
-                                                                {formik.errors.gender}
-                                                            </span>
-                                                        ) : null
-                                                    }
-                                                />
+                                                {data['gender'] ?
+                                                    <CustomSelect
+                                                        label="Gender"
+                                                        id="gender"
+                                                        classgroup="mb-44"
+                                                        options={options}
+                                                        onChange={(option: any) =>
+                                                            formik.setFieldValue('gender', option.value)
+                                                        }
+                                                        name={'propertyType'}
+                                                        placeholder="Select"
+                                                        isSearchable={false}
+                                                        value={data['gender'] && {
+                                                            label: data['gender']?.charAt(0).toUpperCase() +
+                                                                data['gender']?.slice(1).toLowerCase()
+                                                        }}
+                                                        error={
+                                                            formik.errors.gender &&
+                                                                formik.touched.gender ? (
+                                                                <span className="error_Msg">
+                                                                    {formik.errors.gender}
+                                                                </span>
+                                                            ) : null
+                                                        }
+                                                    />
+                                                    :
+                                                    <CustomSelect
+                                                        label="Gender"
+                                                        id="gender"
+                                                        classgroup="mb-44"
+                                                        options={options}
+                                                        onChange={(option: any) =>
+                                                            formik.setFieldValue('gender', option.value)
+                                                        }
+                                                        name={'propertyType'}
+                                                        placeholder="Select"
+                                                        isSearchable={false}
+                                                        error={
+                                                            formik.errors.gender &&
+                                                                formik.touched.gender ? (
+                                                                <span className="error_Msg">
+                                                                    {formik.errors.gender}
+                                                                </span>
+                                                            ) : null
+                                                        }
+                                                    />
+                                                }
                                             </Col>
                                             <Col lg={6} md={6} xl={4}>
                                                 <InputCustom
@@ -237,7 +321,7 @@ const RedeemBookingModal = ({ show, handleClose, data }) => {
                                                 />
                                             </Col>
                                             <Col lg={6} md={6} xl={4}>
-                                                <InputCustom
+                                                {/* <InputCustom
                                                     label="Phone number"
                                                     className="mb-44"
                                                     placeholder="+6512345676"
@@ -252,7 +336,22 @@ const RedeemBookingModal = ({ show, handleClose, data }) => {
                                                             <span>{formik.errors.number}</span>
                                                         ) : null
                                                     }
+                                                /> */}
+                                                <label className="form-label">
+                                                    Mobile Number
+                                                </label>
+                                                <PhoneInput
+                                                    country="us"
+                                                    value={formik.values.number}
+                                                    onChange={(number) => {
+                                                        formik.setFieldValue('number', `+${number}`)
+                                                    }}
+                                                    enableSearch={true}
                                                 />
+                                                <p className="error-Msg" style={{ color: 'red' }}>
+                                                    {formik.errors.number && formik.touched.number && formik.errors.number}
+                                                </p>
+
                                             </Col>
                                             <Col lg={6} md={6} xl={4}>
                                                 <InputCustom
@@ -323,7 +422,7 @@ const RedeemBookingModal = ({ show, handleClose, data }) => {
                                             <Col xs={12}>
                                                 <div className='d-flex justify-content-between'>
                                                     <span className='btn-style grey-btn'>Cancel</span>
-                                                    <button type='submit' className='btn-style' onClick={handleNext}>Confirm</button>
+                                                    <button type='submit' className='btn-style' >Confirm</button>
                                                 </div>
                                             </Col>
                                         </Row>
@@ -337,7 +436,7 @@ const RedeemBookingModal = ({ show, handleClose, data }) => {
                                     <p>Waiting for confirmation</p>
                                     <Col xs={12}>
                                         <div className='d-flex justify-content-between'>
-                                            <span className='btn-style grey-btn'>Cancel</span>
+                                            <span className='btn-style grey-btn' onClick={handlePrev}>Cancel</span>
                                             <button type='submit' className='btn-style' onClick={handleNext}>Confirm</button>
                                         </div>
                                     </Col>
@@ -345,20 +444,20 @@ const RedeemBookingModal = ({ show, handleClose, data }) => {
                             </Tab.Pane>
                             <Tab.Pane eventKey="booking">
                                 <div className='booking_complete'>
-                                    <h2>Redeeming <u>10</u> nights in  <u>Nazeki Villa</u></h2>
+                                    <h2>Redeeming <u>{dateDifferenceInDays ? dateDifferenceInDays : ''}</u> nights in  <u>{propertyData ? propertyData[0]?.pass?.property?.name : ""}</u></h2>
                                     <Row className='align-items-center mt-4 mt-md-5'>
                                         <Col xs={12} lg={6}>
                                             <div className='booking_from_to d-flex flex-wrap align-items-center'>
                                                 <div>
                                                     <span>From</span>
-                                                    <h2>12 Jan 2023</h2>
-                                                    <p>Saturday</p>
+                                                    <h2>{formik.values.checkIndate !== '' ? moment(formik.values.checkIndate).format("D MMMM YYYY") : ""}</h2>
+                                                    <p>{formik.values.checkIndate !== '' ? moment(formik.values.checkIndate).format('dddd') : ""}</p>
                                                 </div>
                                                 <div className='mx-5'><SmallArrowIcon /></div>
                                                 <div>
                                                     <span>To</span>
-                                                    <h2>22 Jan 2023</h2>
-                                                    <p>Sunday</p>
+                                                    <h2>{formik.values.checkoutdate !== '' ? moment(formik.values.checkoutdate).format("D MMMM YYYY") : ""}</h2>
+                                                    <p>{formik.values.checkoutdate !== '' ? moment(formik.values.checkoutdate).format('dddd') : ""}</p>
                                                 </div>
                                             </div>
                                         </Col>
@@ -373,11 +472,11 @@ const RedeemBookingModal = ({ show, handleClose, data }) => {
                                     <Row className='booking_complete_list'>
                                         <Col xs={6} md={4} xl={3}>
                                             <label>Pass type</label>
-                                            <h2>SP7</h2>
+                                            <h2>{propertyData ? `SP${propertyData[0]?.pass?.redeemable_nights}` : ""}</h2>
                                         </Col>
                                         <Col xs={6} md={3} xl={3}>
                                             <label>Price</label>
-                                            <h2>$4,999</h2>
+                                            <h2>{handleConversion(conversionRate, propertyData[0]?.pass?.price) + ' ' + currencySymobl}</h2>
                                         </Col>
                                         <Col xs={12} md={5} xl={5}>
                                             <label>Room</label>
@@ -387,29 +486,31 @@ const RedeemBookingModal = ({ show, handleClose, data }) => {
                                     <Row className='booking_complete_list'>
                                         <Col xs={6} md={4} xl={3}>
                                             <label>Name</label>
-                                            <h2>Bruno Fernandes</h2>
+                                            <h2>{data ? data['firstName']?.charAt(0).toUpperCase() + data['firstName']?.slice(1).toLowerCase()
+                                                + ' ' +
+                                                data['lastName']?.charAt(0).toUpperCase() + data['lastName']?.slice(1).toLowerCase() : ""}</h2>
                                         </Col>
                                         <Col className='d-none d-md-block' xs={6} md={3} xl={3}>
                                         </Col>
                                         <Col xs={6} md={5} xl={5}>
                                             <label>Number</label>
-                                            <h2>+651231231233</h2>
+                                            <h2>{data?.user?.mobile_number ? data?.user?.mobile_number : ""}</h2>
                                         </Col>
                                     </Row>
                                     <Row className='booking_complete_list'>
                                         <Col xs={6} md={4} xl={3}>
                                             <label>Passport no</label>
-                                            <h2>A3543456445</h2>
+                                            <h2>{data?.passportNumber ? data?.passportNumber : ""}</h2>
                                         </Col>
                                         <Col className='d-none d-md-block' xs={6} md={3} xl={3}>
                                         </Col>
                                         <Col xs={12} md={5} xl={5}>
                                             <label>Email</label>
-                                            <h2>brunofergie@gmail.com</h2>
+                                            <h2>{data?.user?.email ? data?.user?.email : ""}</h2>
                                         </Col>
                                     </Row>
                                     <div className='d-flex justify-content-between mt-3'>
-                                        <button type='submit' className='btn-style grey-btn'>Cancel</button>
+                                        <button type='submit' className='btn-style grey-btn' onClick={handlePrev}>Cancel</button>
                                         <button type='submit' className='btn-style' onClick={handleRedeem}>Confirm</button>
                                     </div>
                                 </div>

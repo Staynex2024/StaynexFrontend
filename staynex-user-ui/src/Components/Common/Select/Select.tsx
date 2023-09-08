@@ -22,7 +22,6 @@ type propsType = {
   error?: any
   isClearable?: any
   value?: valueType
-  menuPlacement?: valueType
 }
 
 const CustomSelect = ({
@@ -43,7 +42,6 @@ const CustomSelect = ({
   error,
   isClearable,
   value,
-  menuPlacement,
 }: propsType) => {
   return (
     <>

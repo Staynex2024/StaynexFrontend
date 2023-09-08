@@ -58,7 +58,7 @@ const Header = () => {
     await dispatch(logOut())
   }
 
-  
+
   const handleNavigation = () => {
     navigate('/auth/new-property')
   }
@@ -79,8 +79,6 @@ const Header = () => {
       handleAddWalletAddress()
        }
   }, [walletAddress]);
-
-
 
   return (
     <>
@@ -109,7 +107,7 @@ const Header = () => {
                 <div className="d-flex align-items-center justify-content-between">
                   <div className="admin_header_search d-flex align-items-center">
                     <label>Partner Portal</label>
-                    <Form.Control type="text" placeholder="Search" />
+                    {/* <Form.Control type="text" placeholder="Search" /> */}
                   </div>
                   <span className="Mobile_toggleBtn" onClick={handleShow}>
                     <img src={menuToggle} alt="Menu" />
@@ -118,11 +116,11 @@ const Header = () => {
               </Col>
               <Col md={6} className="mt-3 mt-md-0">
                 <div className="d-flex justify-content-between justify-content-md-end align-items-center">
-              <ConnectWallet />
+                  <ConnectWallet />
 
                   <Dropdown align="end" className="Notification_Dropdown">
                     <Dropdown.Toggle variant="" id="dropdown-basic">
-                      <NotificationIcon />
+                      {/* <NotificationIcon /> */}
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                       {countrylist.map((data, i) => {

@@ -42,6 +42,8 @@ const getContractInstance = async (contractType: string, dynamicAddress: string)
         switch (contractType) {
             case 'factory':
                 return contractInstance ? resolve(contractInstance) : createInstance().then(() => { resolve(contractInstance); }).catch(reject);
+            case 'function' :
+                return contractInstance ? resolve(contractInstance) : createInstance().then(() => { resolve(contractInstance); }).catch(reject);
             case 'dynamic':
                 let dynamicInstance = web3Instance ? await new web3Instance.eth.Contract(
                     DynamicABI,
@@ -90,17 +92,18 @@ export const callSendMethod = async (method: string, data: any, walletAddress: s
             if (walletAddress === "") {
                 reject(new Error("Please connect wallet"));
             }
-
+            
             /**CREATE DATA FOR CALL SEND METHOD */
             let dataForSend: any = { from: walletAddress };
-
+            
             /**CHECK IF WE NEED TO SEND VALUE IN SEND METHOD */
             if (value) {
                 dataForSend.value = value;
             }
-
+            
             /**GET SELECTED CONTRACT INSTANCE */
             let contract: any = await getContractInstance(contractType, dynamicAddress);
+
 
             /**CHECK IF WE NEED TO GIVE APPROVAL TO CONTRACT FOR TOKEN */
             // if ((method === "buyTokens" && data[1] !== 1)) {
@@ -122,7 +125,7 @@ export const callSendMethod = async (method: string, data: any, walletAddress: s
                     .send(dataForSend).then((result: object) => {
                         resolve(result);
                     })
-                    .catch((error: Error) => { reject(error) });
+                    .catch((error: Error) => { reject(error); console.log('this is catch')});
             } else {
                 reject(new Error("Contract not found."));
             }

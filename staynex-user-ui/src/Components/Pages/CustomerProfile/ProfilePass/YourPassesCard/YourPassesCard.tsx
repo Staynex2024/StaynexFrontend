@@ -10,16 +10,20 @@ import CustomSelect from '../../../../Common/Select/Select'
 import Checkbox from '../../../../Common/FormInputs/Checkbox'
 import { useSelector } from 'react-redux'
 import { handleConversion } from "../../../../../Services/common.service";
+import toaster from '../../../../Common/Toast'
 
 const YourPassesCard = ({ customerData }: any) => {
 
-  const conversionRate = useSelector((state: any) => state.user.conversionRate)
-  const currencySymobl = useSelector((state: any) => state.user.currencySymbol)
+    const conversionRate = useSelector((state: any) => state.user.conversionRate)
+    const currencySymobl = useSelector((state: any) => state.user.currencySymbol)
+
+    let State = require("country-state-city").State;
 
     const [show, setShow] = useState(false);
     const [isActive, setActive] = useState(false);
     const [showcancel, setShowcancel] = useState(false);
     const [propertyData, setPropertyData] = useState([])
+    const [userPassId, setUserPassId] = useState('')
     const toggleClass = () => {
         setActive(!isActive);
     };
@@ -48,6 +52,14 @@ const YourPassesCard = ({ customerData }: any) => {
         }
     }, [customerData])
 
+    const handleModal = (data) => {
+        if (data?.availableNights > 0) {
+            setShow(true)
+            setUserPassId(data?.id)
+        }else {
+            toaster.error("Not enough nights to redeem")
+        }
+    }
     return (
         <>
             <div className='tabs_innerContent'>
@@ -55,7 +67,7 @@ const YourPassesCard = ({ customerData }: any) => {
                 <div className={isActive ? 'tabs_innerContent openFilter' : "tabs_innerContent"}>
                     <div className='Listings_Filter_Btns d-flex align-items-center justify-content-between'>
                         <Dropdown className='filter_Dropdown filter_items_Dropdown'>
-                            <Dropdown.Toggle className='filter_btn' variant="" id="dropdown-basic"><FilterToggleIcon /> Filter</Dropdown.Toggle>
+                            {/* <Dropdown.Toggle className='filter_btn' variant="" id="dropdown-basic"><FilterToggleIcon /> Filter</Dropdown.Toggle> */}
                             <Dropdown.Menu>
                                 <div className='filter_items_box'>
                                     <h5>Destination</h5>
@@ -74,7 +86,7 @@ const YourPassesCard = ({ customerData }: any) => {
                                 {/* <Dropdown.Item></Dropdown.Item> */}
                             </Dropdown.Menu>
                         </Dropdown>
-                        <Dropdown className='filter_Dropdown'>
+                        {/* <Dropdown className='filter_Dropdown'>
                             <Dropdown.Toggle className='filter_btn' variant="" id="dropdown-basic"><span className='me-2'>Sort by:</span> A-Z <FilterIcon /></Dropdown.Toggle>
                             <Dropdown.Menu>
                                 {fliterlist.map((data, i) => {
@@ -85,7 +97,7 @@ const YourPassesCard = ({ customerData }: any) => {
                                     )
                                 })}
                             </Dropdown.Menu>
-                        </Dropdown>
+                        </Dropdown> */}
                     </div>
                 </div>
                 <div className='Profile_passbox'>
@@ -100,8 +112,11 @@ const YourPassesCard = ({ customerData }: any) => {
                                     </Col>
                                     <Col xs={12} lg={8} className='flex ps-lg-0'>
                                         <div className='Profile_passbox_details w-100'>
-                                            <h2>{data['pass']['property']['name']}</h2>
-                                            <h6>Bali</h6>
+                                            <h2>{data?.['pass']?.['property']?.['name']}</h2>
+                                            <h6>{data?.['pass']?.['property']?.['location'] ?
+                                                State.getStateByCodeAndCountry(
+                                                    data?.['pass']?.['property']?.['location']?.['state'],
+                                                    data?.['pass']['property']['location']['country'])['name'] : ""}</h6>
                                             <ul>
                                                 <li>
                                                     <span>Price</span>
@@ -119,15 +134,15 @@ const YourPassesCard = ({ customerData }: any) => {
                                             <ul className='border-0'>
                                                 <li>
                                                     <span>Pass type</span>
-                                                    <p>SP7</p>
+                                                    <p>{data ? `SP${data['pass']['redeemable_nights']}` : ""}</p>
                                                 </li>
                                                 <li>
                                                     <span>Redeemable nights</span>
-                                                    <p>3 per year</p>
+                                                    <p>{data ? `${data['pass']['redeemable_nights']}` : ""} per year</p>
                                                 </li>
                                                 <li>
                                                     <span>Total redeemable</span>
-                                                    <p>30 nights</p>
+                                                    <p>{data ? `${data['totalAvailableNights']} Nights` : ''}</p>
                                                 </li>
                                                 <li>
                                                     <span>Rewards</span>
@@ -135,8 +150,8 @@ const YourPassesCard = ({ customerData }: any) => {
                                                 </li>
                                             </ul>
                                             <div className='btn_group d-flex'>
-                                                <CommonButton title="Swap" onClick={() => setShowcancel(true)} className="grey-btn w-50 me-2" />
-                                                <CommonButton title="Redeem" onClick={() => setShow(true)} className="w-50 ms-2" />
+                                                <CommonButton title="Coming Soon Swap" onClick={() => setShowcancel(true)} className="grey-btn w-50 me-2" disabled={true} />
+                                                <CommonButton title="Redeem" onClick={() => handleModal(data)} className="w-50 ms-2" />
                                             </div>
                                         </div>
                                     </Col>
@@ -171,6 +186,8 @@ const YourPassesCard = ({ customerData }: any) => {
                 show={show}
                 handleClose={() => setShow(false)}
                 data={customerData}
+                propertyData={propertyData}
+                userPassId={userPassId}
             />
             <CancelBookingModal
                 show={showcancel}

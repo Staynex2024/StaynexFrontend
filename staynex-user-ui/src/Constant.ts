@@ -11,7 +11,7 @@ export const NETWORK_DECIMALS = 18
 export const EXPLORAR_LINK = 'https://mumbai.polygonscan.com/'
 export const PAGE_LIMIT = 5
 
-export const CONTRACT_ADDRESS = '0xfDEe82146D6937D4d1369a2f714e91e1244021f9'
+export const CONTRACT_ADDRESS = '0x9C19D05b1eE42FdCF309FaC7faF2528f497324a7'
 export const OWNER_ADDRESS = '0x889DFbc9B2a35f98852d2a306338ae4C4d0f3331'
 
 export const WEB3_ONBOARDING_API_KEY = '1730eff0-9d50-4382-a3fe-89f0d34a2070'

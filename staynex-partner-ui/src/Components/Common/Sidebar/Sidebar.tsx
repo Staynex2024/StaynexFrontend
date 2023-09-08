@@ -6,6 +6,8 @@ import { BookingIcon, DashboardIcon, HomeIcon, LogoutIcon, LoyaltyIcon, ManageIc
 import { Dropdown } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { logOut } from "../../../Redux/Actions/user.action";
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
 
 const Sidebar = ({ handleSidebar }: { handleSidebar?: () => void }) => {
   const dispatch: any = useDispatch();
@@ -28,17 +30,34 @@ const Sidebar = ({ handleSidebar }: { handleSidebar?: () => void }) => {
     await dispatch(logOut());
   };
 
+  const renderTooltip = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      <p>Cooming Soon</p>
+    </Tooltip>
+  );
+
   return (
     <aside className="sidebar">
       <div className="sidebar_Menu">
         <Link to="/"><img src={headerLogo} alt='Logo' /></Link>
         <ul className="sidebar_inner">
           <li>
-            <NavLink to="/auth/dashboard" className="nav_link">
+            <span
+              // to=""
+              className="nav_link">
               <span className="nav_link_icon"><DashboardIcon /></span>
-              Dashboard
-            </NavLink>
+              {/* Dashboard */}
+              <OverlayTrigger
+                placement="top"
+                delay={{ show: 250, hide: 400 }}
+                overlay={renderTooltip}
+              >
+                <span>Dashboard</span>
+              </OverlayTrigger>
+            </span>
           </li>
+
+
           <li>
             <NavLink to="/auth/Booking" className="nav_link">
               <span className="nav_link_icon"><BookingIcon /></span>
@@ -65,12 +84,12 @@ const Sidebar = ({ handleSidebar }: { handleSidebar?: () => void }) => {
               </Dropdown.Menu>
             </Dropdown>
           </li>
-          <li>
+          {/* <li>
             <NavLink to="/auth/support" className="nav_link">
               <span className="nav_link_icon"><SupportIcon /></span>
               Support
             </NavLink>
-          </li>
+          </li> */}
         </ul>
         {/* <ul className="sidebar_inner">
           {NavLinks.map((item) => (

@@ -15,6 +15,8 @@ export const APIURL: any = {
   ACTION_ON_PASS: "/createActionOnPassRequest",
   LIST_DELIST_PASS: "/createListAndDelistPass",
   PENDING_PROPERTY_REQUESTLIST: "/pendingPropertyRequestsList",
+  CUSTOMER_LIST: '/getAllCustomer',
+  PASS_BUY_REQUEST: '/getUserPasses'
 }
 
 export const RESPONSES: any = {

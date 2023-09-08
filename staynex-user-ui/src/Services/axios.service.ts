@@ -102,7 +102,7 @@ function handleSuccess(res) {
 export const apiCallPost = (url, data, params = {}, showtoaster = false) =>
   new Promise((resolve) => {
     axios
-      .post(formatUrl(url, params), data)
+      .post(formatUrl(url, params), data, { withCredentials: true })
       .then((res) => {
         showtoaster && handleSuccess(res);
         resolve(res.data);
@@ -117,7 +117,7 @@ export const apiCallGet = (url, params = {}, showtoaster = false) =>
 
   new Promise((resolve) => {
     axios
-      .get(formatUrl(url, params))
+      .get(formatUrl(url, params), { withCredentials: true })
       .then((res) => {
         showtoaster && handleSuccess(res);
         resolve(res.data);

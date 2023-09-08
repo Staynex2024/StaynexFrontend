@@ -49,7 +49,7 @@ const Dashboard = () => {
               ))}
             </ul>
           </div>
-          <div className="statistics_card">
+          {/* <div className="statistics_card">
             <p>Pass Details</p>
             <div className="statistics_card_typepass">
               <label>Types of pass</label>
@@ -100,7 +100,7 @@ const Dashboard = () => {
                 />
               </Col>
             </Row>
-          </div>
+          </div> */}
         </div>
       </section>
 

@@ -31,7 +31,9 @@ export const UserSlice = createSlice({
             state.walletType = payload;
         },
         propertyDetails: (state, param) => {
-            const { payload } = param;            
+            const { payload } = param;           
+            console.log("payload",payload);
+             
             state.propertyDetails = payload;
         },
         logoutUser: (state) => {

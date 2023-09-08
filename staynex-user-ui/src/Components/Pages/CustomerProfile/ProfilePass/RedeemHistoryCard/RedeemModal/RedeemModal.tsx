@@ -5,7 +5,7 @@ import { CheckcircleIcon } from '../../../../../../Assets/Images/svgImgs/svgImgs
 import CommonButton from '../../../../../Common/CommonButton/CommonButton';
 import RedeemBookingModal from '../RedeemBookingModal/RedeemBookingModal';
 
-const RedeemModal = ({ show, handleClose, data }) => {
+const RedeemModal = ({ show, handleClose, data, propertyData, userPassId }) => {
     const [showbooking, setShowbooking] = useState(false);
     return (
         <>
@@ -31,6 +31,8 @@ const RedeemModal = ({ show, handleClose, data }) => {
                 show={showbooking}
                 handleClose={() => setShowbooking(false)}
                 data={data}
+                propertyData= {propertyData}
+                userPassId= {userPassId}
             />
         </>
     )

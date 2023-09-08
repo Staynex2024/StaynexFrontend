@@ -19,11 +19,11 @@ const Header = () => {
 
   useEffect(() => {
     const handleCustomerLogin = async () => {
-      const result = await dispatch(callApiPostMethod(APIURL?.CUSTOMER_LOGIN, { walletAddress: walletAddress }, {}, false))
+      const result = await dispatch(callApiPostMethod(APIURL?.CUSTOMER_LOGIN, { walletAddress: walletAddress, password: "staynex" }, {}, false))
 
-      if (result?.data === false) {
+      if (result?.email_status === false) {
         navigate('/auth/profile-login')
-      } else if (result?.data === true) {
+      } else if (result?.email_status === true) {
         navigate('/auth/profile-pass')
       }
     }

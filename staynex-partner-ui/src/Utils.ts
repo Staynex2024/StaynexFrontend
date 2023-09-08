@@ -8,8 +8,10 @@ export const APIURL: any = {
   VENDOR_DETAILS: '/getVendorDetails',
   VENDOR_ADD_PROPERTY: '/addProperty',
   VENDOR_UPDATE_PROPERTY: '/updateProperty',
-  VENDOR_UPLAOD: '/upload',
+  VENDOR_UPLOAD: '/upload',
   ADD_WALLETADDRESS : 'addWalletAddress',
+  GET_BOOKING_LIST : 'getBookingList',
+  UPDATE_BOOKING_STATUS : 'updateBookingStatus',
 
   CREATE_PASS: '/pass/addPass',
   PASSES_LIST: '/pass/passesList',
@@ -19,7 +21,7 @@ export const APIURL: any = {
   LIST_DELIST_PASS: '/pass/actionListing',
   PASSES_RESUBMIT_PASS: '/pass/resubmitPass',
   GET_EXCHANGE_RATE: '/getExchangeRateList'
-}
+};
 
 export const RESPONSES: any = {
   SUCCESS: 200,

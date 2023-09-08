@@ -36,6 +36,7 @@ const Settings = () => {
                 <div className='settings_section'>
                     <Form onSubmit={formik.handleSubmit}>
                         <Accordion defaultActiveKey="0">
+                            {/* 
                             <Accordion.Item eventKey="0">
                                 <Accordion.Header>General</Accordion.Header>
                                 <Accordion.Body>
@@ -121,9 +122,10 @@ const Settings = () => {
                                             </li>
                                         </ul>
                                     </div>
-                                </Accordion.Body>
+                                </Accordion.Body> 
                             </Accordion.Item>
-                            <Accordion.Item eventKey="1">
+                                */}
+                            {/* <Accordion.Item eventKey="1">
                                 <Accordion.Header>Email</Accordion.Header>
                                 <Accordion.Body>
                                     <div className='fieldscontent'>
@@ -159,25 +161,25 @@ const Settings = () => {
                                         </Row>
                                     </div>
                                 </Accordion.Body>
-                            </Accordion.Item>
+                            </Accordion.Item> */}
                             <Accordion.Item eventKey="2">
                                 <Accordion.Header>Security</Accordion.Header>
                                 <Accordion.Body>
                                     <div className='security'>
-                                        <h5>These settings are helps you keep your account secure. <span><SecureIcon /></span></h5>
+                                        {/* <h5>These settings are helps you keep your account secure. <span><SecureIcon /></span></h5> */}
                                         <ul className='security_listing'>
                                             <li>
-                                                <div className='text_sec'>
+                                                {/* <div className='text_sec'>
                                                     <h6>Save my Activity Logs</h6>
                                                     <p>You can save your all activity logs including unusual activity detected.</p>
-                                                </div>
-                                                <div className='btn_section'>
+                                                </div> */}
+                                                {/* <div className='btn_section'>
                                                     <Switch
                                                         id=''
                                                         // onChange=''
                                                         name=''
                                                     />
-                                                </div>
+                                                </div> */}
                                             </li>
                                             <li>
                                                 <div className='text_sec'>

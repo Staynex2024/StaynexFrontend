@@ -5,12 +5,14 @@ import uploadIcon from '../../../../../Assets/Images/upload_icon.svg'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import InputCustom from '../../../../Common/Inputs/InputCustom'
-import { Col, Dropdown, Form, Row } from 'react-bootstrap'
+import { Col, Form, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { callApiPostMethod } from '../../../../../Redux/Actions/api.action'
 import { APIURL } from '../../../../../Utils'
-import DropdownMenu from 'react-bootstrap/esm/DropdownMenu'
+// import DropdownMenu from 'react-bootstrap/esm/DropdownMenu'
 import CustomSelect from '../../../../Common/Select/Select'
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 
 const MyAccountCard = ({ customerData }: any) => {
   const dispatch: any = useDispatch()
@@ -63,7 +65,7 @@ const MyAccountCard = ({ customerData }: any) => {
         lastName: values?.lastName,
         gender: values?.gender,
         email: values?.email,
-        mobileNumber: '+62' + values?.number,
+        mobileNumber: values?.number,
         passportNumber: values?.passport,
         profileImage: profileImg !== '' && profileImg,
       }
@@ -86,7 +88,7 @@ const MyAccountCard = ({ customerData }: any) => {
       // formik.setFieldValue('email', customerData['user']['email'])
       formik.setFieldValue(
         'number',
-        customerData['user']['mobile_number'].slice(3),
+        customerData['user']['mobile_number'],
       )
       setFile(customerData['imageUrl'])
     }
@@ -107,16 +109,16 @@ const MyAccountCard = ({ customerData }: any) => {
     formData.append('file', fileData, fileName)
 
     const res: any = await dispatch(
-        callApiPostMethod(APIURL.USER_PROFILE, formData, {}, false),
+      callApiPostMethod(APIURL.USER_PROFILE, formData, {}, false),
     )
 
     if (res?.error === false) {
-        setProfileImg(res?.data)
-    } 
+      setProfileImg(res?.data)
+    }
 
     setFile(URL.createObjectURL(e.target.files[0]));
 
-}
+  }
 
   return (
     <>
@@ -202,27 +204,49 @@ const MyAccountCard = ({ customerData }: any) => {
                 />
               </Col>
               <Col lg={6} md={6} xl={4}>
-                <CustomSelect
-                  label="Gender"
-                  id="gender"
-                  classgroup="mb-44"
-                  options={options}
-                  onChange={(option: any) =>
-                    formik.setFieldValue('gender', option.value)
-                  }
-                  name={'propertyType'}
-                  placeholder="Select"
-                  isSearchable={false}
-                  // value={customerData['gender'] && { label: customerData['gender']?.charAt(0).toUpperCase() + customerData['gender']?.slice(1).toLowerCase()}}
-                  error={
-                    formik.errors.gender &&
-                      formik.touched.gender ? (
-                      <span className="error_Msg">
-                        {formik.errors.gender}
-                      </span>
-                    ) : null
-                  }
-                />
+                {customerData['gender'] ?
+                  <CustomSelect
+                    label="Gender"
+                    id="gender"
+                    classgroup="mb-44"
+                    options={options}
+                    onChange={(option: any) =>
+                      formik.setFieldValue('gender', option.value)
+                    }
+                    name={'propertyType'}
+                    placeholder="Select"
+                    isSearchable={false}
+                    value={customerData['gender'] && { label: customerData['gender']?.charAt(0).toUpperCase() + customerData['gender']?.slice(1).toLowerCase() }}
+                    error={
+                      formik.errors.gender &&
+                        formik.touched.gender ? (
+                        <span className="error_Msg">
+                          {formik.errors.gender}
+                        </span>
+                      ) : null
+                    }
+                  /> :
+                  <CustomSelect
+                    label="Gender"
+                    id="gender"
+                    classgroup="mb-44"
+                    options={options}
+                    onChange={(option: any) =>
+                      formik.setFieldValue('gender', option.value)
+                    }
+                    name={'propertyType'}
+                    placeholder="Select"
+                    isSearchable={false}
+                    error={
+                      formik.errors.gender &&
+                        formik.touched.gender ? (
+                        <span className="error_Msg">
+                          {formik.errors.gender}
+                        </span>
+                      ) : null
+                    }
+                  />
+                }
               </Col>
               <Col lg={6} md={6} xl={4}>
                 <InputCustom
@@ -265,27 +289,24 @@ const MyAccountCard = ({ customerData }: any) => {
                 />
               </Col>
               <Col lg={6} md={6} xl={4}>
-                <InputCustom
-                  label="Phone number"
-                  className="mb-44"
-                  placeholder="+6512345676"
-                  id="number"
-                  name="number"
-                  type="text"
-                  maxLength={15}
-                  onChange={(event: any) => {
-                    if (/^\d*(\d{0,8})?$/.test(event.target.value)) {
-                      formik.handleChange(event)
-                    }
-                  }}
-                  autoFocus={true}
+                <label className="form-label">
+                  Mobile Number
+                </label>
+                {/* {customerData && Object.keys(customerData).length > 0 && */}
+                <PhoneInput
+                  country="us"
                   value={formik.values.number}
-                  error={
-                    formik.errors.number && formik.touched.number ? (
-                      <span>{formik.errors.number}</span>
-                    ) : null
-                  }
+                  // id='number'
+                  onChange={(number) => {
+                    formik.setFieldValue('number', `+${number}`)
+                  }}
+                  // onChange={formik.handleChange}
+                  enableSearch={true}
                 />
+                <p className="error-Msg" style={{ color: 'red' }}>
+                  {formik.errors.number && formik.touched.number && formik.errors.number}
+                </p>
+
               </Col>
               <Col xs={12}>
                 <button type="submit" className="btn-style">

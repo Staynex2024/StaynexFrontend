@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 import './Sidebar.scss'
 import headerLogo from '../../../Assets/Images/white-logo.svg'
 import {
@@ -15,12 +15,14 @@ import { useDispatch } from 'react-redux'
 
 const Sidebar = ({ handleSidebar }: { handleSidebar?: () => void }) => {
   const dispatch: any = useDispatch()
+  const location: any = useLocation();
 
   const NavLinks = [
     {
       icon: <DashboardIcon />,
       label: 'Dashboard',
       to: '/auth/dashboard',
+      // comingsoon:<small></small>,
     },
     {
       icon: <HomeIcon />,
@@ -40,9 +42,15 @@ const Sidebar = ({ handleSidebar }: { handleSidebar?: () => void }) => {
     {
       icon: <ManageSearchIcon />,
       label: 'Management',
-      to: '/auth/management',
+      to: location.pathname,
+      comingsoon:<small></small>,
     },
-  ]
+    {
+      icon: <ManageSearchIcon />,
+      label: 'Buy Request',
+      to: '/auth/buy-request',
+    },
+  ];
 
   const NavfooterLinks = [
     {
@@ -70,12 +78,13 @@ const Sidebar = ({ handleSidebar }: { handleSidebar?: () => void }) => {
         </Link>
         <ul className="sidebar_inner">
           {NavLinks.map((item) => (
-            <li key={item.label}>
+            <li key={item.label}>  
               <NavLink
                 to={item.to}
                 className="nav_link"
                 onClick={handleSidebar}
               >
+                 {item.comingsoon}
                 <span className="nav_link_icon">{item.icon}</span>
                 {item.label}
               </NavLink>

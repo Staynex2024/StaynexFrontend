@@ -76,7 +76,7 @@
                 justify-content: flex-start;
 
                 li {
-                    &.multi-preview {
+                    .multi-preview {
                         display: flex;
                         flex-wrap: wrap;
                         align-items: flex-start;
